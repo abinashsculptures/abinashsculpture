@@ -15,7 +15,8 @@ const Services: React.FC = () => {
         "Material selection guidance",
         "Regular progress updates",
         "Professional installation available"
-      ]
+      ],
+      image: "/lovable-uploads/daeca681-c10c-447f-8787-e6a09e09577f.png"
     },
     {
       title: "Hindu Gods Sculptures",
@@ -26,7 +27,8 @@ const Services: React.FC = () => {
         "Variety of materials including stone, bronze, and marble",
         "Customized bases and pedestals",
         "Consecration assistance available"
-      ]
+      ],
+      image: "/lovable-uploads/636bb5a8-10fc-4b88-b8ea-bb07337d922e.png"
     },
     {
       title: "Buddha Sculptures",
@@ -37,7 +39,8 @@ const Services: React.FC = () => {
         "Indoor and outdoor options",
         "Specialty finishes and patinas",
         "Custom sizing available"
-      ]
+      ],
+      image: "/lovable-uploads/966a3bb0-7519-4427-a96f-50d82f1d3f73.png"
     },
     {
       title: "Stone Temple Designs",
@@ -48,7 +51,8 @@ const Services: React.FC = () => {
         "Hand-carved details and ornamentation",
         "On-site installation and assembly",
         "Restoration of existing temple structures"
-      ]
+      ],
+      image: "/lovable-uploads/fcbef6d2-2918-4e70-8608-d0871c7d9a4f.png"
     }
   ];
 
@@ -91,7 +95,13 @@ const Services: React.FC = () => {
                       Inquire Now
                     </Link>
                   </div>
-                  <div className={`h-64 md:h-80 bg-sculpture-gray rounded-lg ${index % 2 === 1 ? 'order-2 md:order-1' : ''}`}></div>
+                  <div className={`h-64 md:h-80 rounded-lg overflow-hidden ${index % 2 === 1 ? 'order-2 md:order-1' : ''}`}>
+                    <img 
+                      src={service.image} 
+                      alt={service.title} 
+                      className="w-full h-full object-cover object-center"
+                    />
+                  </div>
                 </div>
               ))}
             </div>

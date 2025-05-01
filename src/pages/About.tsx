@@ -37,7 +37,13 @@ const About: React.FC = () => {
                   Our founder's vision was to create sculptures that not only please the eye but also touch the soul, especially in our crafting of Hindu deities and Buddha sculptures that radiate spiritual essence.
                 </p>
               </div>
-              <div className="bg-sculpture-gray h-80 rounded-lg"></div>
+              <div className="rounded-lg overflow-hidden h-80">
+                <img 
+                  src="/lovable-uploads/87f797e2-3d15-4e6c-857c-ee05dee9daf4.png" 
+                  alt="Lord Murugan Sculpture" 
+                  className="w-full h-full object-cover"
+                />
+              </div>
             </div>
           </div>
         </section>
@@ -103,7 +109,13 @@ const About: React.FC = () => {
         <section className="section-padding bg-sculpture-peach bg-opacity-20">
           <div className="container mx-auto px-4">
             <div className="grid grid-cols-1 md:grid-cols-2 gap-12 items-center">
-              <div className="bg-sculpture-gray h-80 rounded-lg order-2 md:order-1"></div>
+              <div className="rounded-lg overflow-hidden h-80 order-2 md:order-1">
+                <img 
+                  src="/lovable-uploads/966a3bb0-7519-4427-a96f-50d82f1d3f73.png" 
+                  alt="Our Studio Space" 
+                  className="w-full h-full object-cover"
+                />
+              </div>
               <div className="order-1 md:order-2">
                 <h2 className="text-3xl font-bold mb-6">Our Studio Space</h2>
                 <p className="mb-4">

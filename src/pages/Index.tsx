@@ -37,13 +37,39 @@ const Index: React.FC = () => {
           <div className="container mx-auto">
             <h2 className="text-3xl md:text-4xl font-bold text-center mb-12">Featured Sculptures</h2>
             <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
-              {[1, 2, 3].map((item) => (
-                <div key={item} className="card hover-scale">
-                  <div className="h-64 bg-sculpture-gray rounded mb-4"></div>
-                  <h3 className="text-xl font-serif font-semibold mb-2">Masterpiece Title {item}</h3>
-                  <p className="text-muted-foreground">A beautiful sculpture crafted with precision and artistic vision.</p>
+              <div className="card hover-scale">
+                <div className="h-64 rounded mb-4 overflow-hidden">
+                  <img 
+                    src="/lovable-uploads/f75bff38-a7f3-4c58-a95b-dca223dc1b03.png" 
+                    alt="Lord Ganesha Sculpture" 
+                    className="w-full h-full object-cover"
+                  />
                 </div>
-              ))}
+                <h3 className="text-xl font-serif font-semibold mb-2">Lord Ganesha</h3>
+                <p className="text-muted-foreground">Exquisite black stone Ganesha with intricate carving and traditional details.</p>
+              </div>
+              <div className="card hover-scale">
+                <div className="h-64 rounded mb-4 overflow-hidden">
+                  <img 
+                    src="/lovable-uploads/966a3bb0-7519-4427-a96f-50d82f1d3f73.png" 
+                    alt="Meditating Buddha Sculpture" 
+                    className="w-full h-full object-cover"
+                  />
+                </div>
+                <h3 className="text-xl font-serif font-semibold mb-2">Meditating Buddha</h3>
+                <p className="text-muted-foreground">Serene Buddha sculpture crafted in light granite with traditional pose and ornate details.</p>
+              </div>
+              <div className="card hover-scale">
+                <div className="h-64 rounded mb-4 overflow-hidden">
+                  <img 
+                    src="/lovable-uploads/95eaae5e-d594-4c96-94b2-4c16e3c161be.png" 
+                    alt="Vishnu with Lakshmi" 
+                    className="w-full h-full object-cover"
+                  />
+                </div>
+                <h3 className="text-xl font-serif font-semibold mb-2">Vishnu with Lakshmi</h3>
+                <p className="text-muted-foreground">Magnificent stone sculpture showing Lord Vishnu with Goddess Lakshmi in traditional form.</p>
+              </div>
             </div>
             <div className="text-center mt-12">
               <Link to="/works" className="btn-secondary">
@@ -58,11 +84,39 @@ const Index: React.FC = () => {
           <div className="container mx-auto">
             <h2 className="text-3xl md:text-4xl font-bold text-center mb-12">Our Services</h2>
             <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
-              {["Custom Sculptures", "Hindu Gods", "Buddha Sculptures", "Stone Temples"].map((service) => (
-                <div key={service} className="card hover-scale">
-                  <h3 className="text-xl font-serif font-semibold mb-2">{service}</h3>
+              {[
+                {
+                  title: "Custom Sculptures", 
+                  text: "Personalized sculptures created to your specifications with attention to detail.",
+                  image: "/lovable-uploads/daeca681-c10c-447f-8787-e6a09e09577f.png"
+                },
+                {
+                  title: "Hindu Gods", 
+                  text: "Divine sculptures of Hindu deities crafted with devotion and traditional artistry.",
+                  image: "/lovable-uploads/636bb5a8-10fc-4b88-b8ea-bb07337d922e.png"
+                },
+                {
+                  title: "Buddha Sculptures", 
+                  text: "Peaceful Buddha sculptures that bring tranquility to any space.",
+                  image: "/lovable-uploads/966a3bb0-7519-4427-a96f-50d82f1d3f73.png"
+                },
+                {
+                  title: "Stone Temples", 
+                  text: "Expertly crafted stone temple elements following traditional design principles.",
+                  image: "/lovable-uploads/fcbef6d2-2918-4e70-8608-d0871c7d9a4f.png"
+                }
+              ].map((service) => (
+                <div key={service.title} className="card hover-scale">
+                  <div className="h-36 rounded mb-4 overflow-hidden">
+                    <img 
+                      src={service.image} 
+                      alt={service.title} 
+                      className="w-full h-full object-cover object-center"
+                    />
+                  </div>
+                  <h3 className="text-xl font-serif font-semibold mb-2">{service.title}</h3>
                   <p className="text-muted-foreground mb-4">
-                    Professional {service.toLowerCase()} created with devotion and artistic excellence.
+                    {service.text}
                   </p>
                   <Link to="/services" className="text-sculpture-pink hover:underline">
                     Learn more →

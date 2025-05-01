@@ -2,18 +2,74 @@
 import React, { useState } from 'react';
 import Navbar from '../components/Navbar';
 import Footer from '../components/Footer';
+import { AspectRatio } from '@/components/ui/aspect-ratio';
 
-// Sample portfolio data
+// Updated portfolio data with real images
 const portfolioItems = [
-  { id: 1, title: "Lord Ganesha", category: "Hindu Gods", year: 2023 },
-  { id: 2, title: "Meditating Buddha", category: "Buddha", year: 2023 },
-  { id: 3, title: "Temple Doorway", category: "Temple", year: 2022 },
-  { id: 4, title: "Goddess Lakshmi", category: "Hindu Gods", year: 2022 },
-  { id: 5, title: "Lord Shiva", category: "Hindu Gods", year: 2021 },
-  { id: 6, title: "Zen Garden Buddha", category: "Buddha", year: 2021 },
-  { id: 7, title: "Custom Family Sculpture", category: "Custom", year: 2020 },
-  { id: 8, title: "Temple Arch", category: "Temple", year: 2020 },
-  { id: 9, title: "Saraswati Idol", category: "Hindu Gods", year: 2019 },
+  { 
+    id: 1, 
+    title: "Lord Ganesha", 
+    category: "Hindu Gods", 
+    year: 2023,
+    image: "/lovable-uploads/f75bff38-a7f3-4c58-a95b-dca223dc1b03.png", 
+    description: "Exquisitely detailed Ganesha sculpture with intricate carving"
+  },
+  { 
+    id: 2, 
+    title: "Meditating Buddha", 
+    category: "Buddha", 
+    year: 2023,
+    image: "/lovable-uploads/966a3bb0-7519-4427-a96f-50d82f1d3f73.png",
+    description: "Serene Buddha sculpture in traditional meditation pose"
+  },
+  { 
+    id: 3, 
+    title: "Temple Doorway", 
+    category: "Temple", 
+    year: 2022,
+    image: "/lovable-uploads/fcbef6d2-2918-4e70-8608-d0871c7d9a4f.png",
+    description: "Elegant stone temple doorway with traditional architecture"
+  },
+  { 
+    id: 4, 
+    title: "Vishnu with Lakshmi", 
+    category: "Hindu Gods", 
+    year: 2022,
+    image: "/lovable-uploads/95eaae5e-d594-4c96-94b2-4c16e3c161be.png",
+    description: "Detailed sculpture of Lord Vishnu with Goddess Lakshmi"
+  },
+  { 
+    id: 5, 
+    title: "Lord Krishna", 
+    category: "Hindu Gods", 
+    year: 2021,
+    image: "/lovable-uploads/636bb5a8-10fc-4b88-b8ea-bb07337d922e.png",
+    description: "Beautiful sculpture of Lord Krishna playing the flute"
+  },
+  { 
+    id: 6, 
+    title: "Standing Warrior", 
+    category: "Custom", 
+    year: 2021,
+    image: "/lovable-uploads/daeca681-c10c-447f-8787-e6a09e09577f.png",
+    description: "Majestic warrior sculpture with traditional details"
+  },
+  { 
+    id: 7, 
+    title: "Lord Murugan", 
+    category: "Hindu Gods", 
+    year: 2020,
+    image: "/lovable-uploads/87f797e2-3d15-4e6c-857c-ee05dee9daf4.png",
+    description: "Impressive sculpture of Lord Murugan with ornate details"
+  },
+  { 
+    id: 8, 
+    title: "Traditional Devi", 
+    category: "Hindu Gods", 
+    year: 2020,
+    image: "/lovable-uploads/20755c49-1107-47f4-aad5-daca78334f2b.png",
+    description: "Beautiful goddess sculpture with traditional elements"
+  },
 ];
 
 const categories = ["All", "Hindu Gods", "Buddha", "Temple", "Custom"];
@@ -68,8 +124,17 @@ const Works: React.FC = () => {
             <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
               {filteredItems.map((item) => (
                 <div key={item.id} className="card hover-scale">
-                  <div className="h-64 bg-sculpture-gray rounded mb-4"></div>
+                  <div className="rounded-lg overflow-hidden mb-4">
+                    <AspectRatio ratio={3/4} className="bg-sculpture-gray">
+                      <img 
+                        src={item.image} 
+                        alt={item.title} 
+                        className="w-full h-full object-cover" 
+                      />
+                    </AspectRatio>
+                  </div>
                   <h3 className="text-xl font-serif font-semibold mb-1">{item.title}</h3>
+                  <p className="text-sm text-muted-foreground mb-2">{item.description}</p>
                   <div className="flex justify-between text-muted-foreground">
                     <span>{item.category}</span>
                     <span>{item.year}</span>
