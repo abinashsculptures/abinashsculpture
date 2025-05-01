@@ -64,10 +64,12 @@ export default {
 					ring: 'hsl(var(--sidebar-ring))'
 				},
 				sculpture: {
-					cream: "#FEF7CD",
-					peach: "#FDE1D3",
-					blue: "#D3E4FD",
-					gray: "#F1F0FB",
+					cream: "#FFF5F7",
+					peach: "#FFDEE2",
+					blue: "#FFD3F8",
+					gray: "#F5E1F0",
+					pink: "#FFB6C1",
+					darkpink: "#FF69B4",
 				}
 			},
 			borderRadius: {

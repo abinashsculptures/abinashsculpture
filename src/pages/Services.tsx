@@ -8,7 +8,7 @@ const Services: React.FC = () => {
   const services = [
     {
       title: "Custom Sculptures",
-      description: "Commission a unique sculpture tailored to your specific vision, space, and preferences. We work with a variety of materials including stone, metal, wood, and mixed media.",
+      description: "Commission a unique sculpture tailored to your specific vision, space, and preferences. We work with a variety of materials to create one-of-a-kind pieces that reflect your personal style.",
       details: [
         "Initial consultation and concept development",
         "Sketches and digital mockups",
@@ -18,36 +18,36 @@ const Services: React.FC = () => {
       ]
     },
     {
-      title: "Restoration Services",
-      description: "Bring new life to damaged or aging sculptures through our professional restoration services, preserving their beauty and structural integrity for generations to come.",
+      title: "Hindu Gods Sculptures",
+      description: "Beautiful and sacred sculptures of Hindu deities crafted with devotion and attention to traditional iconography. Perfect for temples, shrines, or personal worship spaces.",
       details: [
-        "Condition assessment and documentation",
-        "Careful cleaning and surface treatment",
-        "Structural repairs and reinforcement",
-        "Missing parts recreation",
-        "Protective coating application"
+        "Traditional and contemporary designs",
+        "Multiple sizes available",
+        "Variety of materials including stone, bronze, and marble",
+        "Customized bases and pedestals",
+        "Consecration assistance available"
       ]
     },
     {
-      title: "Sculpture Workshops",
-      description: "Learn the art of sculpture through our hands-on workshops suitable for beginners and advanced practitioners alike, guided by our expert sculptors.",
+      title: "Buddha Sculptures",
+      description: "Serene and peaceful Buddha statues that bring tranquility and mindfulness to any space. Available in various poses, sizes, and materials.",
       details: [
-        "Small group sessions (max 8 participants)",
-        "All materials included",
-        "Beginner to advanced levels available",
-        "Weekend intensives or weekly sessions",
-        "Private workshops available"
+        "Multiple meditation poses available",
+        "Traditional and modern interpretations",
+        "Indoor and outdoor options",
+        "Specialty finishes and patinas",
+        "Custom sizing available"
       ]
     },
     {
-      title: "Art Consultations",
-      description: "Receive expert guidance on selecting or commissioning sculptures for your space, whether it's a residential property, corporate environment, or public installation.",
+      title: "Stone Temple Designs",
+      description: "Expert craftsmanship for stone temple elements, from ornate doorways to complete temple structures, designed according to traditional Vastu principles.",
       details: [
-        "Space assessment and recommendations",
-        "Art selection guidance",
-        "Budget planning assistance",
-        "Installation logistics",
-        "Maintenance advice"
+        "Architectural consultation and planning",
+        "Traditional stone selection",
+        "Hand-carved details and ornamentation",
+        "On-site installation and assembly",
+        "Restoration of existing temple structures"
       ]
     }
   ];
@@ -62,7 +62,7 @@ const Services: React.FC = () => {
             <div className="max-w-3xl mx-auto text-center">
               <h1 className="text-4xl md:text-5xl font-bold mb-6">Our Services</h1>
               <p className="text-lg text-muted-foreground">
-                From custom creations to restoration, we offer comprehensive sculpture services tailored to your needs.
+                From custom creations to sacred sculptures, we offer comprehensive artistic services tailored to your needs.
               </p>
             </div>
           </div>
@@ -82,7 +82,7 @@ const Services: React.FC = () => {
                       <ul className="space-y-2">
                         {service.details.map((detail, i) => (
                           <li key={i} className="flex items-start">
-                            <span className="text-sculpture-peach mr-2">•</span> {detail}
+                            <span className="text-sculpture-pink mr-2">•</span> {detail}
                           </li>
                         ))}
                       </ul>
@@ -105,7 +105,7 @@ const Services: React.FC = () => {
             <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
               <div className="card">
                 <div className="flex items-center mb-4">
-                  <div className="w-12 h-12 flex items-center justify-center bg-sculpture-peach rounded-full text-white font-bold text-xl">
+                  <div className="w-12 h-12 flex items-center justify-center bg-sculpture-pink rounded-full text-white font-bold text-xl">
                     1
                   </div>
                   <h3 className="text-xl font-semibold ml-4">Consultation</h3>
@@ -116,7 +116,7 @@ const Services: React.FC = () => {
               </div>
               <div className="card">
                 <div className="flex items-center mb-4">
-                  <div className="w-12 h-12 flex items-center justify-center bg-sculpture-peach rounded-full text-white font-bold text-xl">
+                  <div className="w-12 h-12 flex items-center justify-center bg-sculpture-pink rounded-full text-white font-bold text-xl">
                     2
                   </div>
                   <h3 className="text-xl font-semibold ml-4">Design & Planning</h3>
@@ -127,7 +127,7 @@ const Services: React.FC = () => {
               </div>
               <div className="card">
                 <div className="flex items-center mb-4">
-                  <div className="w-12 h-12 flex items-center justify-center bg-sculpture-peach rounded-full text-white font-bold text-xl">
+                  <div className="w-12 h-12 flex items-center justify-center bg-sculpture-pink rounded-full text-white font-bold text-xl">
                     3
                   </div>
                   <h3 className="text-xl font-semibold ml-4">Creation & Delivery</h3>

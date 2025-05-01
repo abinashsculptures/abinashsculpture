@@ -3,6 +3,7 @@ import React from 'react';
 import { Link } from 'react-router-dom';
 import Navbar from '../components/Navbar';
 import Footer from '../components/Footer';
+import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar';
 
 const Index: React.FC = () => {
   return (
@@ -14,7 +15,7 @@ const Index: React.FC = () => {
           <div className="container mx-auto px-4">
             <div className="max-w-3xl mx-auto text-center">
               <h1 className="text-4xl md:text-6xl font-bold mb-6 animate-fade-in">
-                Transforming Imagination Into Tangible Art
+                Abinash Sculptures
               </h1>
               <p className="text-lg md:text-xl text-muted-foreground mb-8 animate-fade-in" style={{ animationDelay: '0.2s' }}>
                 Crafting unique, premium sculptures that embody emotion, creativity, and artistic excellence
@@ -57,13 +58,13 @@ const Index: React.FC = () => {
           <div className="container mx-auto">
             <h2 className="text-3xl md:text-4xl font-bold text-center mb-12">Our Services</h2>
             <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
-              {["Custom Sculptures", "Restoration", "Workshops", "Consultations"].map((service) => (
+              {["Custom Sculptures", "Hindu Gods", "Buddha Sculptures", "Stone Temples"].map((service) => (
                 <div key={service} className="card hover-scale">
                   <h3 className="text-xl font-serif font-semibold mb-2">{service}</h3>
                   <p className="text-muted-foreground mb-4">
-                    Professional {service.toLowerCase()} services tailored to your unique needs and vision.
+                    Professional {service.toLowerCase()} created with devotion and artistic excellence.
                   </p>
-                  <Link to="/services" className="text-sculpture-peach hover:underline">
+                  <Link to="/services" className="text-sculpture-pink hover:underline">
                     Learn more →
                   </Link>
                 </div>
@@ -79,26 +80,32 @@ const Index: React.FC = () => {
             <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
               <div className="card">
                 <div className="flex items-center mb-4">
-                  <div className="w-12 h-12 bg-sculpture-gray rounded-full mr-4"></div>
+                  <Avatar className="h-16 w-16 mr-4">
+                    <AvatarImage src="https://api.dicebear.com/7.x/avataaars/svg?seed=John&backgroundColor=ffdfbf" alt="John Smith" />
+                    <AvatarFallback>JS</AvatarFallback>
+                  </Avatar>
                   <div>
                     <h4 className="font-semibold">John Smith</h4>
-                    <p className="text-muted-foreground">Art Collector</p>
+                    <p className="text-muted-foreground">Temple Trustee</p>
                   </div>
                 </div>
                 <p className="italic">
-                  "The attention to detail and artistic vision exceeded all my expectations. Truly a masterpiece that has become the centerpiece of my collection."
+                  "The attention to detail in the Hindu deity sculptures exceeded all our expectations. The devotion and craftsmanship put into each piece is remarkable."
                 </p>
               </div>
               <div className="card">
                 <div className="flex items-center mb-4">
-                  <div className="w-12 h-12 bg-sculpture-gray rounded-full mr-4"></div>
+                  <Avatar className="h-16 w-16 mr-4">
+                    <AvatarImage src="https://api.dicebear.com/7.x/avataaars/svg?seed=Emily&backgroundColor=b6e3f4" alt="Emily Johnson" />
+                    <AvatarFallback>EJ</AvatarFallback>
+                  </Avatar>
                   <div>
                     <h4 className="font-semibold">Emily Johnson</h4>
                     <p className="text-muted-foreground">Interior Designer</p>
                   </div>
                 </div>
                 <p className="italic">
-                  "Working with SculptStudio was a delight. They transformed my concept into a stunning sculpture that perfectly complements the space."
+                  "Working with Abinash Sculptures was a delight. They transformed my concept into a stunning Buddha sculpture that perfectly complements my client's meditation space."
                 </p>
               </div>
             </div>

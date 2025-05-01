@@ -5,18 +5,18 @@ import Footer from '../components/Footer';
 
 // Sample portfolio data
 const portfolioItems = [
-  { id: 1, title: "Eternal Embrace", category: "Stone", year: 2023 },
-  { id: 2, title: "Oceanic Reverie", category: "Metal", year: 2023 },
-  { id: 3, title: "Forest Whispers", category: "Wood", year: 2022 },
-  { id: 4, title: "Urban Symphony", category: "Mixed Media", year: 2022 },
-  { id: 5, title: "Celestial Dance", category: "Stone", year: 2021 },
-  { id: 6, title: "Autumn Reflections", category: "Wood", year: 2021 },
-  { id: 7, title: "Industrial Dreams", category: "Metal", year: 2020 },
-  { id: 8, title: "Harmonic Convergence", category: "Mixed Media", year: 2020 },
-  { id: 9, title: "Desert Mirage", category: "Stone", year: 2019 },
+  { id: 1, title: "Lord Ganesha", category: "Hindu Gods", year: 2023 },
+  { id: 2, title: "Meditating Buddha", category: "Buddha", year: 2023 },
+  { id: 3, title: "Temple Doorway", category: "Temple", year: 2022 },
+  { id: 4, title: "Goddess Lakshmi", category: "Hindu Gods", year: 2022 },
+  { id: 5, title: "Lord Shiva", category: "Hindu Gods", year: 2021 },
+  { id: 6, title: "Zen Garden Buddha", category: "Buddha", year: 2021 },
+  { id: 7, title: "Custom Family Sculpture", category: "Custom", year: 2020 },
+  { id: 8, title: "Temple Arch", category: "Temple", year: 2020 },
+  { id: 9, title: "Saraswati Idol", category: "Hindu Gods", year: 2019 },
 ];
 
-const categories = ["All", "Stone", "Metal", "Wood", "Mixed Media"];
+const categories = ["All", "Hindu Gods", "Buddha", "Temple", "Custom"];
 
 const Works: React.FC = () => {
   const [selectedCategory, setSelectedCategory] = useState("All");
@@ -51,7 +51,7 @@ const Works: React.FC = () => {
                   onClick={() => setSelectedCategory(category)}
                   className={`px-4 py-2 rounded-full transition-colors duration-300 ${
                     selectedCategory === category
-                      ? 'bg-sculpture-peach text-foreground'
+                      ? 'bg-sculpture-pink text-foreground'
                       : 'bg-gray-100 hover:bg-sculpture-blue hover:bg-opacity-30'
                   }`}
                 >

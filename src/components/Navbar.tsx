@@ -18,21 +18,21 @@ const Navbar: React.FC = () => {
     <nav className="bg-sculpture-cream bg-opacity-90 backdrop-blur-sm fixed w-full z-50">
       <div className="container mx-auto px-4 py-4 flex justify-between items-center">
         <Link to="/" className="font-serif text-2xl md:text-3xl font-bold">
-          Sculpt<span className="text-sculpture-peach">Studio</span>
+          Abinash<span className="text-sculpture-pink">Sculptures</span>
         </Link>
 
         {/* Desktop menu */}
         <div className="hidden md:flex space-x-8">
-          <Link to="/" className="font-medium hover:text-sculpture-peach transition-colors duration-300">
+          <Link to="/" className="font-medium hover:text-sculpture-pink transition-colors duration-300">
             Home
           </Link>
-          <Link to="/about" className="font-medium hover:text-sculpture-peach transition-colors duration-300">
+          <Link to="/about" className="font-medium hover:text-sculpture-pink transition-colors duration-300">
             About
           </Link>
-          <Link to="/services" className="font-medium hover:text-sculpture-peach transition-colors duration-300">
+          <Link to="/services" className="font-medium hover:text-sculpture-pink transition-colors duration-300">
             Services
           </Link>
-          <Link to="/works" className="font-medium hover:text-sculpture-peach transition-colors duration-300">
+          <Link to="/works" className="font-medium hover:text-sculpture-pink transition-colors duration-300">
             Works
           </Link>
           <Link to="/book" className="btn-primary">
