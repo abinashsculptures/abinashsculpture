@@ -1,24 +1,18 @@
-
 import React, { useState } from 'react';
 import { Link } from 'react-router-dom';
 import { Menu, X } from 'lucide-react';
-
 const Navbar: React.FC = () => {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
-
   const toggleMenu = () => {
     setIsMenuOpen(!isMenuOpen);
   };
-
   const closeMenu = () => {
     setIsMenuOpen(false);
   };
-
-  return (
-    <nav className="bg-sculpture-cream bg-opacity-90 backdrop-blur-sm fixed w-full z-50">
+  return <nav className="bg-sculpture-cream bg-opacity-90 backdrop-blur-sm fixed w-full z-50">
       <div className="container mx-auto px-4 py-4 flex justify-between items-center">
         <Link to="/" className="font-serif text-2xl md:text-3xl font-bold">
-          Abinash<span className="text-sculpture-pink">Sculptures</span>
+          Abinash<span className="text-sculpture-pink">Sculpturess</span>
         </Link>
 
         {/* Desktop menu */}
@@ -47,8 +41,7 @@ const Navbar: React.FC = () => {
       </div>
 
       {/* Mobile menu */}
-      {isMenuOpen && (
-        <div className="md:hidden bg-white absolute w-full animate-fade-in">
+      {isMenuOpen && <div className="md:hidden bg-white absolute w-full animate-fade-in">
           <div className="container mx-auto px-4 py-4 flex flex-col space-y-4">
             <Link to="/" className="font-medium py-2" onClick={closeMenu}>
               Home
@@ -66,10 +59,7 @@ const Navbar: React.FC = () => {
               Book an Order
             </Link>
           </div>
-        </div>
-      )}
-    </nav>
-  );
+        </div>}
+    </nav>;
 };
-
 export default Navbar;
