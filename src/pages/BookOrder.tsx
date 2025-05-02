@@ -11,9 +11,9 @@ const BookOrder: React.FC = () => {
     name: '',
     email: '',
     phone: '',
-    serviceType: 'custom',
-    budget: '',
-    timeline: '',
+    serviceType: 'hindu-gods',
+    statueName: '',
+    sculptureSize: '',
     description: ''
   });
   const [isSubmitting, setIsSubmitting] = useState(false);
@@ -39,8 +39,8 @@ const BookOrder: React.FC = () => {
           email: formData.email,
           phone: formData.phone,
           service_type: formData.serviceType,
-          budget: formData.budget,
-          timeline: formData.timeline,
+          budget: formData.sculptureSize, // Using existing budget field for sculptureSize
+          timeline: formData.statueName, // Using existing timeline field for statueName
           description: formData.description
         });
       
@@ -65,9 +65,9 @@ const BookOrder: React.FC = () => {
         name: '',
         email: '',
         phone: '',
-        serviceType: 'custom',
-        budget: '',
-        timeline: '',
+        serviceType: 'hindu-gods',
+        statueName: '',
+        sculptureSize: '',
         description: ''
       });
     } catch (err) {
@@ -166,41 +166,42 @@ const BookOrder: React.FC = () => {
                         required
                         disabled={isSubmitting}
                       >
-                        <option value="custom">Custom Sculpture</option>
-                        <option value="restoration">Restoration</option>
-                        <option value="workshop">Workshop Booking</option>
-                        <option value="consultation">Art Consultation</option>
+                        <option value="hindu-gods">Hindu Gods</option>
+                        <option value="buddhas">Buddhas</option>
+                        <option value="stone-temples">Stone Temples</option>
                       </select>
                     </div>
 
                     <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
                       <div>
-                        <label htmlFor="budget" className="block text-sm font-medium mb-1">
-                          Budget Range
+                        <label htmlFor="statueName" className="block text-sm font-medium mb-1">
+                          Name of the Statue *
                         </label>
                         <input
                           type="text"
-                          id="budget"
-                          name="budget"
-                          value={formData.budget}
+                          id="statueName"
+                          name="statueName"
+                          value={formData.statueName}
                           onChange={handleChange}
-                          placeholder="e.g., $1,000-$5,000"
+                          placeholder="e.g., Lord Krishna, Buddha"
                           className="w-full px-4 py-2 border rounded-md focus:ring-2 focus:ring-sculpture-peach focus:border-transparent"
+                          required
                           disabled={isSubmitting}
                         />
                       </div>
                       <div>
-                        <label htmlFor="timeline" className="block text-sm font-medium mb-1">
-                          Desired Timeline
+                        <label htmlFor="sculptureSize" className="block text-sm font-medium mb-1">
+                          Size of the Sculpture *
                         </label>
                         <input
                           type="text"
-                          id="timeline"
-                          name="timeline"
-                          value={formData.timeline}
+                          id="sculptureSize"
+                          name="sculptureSize"
+                          value={formData.sculptureSize}
                           onChange={handleChange}
-                          placeholder="e.g., 3 months"
+                          placeholder="e.g., 2ft x 1ft"
                           className="w-full px-4 py-2 border rounded-md focus:ring-2 focus:ring-sculpture-peach focus:border-transparent"
+                          required
                           disabled={isSubmitting}
                         />
                       </div>

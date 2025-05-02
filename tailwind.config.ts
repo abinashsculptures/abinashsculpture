@@ -70,6 +70,8 @@ export default {
 					gray: "#F5E1F0",
 					pink: "#FFB6C1",
 					darkpink: "#FF69B4",
+					stone: "#E0E0DC", // Added for stone temple references
+					sandstone: "#C2B280", // Added for stone references
 				},
 				amber: {
 					50: '#fffbeb',

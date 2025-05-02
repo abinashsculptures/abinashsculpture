@@ -45,20 +45,20 @@ const Index: React.FC = () => {
                     className="w-full h-auto rounded-lg mb-4"
                   />
                   <img 
-                    src="/lovable-uploads/87f797e2-3d15-4e6c-857c-ee05dee9daf4.png" 
-                    alt="Lord Murugan Sculpture" 
+                    src="/lovable-uploads/4dd77698-dfcc-4125-a47d-10367a11c0e1.png" 
+                    alt="Lord Krishna Sculpture" 
                     className="w-full h-auto rounded-lg"
                   />
                 </div>
                 <div className="pt-12">
                   <img 
-                    src="/lovable-uploads/636bb5a8-10fc-4b88-b8ea-bb07337d922e.png" 
+                    src="/lovable-uploads/4dd77698-dfcc-4125-a47d-10367a11c0e1.png" 
                     alt="Lord Krishna Sculpture" 
                     className="w-full h-auto rounded-lg mb-4"
                   />
                   <img 
-                    src="/lovable-uploads/fcbef6d2-2918-4e70-8608-d0871c7d9a4f.png" 
-                    alt="Temple Doorway" 
+                    src="/lovable-uploads/0cafab96-a8a1-4bda-ab13-3fc042ddfef3.png" 
+                    alt="Stone Temple" 
                     className="w-full h-auto rounded-lg"
                   />
                 </div>
@@ -78,8 +78,8 @@ const Index: React.FC = () => {
                   className="w-full h-auto rounded-lg"
                 />
                 <img 
-                  src="/lovable-uploads/966a3bb0-7519-4427-a96f-50d82f1d3f73.png" 
-                  alt="Buddha Sculpture" 
+                  src="/lovable-uploads/4dd77698-dfcc-4125-a47d-10367a11c0e1.png" 
+                  alt="Lord Krishna Sculpture" 
                   className="w-full h-auto rounded-lg mt-12"
                 />
               </div>
@@ -171,7 +171,7 @@ const Index: React.FC = () => {
               </div>
               <div className="bg-white p-4 rounded-lg text-center hover-scale">
                 <img 
-                  src="/lovable-uploads/fcbef6d2-2918-4e70-8608-d0871c7d9a4f.png" 
+                  src="/lovable-uploads/0cafab96-a8a1-4bda-ab13-3fc042ddfef3.png" 
                   alt="Stone Temples" 
                   className="w-full h-48 object-cover rounded-lg mb-4"
                 />
@@ -179,11 +179,11 @@ const Index: React.FC = () => {
               </div>
               <div className="bg-white p-4 rounded-lg text-center hover-scale">
                 <img 
-                  src="/lovable-uploads/daeca681-c10c-447f-8787-e6a09e09577f.png" 
-                  alt="Handcrafts" 
+                  src="/lovable-uploads/4dd77698-dfcc-4125-a47d-10367a11c0e1.png" 
+                  alt="Lord Krishna" 
                   className="w-full h-48 object-cover rounded-lg mb-4"
                 />
-                <h3 className="font-medium">Handcrafts</h3>
+                <h3 className="font-medium">Lord Krishna</h3>
               </div>
             </div>
           </div>
@@ -216,7 +216,7 @@ const Index: React.FC = () => {
                   className="w-full h-64 object-cover"
                 />
                 <div className="absolute bottom-0 left-0 right-0 bg-white bg-opacity-90 p-2 text-center">
-                  <h4 className="font-medium">Auspicious</h4>
+                  <h4 className="font-medium">Ganesha</h4>
                 </div>
               </div>
               <div className="relative group overflow-hidden rounded-lg">
@@ -226,17 +226,17 @@ const Index: React.FC = () => {
                   className="w-full h-64 object-cover"
                 />
                 <div className="absolute bottom-0 left-0 right-0 bg-white bg-opacity-90 p-2 text-center">
-                  <h4 className="font-medium">Vintage</h4>
+                  <h4 className="font-medium">Traditional Devi</h4>
                 </div>
               </div>
               <div className="relative group overflow-hidden rounded-lg">
                 <img 
-                  src="/lovable-uploads/87f797e2-3d15-4e6c-857c-ee05dee9daf4.png" 
-                  alt="Lord Murugan" 
+                  src="/lovable-uploads/4dd77698-dfcc-4125-a47d-10367a11c0e1.png" 
+                  alt="Lord Krishna" 
                   className="w-full h-64 object-cover"
                 />
                 <div className="absolute bottom-0 left-0 right-0 bg-white bg-opacity-90 p-2 text-center">
-                  <h4 className="font-medium">Nature</h4>
+                  <h4 className="font-medium">Lord Krishna</h4>
                 </div>
               </div>
               <div className="relative group overflow-hidden rounded-lg">
@@ -246,37 +246,37 @@ const Index: React.FC = () => {
                   className="w-full h-64 object-cover"
                 />
                 <div className="absolute bottom-0 left-0 right-0 bg-white bg-opacity-90 p-2 text-center">
-                  <h4 className="font-medium">Rustic</h4>
+                  <h4 className="font-medium">Divine Couple</h4>
                 </div>
               </div>
               <div className="relative group overflow-hidden rounded-lg">
                 <img 
-                  src="/lovable-uploads/daeca681-c10c-447f-8787-e6a09e09577f.png" 
-                  alt="Standing Warrior" 
-                  className="w-full h-64 object-cover"
-                />
-                <div className="absolute bottom-0 left-0 right-0 bg-white bg-opacity-90 p-2 text-center">
-                  <h4 className="font-medium">Modern</h4>
-                </div>
-              </div>
-              <div className="relative group overflow-hidden rounded-lg">
-                <img 
-                  src="/lovable-uploads/fcbef6d2-2918-4e70-8608-d0871c7d9a4f.png" 
-                  alt="Temple Doorway" 
-                  className="w-full h-64 object-cover"
-                />
-                <div className="absolute bottom-0 left-0 right-0 bg-white bg-opacity-90 p-2 text-center">
-                  <h4 className="font-medium">Temple</h4>
-                </div>
-              </div>
-              <div className="relative group overflow-hidden rounded-lg">
-                <img 
-                  src="/lovable-uploads/636bb5a8-10fc-4b88-b8ea-bb07337d922e.png" 
+                  src="/lovable-uploads/4dd77698-dfcc-4125-a47d-10367a11c0e1.png" 
                   alt="Lord Krishna" 
                   className="w-full h-64 object-cover"
                 />
                 <div className="absolute bottom-0 left-0 right-0 bg-white bg-opacity-90 p-2 text-center">
-                  <h4 className="font-medium">Vintage</h4>
+                  <h4 className="font-medium">Krishna</h4>
+                </div>
+              </div>
+              <div className="relative group overflow-hidden rounded-lg">
+                <img 
+                  src="/lovable-uploads/0cafab96-a8a1-4bda-ab13-3fc042ddfef3.png" 
+                  alt="Stone Temple" 
+                  className="w-full h-64 object-cover"
+                />
+                <div className="absolute bottom-0 left-0 right-0 bg-white bg-opacity-90 p-2 text-center">
+                  <h4 className="font-medium">Stone Temple</h4>
+                </div>
+              </div>
+              <div className="relative group overflow-hidden rounded-lg">
+                <img 
+                  src="/lovable-uploads/4dd77698-dfcc-4125-a47d-10367a11c0e1.png" 
+                  alt="Lord Krishna" 
+                  className="w-full h-64 object-cover"
+                />
+                <div className="absolute bottom-0 left-0 right-0 bg-white bg-opacity-90 p-2 text-center">
+                  <h4 className="font-medium">Krishna Statue</h4>
                 </div>
               </div>
             </div>
@@ -307,7 +307,7 @@ const Index: React.FC = () => {
                           </div>
                           <div className="bg-amber-500 text-white p-6 rounded-lg">
                             <p className="italic">
-                              "The attention to detail in the Hindu deity sculptures exceeded all our expectations. The devotion and craftsmanship put into each piece is remarkable."
+                              "The attention to detail in the Hindu deity sculptures, especially Lord Krishna, exceeded all our expectations. The devotion and craftsmanship put into each piece is remarkable."
                             </p>
                           </div>
                         </div>
@@ -330,7 +330,7 @@ const Index: React.FC = () => {
                           </div>
                           <div className="bg-amber-500 text-white p-6 rounded-lg">
                             <p className="italic">
-                              "Working with Abinash Sculptures was a delight. They transformed my concept into a stunning Buddha sculpture that perfectly complements my meditation space."
+                              "Working with our studio was a delight. They transformed my concept into a stunning Krishna sculpture that perfectly complements my devotional space."
                             </p>
                           </div>
                         </div>
