@@ -3,6 +3,7 @@ import React, { useState } from 'react';
 import { useToast } from '@/hooks/use-toast';
 import Navbar from '../components/Navbar';
 import Footer from '../components/Footer';
+import { supabase } from '@/integrations/supabase/client';
 
 const BookOrder: React.FC = () => {
   const { toast } = useToast();
@@ -15,6 +16,7 @@ const BookOrder: React.FC = () => {
     timeline: '',
     description: ''
   });
+  const [isSubmitting, setIsSubmitting] = useState(false);
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement | HTMLSelectElement>) => {
     const { name, value } = e.target;
@@ -24,28 +26,60 @@ const BookOrder: React.FC = () => {
     }));
   };
 
-  const handleSubmit = (e: React.FormEvent) => {
+  const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
+    setIsSubmitting(true);
     
-    // Here you would typically send the data to a server
-    console.log('Form submitted:', formData);
-    
-    // Show success message
-    toast({
-      title: "Request Submitted Successfully!",
-      description: "We'll contact you within 24 hours to discuss your project.",
-    });
-    
-    // Reset form
-    setFormData({
-      name: '',
-      email: '',
-      phone: '',
-      serviceType: 'custom',
-      budget: '',
-      timeline: '',
-      description: ''
-    });
+    try {
+      // Insert the form data into the Supabase table
+      const { error } = await supabase
+        .from('order_requests')
+        .insert({
+          name: formData.name,
+          email: formData.email,
+          phone: formData.phone,
+          service_type: formData.serviceType,
+          budget: formData.budget,
+          timeline: formData.timeline,
+          description: formData.description
+        });
+      
+      if (error) {
+        console.error('Error submitting form:', error);
+        toast({
+          title: "Something went wrong",
+          description: "Your request couldn't be submitted. Please try again.",
+          variant: "destructive"
+        });
+        return;
+      }
+      
+      // Show success message
+      toast({
+        title: "Request Submitted Successfully!",
+        description: "We'll contact you within 24 hours to discuss your project.",
+      });
+      
+      // Reset form
+      setFormData({
+        name: '',
+        email: '',
+        phone: '',
+        serviceType: 'custom',
+        budget: '',
+        timeline: '',
+        description: ''
+      });
+    } catch (err) {
+      console.error('Unexpected error:', err);
+      toast({
+        title: "Submission Error",
+        description: "An unexpected error occurred. Please try again.",
+        variant: "destructive"
+      });
+    } finally {
+      setIsSubmitting(false);
+    }
   };
 
   return (
@@ -83,6 +117,7 @@ const BookOrder: React.FC = () => {
                         onChange={handleChange}
                         className="w-full px-4 py-2 border rounded-md focus:ring-2 focus:ring-sculpture-peach focus:border-transparent"
                         required
+                        disabled={isSubmitting}
                       />
                     </div>
 
@@ -99,6 +134,7 @@ const BookOrder: React.FC = () => {
                           onChange={handleChange}
                           className="w-full px-4 py-2 border rounded-md focus:ring-2 focus:ring-sculpture-peach focus:border-transparent"
                           required
+                          disabled={isSubmitting}
                         />
                       </div>
                       <div>
@@ -112,6 +148,7 @@ const BookOrder: React.FC = () => {
                           value={formData.phone}
                           onChange={handleChange}
                           className="w-full px-4 py-2 border rounded-md focus:ring-2 focus:ring-sculpture-peach focus:border-transparent"
+                          disabled={isSubmitting}
                         />
                       </div>
                     </div>
@@ -127,6 +164,7 @@ const BookOrder: React.FC = () => {
                         onChange={handleChange}
                         className="w-full px-4 py-2 border rounded-md focus:ring-2 focus:ring-sculpture-peach focus:border-transparent"
                         required
+                        disabled={isSubmitting}
                       >
                         <option value="custom">Custom Sculpture</option>
                         <option value="restoration">Restoration</option>
@@ -148,6 +186,7 @@ const BookOrder: React.FC = () => {
                           onChange={handleChange}
                           placeholder="e.g., $1,000-$5,000"
                           className="w-full px-4 py-2 border rounded-md focus:ring-2 focus:ring-sculpture-peach focus:border-transparent"
+                          disabled={isSubmitting}
                         />
                       </div>
                       <div>
@@ -162,6 +201,7 @@ const BookOrder: React.FC = () => {
                           onChange={handleChange}
                           placeholder="e.g., 3 months"
                           className="w-full px-4 py-2 border rounded-md focus:ring-2 focus:ring-sculpture-peach focus:border-transparent"
+                          disabled={isSubmitting}
                         />
                       </div>
                     </div>
@@ -178,12 +218,17 @@ const BookOrder: React.FC = () => {
                         rows={5}
                         className="w-full px-4 py-2 border rounded-md focus:ring-2 focus:ring-sculpture-peach focus:border-transparent"
                         required
+                        disabled={isSubmitting}
                       ></textarea>
                     </div>
 
                     <div className="text-center pt-4">
-                      <button type="submit" className="btn-primary w-full md:w-auto md:px-10">
-                        Submit Request
+                      <button 
+                        type="submit" 
+                        className="btn-primary w-full md:w-auto md:px-10"
+                        disabled={isSubmitting}
+                      >
+                        {isSubmitting ? 'Submitting...' : 'Submit Request'}
                       </button>
                     </div>
                   </div>
