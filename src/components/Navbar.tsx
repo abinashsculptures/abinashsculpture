@@ -12,7 +12,7 @@ const Navbar: React.FC = () => {
   return <nav className="bg-sculpture-cream bg-opacity-90 backdrop-blur-sm fixed w-full z-50">
       <div className="container mx-auto px-4 py-4 flex justify-between items-center">
         <Link to="/" className="font-serif text-2xl md:text-3xl font-bold">
-          Abinash<span className="text-sculpture-pink">Sculpturess</span>
+          Abinash<span className="text-sculpture-pink">Sculptures</span>
         </Link>
 
         {/* Desktop menu */}
