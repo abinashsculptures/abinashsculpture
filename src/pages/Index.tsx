@@ -3,18 +3,10 @@ import { Link } from 'react-router-dom';
 import Navbar from '../components/Navbar';
 import Footer from '../components/Footer';
 import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar';
-import {
-  Carousel,
-  CarouselContent,
-  CarouselItem,
-  CarouselNext,
-  CarouselPrevious,
-} from "@/components/ui/carousel";
+import { Carousel, CarouselContent, CarouselItem, CarouselNext, CarouselPrevious } from "@/components/ui/carousel";
 import { Card, CardContent } from "@/components/ui/card";
-
 const Index: React.FC = () => {
-  return (
-    <>
+  return <>
       <Navbar />
       <main className="bg-sculpture-cream">
         {/* Hero Section - Updated Layout with New Images */}
@@ -41,18 +33,10 @@ const Index: React.FC = () => {
               {/* Right side with new images */}
               <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
                 <div className="bg-white p-3 rounded-lg shadow-lg">
-                  <img 
-                    src="/lovable-uploads/636bb5a8-10fc-4b88-b8ea-bb07337d922e.png" 
-                    alt="Sculpture" 
-                    className="w-full h-full object-cover rounded-lg"
-                  />
+                  <img src="/lovable-uploads/636bb5a8-10fc-4b88-b8ea-bb07337d922e.png" alt="Sculpture" className="w-full h-full object-cover rounded-lg" />
                 </div>
                 <div className="bg-white p-3 rounded-lg shadow-lg md:mt-12">
-                  <img 
-                    src="/lovable-uploads/fcbef6d2-2918-4e70-8608-d0871c7d9a4f.png" 
-                    alt="Sculpture" 
-                    className="w-full h-full object-cover rounded-lg"
-                  />
+                  <img src="/lovable-uploads/fcbef6d2-2918-4e70-8608-d0871c7d9a4f.png" alt="Sculpture" className="w-full h-full object-cover rounded-lg" />
                 </div>
               </div>
             </div>
@@ -71,11 +55,7 @@ const Index: React.FC = () => {
             <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-8">
               <div className="card hover-scale overflow-hidden">
                 <div className="h-64 overflow-hidden">
-                  <img 
-                    src="/lovable-uploads/4dd77698-dfcc-4125-a47d-10367a11c0e1.png" 
-                    alt="Lord Krishna" 
-                    className="w-full h-full object-cover"
-                  />
+                  <img src="/lovable-uploads/4dd77698-dfcc-4125-a47d-10367a11c0e1.png" alt="Lord Krishna" className="w-full h-full object-cover" />
                 </div>
                 <div className="p-6">
                   <h3 className="text-xl font-semibold mb-2">Lord Krishna</h3>
@@ -85,11 +65,7 @@ const Index: React.FC = () => {
               </div>
               <div className="card hover-scale overflow-hidden">
                 <div className="h-64 overflow-hidden">
-                  <img 
-                    src="/lovable-uploads/966a3bb0-7519-4427-a96f-50d82f1d3f73.png" 
-                    alt="Buddha" 
-                    className="w-full h-full object-cover"
-                  />
+                  <img src="/lovable-uploads/966a3bb0-7519-4427-a96f-50d82f1d3f73.png" alt="Buddha" className="w-full h-full object-cover" />
                 </div>
                 <div className="p-6">
                   <h3 className="text-xl font-semibold mb-2">Buddha Statues</h3>
@@ -99,11 +75,7 @@ const Index: React.FC = () => {
               </div>
               <div className="card hover-scale overflow-hidden">
                 <div className="h-64 overflow-hidden">
-                  <img 
-                    src="/lovable-uploads/0cafab96-a8a1-4bda-ab13-3fc042ddfef3.png" 
-                    alt="Stone Temple" 
-                    className="w-full h-full object-cover"
-                  />
+                  <img src="/lovable-uploads/0cafab96-a8a1-4bda-ab13-3fc042ddfef3.png" alt="Stone Temple" className="w-full h-full object-cover" />
                 </div>
                 <div className="p-6">
                   <h3 className="text-xl font-semibold mb-2">Stone Temples</h3>
@@ -125,16 +97,8 @@ const Index: React.FC = () => {
           <div className="container mx-auto px-4">
             <div className="grid grid-cols-1 md:grid-cols-2 gap-12 items-center">
               <div className="grid grid-cols-2 gap-4">
-                <img 
-                  src="/lovable-uploads/f75bff38-a7f3-4c58-a95b-dca223dc1b03.png" 
-                  alt="Ganesha Sculpture" 
-                  className="w-full h-auto rounded-lg"
-                />
-                <img 
-                  src="/lovable-uploads/4dd77698-dfcc-4125-a47d-10367a11c0e1.png" 
-                  alt="Lord Krishna Sculpture" 
-                  className="w-full h-auto rounded-lg mt-12"
-                />
+                <img src="/lovable-uploads/f75bff38-a7f3-4c58-a95b-dca223dc1b03.png" alt="Ganesha Sculpture" className="w-full h-auto rounded-lg" />
+                <img src="/lovable-uploads/4dd77698-dfcc-4125-a47d-10367a11c0e1.png" alt="Lord Krishna Sculpture" className="w-full h-auto rounded-lg mt-12" />
               </div>
               <div className="space-y-6">
                 <div className="text-sculpture-darkpink font-semibold">ABOUT US</div>
@@ -207,35 +171,19 @@ const Index: React.FC = () => {
             </h2>
             <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 gap-6">
               <div className="bg-white p-4 rounded-lg text-center hover-scale">
-                <img 
-                  src="/lovable-uploads/f75bff38-a7f3-4c58-a95b-dca223dc1b03.png" 
-                  alt="Hindu Gods" 
-                  className="w-full h-48 object-cover rounded-lg mb-4"
-                />
+                <img src="/lovable-uploads/f75bff38-a7f3-4c58-a95b-dca223dc1b03.png" alt="Hindu Gods" className="w-full h-48 object-cover rounded-lg mb-4" />
                 <h3 className="font-medium">Hindu Gods</h3>
               </div>
               <div className="bg-white p-4 rounded-lg text-center hover-scale">
-                <img 
-                  src="/lovable-uploads/966a3bb0-7519-4427-a96f-50d82f1d3f73.png" 
-                  alt="Buddhas" 
-                  className="w-full h-48 object-cover rounded-lg mb-4"
-                />
+                <img src="/lovable-uploads/966a3bb0-7519-4427-a96f-50d82f1d3f73.png" alt="Buddhas" className="w-full h-48 object-cover rounded-lg mb-4" />
                 <h3 className="font-medium">Buddhas</h3>
               </div>
               <div className="bg-white p-4 rounded-lg text-center hover-scale">
-                <img 
-                  src="/lovable-uploads/0cafab96-a8a1-4bda-ab13-3fc042ddfef3.png" 
-                  alt="Stone Temples" 
-                  className="w-full h-48 object-cover rounded-lg mb-4"
-                />
+                <img src="/lovable-uploads/0cafab96-a8a1-4bda-ab13-3fc042ddfef3.png" alt="Stone Temples" className="w-full h-48 object-cover rounded-lg mb-4" />
                 <h3 className="font-medium">Stone Temples</h3>
               </div>
               <div className="bg-white p-4 rounded-lg text-center hover-scale">
-                <img 
-                  src="/lovable-uploads/4dd77698-dfcc-4125-a47d-10367a11c0e1.png" 
-                  alt="Lord Krishna" 
-                  className="w-full h-48 object-cover rounded-lg mb-4"
-                />
+                <img src="/lovable-uploads/4dd77698-dfcc-4125-a47d-10367a11c0e1.png" alt="Lord Krishna" className="w-full h-48 object-cover rounded-lg mb-4" />
                 <h3 className="font-medium">Lord Krishna</h3>
               </div>
             </div>
@@ -253,81 +201,49 @@ const Index: React.FC = () => {
             </div>
             <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 gap-4">
               <div className="relative group overflow-hidden rounded-lg">
-                <img 
-                  src="/lovable-uploads/966a3bb0-7519-4427-a96f-50d82f1d3f73.png" 
-                  alt="Buddha" 
-                  className="w-full h-64 object-cover"
-                />
+                <img src="/lovable-uploads/966a3bb0-7519-4427-a96f-50d82f1d3f73.png" alt="Buddha" className="w-full h-64 object-cover" />
                 <div className="absolute bottom-0 left-0 right-0 bg-white bg-opacity-90 p-2 text-center">
                   <h4 className="font-medium">Buddha</h4>
                 </div>
               </div>
               <div className="relative group overflow-hidden rounded-lg">
-                <img 
-                  src="/lovable-uploads/f75bff38-a7f3-4c58-a95b-dca223dc1b03.png" 
-                  alt="Ganesha" 
-                  className="w-full h-64 object-cover"
-                />
+                <img src="/lovable-uploads/f75bff38-a7f3-4c58-a95b-dca223dc1b03.png" alt="Ganesha" className="w-full h-64 object-cover" />
                 <div className="absolute bottom-0 left-0 right-0 bg-white bg-opacity-90 p-2 text-center">
                   <h4 className="font-medium">Ganesha</h4>
                 </div>
               </div>
               <div className="relative group overflow-hidden rounded-lg">
-                <img 
-                  src="/lovable-uploads/20755c49-1107-47f4-aad5-daca78334f2b.png" 
-                  alt="Traditional Devi" 
-                  className="w-full h-64 object-cover"
-                />
+                <img src="/lovable-uploads/20755c49-1107-47f4-aad5-daca78334f2b.png" alt="Traditional Devi" className="w-full h-64 object-cover" />
                 <div className="absolute bottom-0 left-0 right-0 bg-white bg-opacity-90 p-2 text-center">
                   <h4 className="font-medium">Traditional Devi</h4>
                 </div>
               </div>
               <div className="relative group overflow-hidden rounded-lg">
-                <img 
-                  src="/lovable-uploads/4dd77698-dfcc-4125-a47d-10367a11c0e1.png" 
-                  alt="Lord Krishna" 
-                  className="w-full h-64 object-cover"
-                />
+                <img src="/lovable-uploads/4dd77698-dfcc-4125-a47d-10367a11c0e1.png" alt="Lord Krishna" className="w-full h-64 object-cover" />
                 <div className="absolute bottom-0 left-0 right-0 bg-white bg-opacity-90 p-2 text-center">
                   <h4 className="font-medium">Lord Krishna</h4>
                 </div>
               </div>
               <div className="relative group overflow-hidden rounded-lg">
-                <img 
-                  src="/lovable-uploads/95eaae5e-d594-4c96-94b2-4c16e3c161be.png" 
-                  alt="Vishnu with Lakshmi" 
-                  className="w-full h-64 object-cover"
-                />
-                <div className="absolute bottom-0 left-0 right-0 bg-white bg-opacity-90 p-2 text-center">
-                  <h4 className="font-medium">Divine Couple</h4>
-                </div>
-              </div>
-              <div className="relative group overflow-hidden rounded-lg">
-                <img 
-                  src="/lovable-uploads/4dd77698-dfcc-4125-a47d-10367a11c0e1.png" 
-                  alt="Lord Krishna" 
-                  className="w-full h-64 object-cover"
-                />
-                <div className="absolute bottom-0 left-0 right-0 bg-white bg-opacity-90 p-2 text-center">
-                  <h4 className="font-medium">Krishna</h4>
-                </div>
-              </div>
-              <div className="relative group overflow-hidden rounded-lg">
-                <img 
-                  src="/lovable-uploads/0cafab96-a8a1-4bda-ab13-3fc042ddfef3.png" 
-                  alt="Stone Temple" 
-                  className="w-full h-64 object-cover"
-                />
+                <img src="/lovable-uploads/95eaae5e-d594-4c96-94b2-4c16e3c161be.png" alt="Vishnu with Lakshmi" className="w-full h-64 object-cover" />
                 <div className="absolute bottom-0 left-0 right-0 bg-white bg-opacity-90 p-2 text-center">
                   <h4 className="font-medium">Stone Temple</h4>
                 </div>
               </div>
               <div className="relative group overflow-hidden rounded-lg">
-                <img 
-                  src="/lovable-uploads/4dd77698-dfcc-4125-a47d-10367a11c0e1.png" 
-                  alt="Lord Krishna" 
-                  className="w-full h-64 object-cover"
-                />
+                <img src="/lovable-uploads/4dd77698-dfcc-4125-a47d-10367a11c0e1.png" alt="Lord Krishna" className="w-full h-64 object-cover" />
+                <div className="absolute bottom-0 left-0 right-0 bg-white bg-opacity-90 p-2 text-center">
+                  <h4 className="font-medium">Krishna</h4>
+                </div>
+              </div>
+              <div className="relative group overflow-hidden rounded-lg">
+                <img src="/lovable-uploads/0cafab96-a8a1-4bda-ab13-3fc042ddfef3.png" alt="Stone Temple" className="w-full h-64 object-cover" />
+                <div className="absolute bottom-0 left-0 right-0 bg-white bg-opacity-90 p-2 text-center">
+                  <h4 className="font-medium">Stone Temple</h4>
+                </div>
+              </div>
+              <div className="relative group overflow-hidden rounded-lg">
+                <img src="/lovable-uploads/4dd77698-dfcc-4125-a47d-10367a11c0e1.png" alt="Lord Krishna" className="w-full h-64 object-cover" />
                 <div className="absolute bottom-0 left-0 right-0 bg-white bg-opacity-90 p-2 text-center">
                   <h4 className="font-medium">Krishna Statue</h4>
                 </div>
@@ -401,8 +317,6 @@ const Index: React.FC = () => {
         </section>
       </main>
       <Footer />
-    </>
-  );
+    </>;
 };
-
 export default Index;
