@@ -1,10 +1,34 @@
 
-import React from 'react';
+import React, { useState } from 'react';
+import { useToast } from '@/hooks/use-toast';
 import Navbar from '../components/Navbar';
 import Footer from '../components/Footer';
 import { Link } from 'react-router-dom';
+import { supabase } from '@/integrations/supabase/client';
+import { Button } from '@/components/ui/button';
+import {
+  Dialog,
+  DialogContent,
+  DialogDescription,
+  DialogHeader,
+  DialogTitle,
+  DialogFooter,
+  DialogClose,
+} from "@/components/ui/dialog";
+import { Input } from "@/components/ui/input";
+import { Label } from "@/components/ui/label";
 
 const Products: React.FC = () => {
+  const { toast } = useToast();
+  const [isDialogOpen, setIsDialogOpen] = useState(false);
+  const [selectedProduct, setSelectedProduct] = useState<any>(null);
+  const [orderForm, setOrderForm] = useState({
+    name: '',
+    email: '',
+    phone: ''
+  });
+  const [isSubmitting, setIsSubmitting] = useState(false);
+
   const productCategories = [
     {
       id: 1,
@@ -44,6 +68,73 @@ const Products: React.FC = () => {
     }
   ];
 
+  const handleOrderClick = (product: any) => {
+    setSelectedProduct(product);
+    setIsDialogOpen(true);
+  };
+
+  const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const { name, value } = e.target;
+    setOrderForm(prev => ({
+      ...prev,
+      [name]: value
+    }));
+  };
+
+  const handleSubmitOrder = async (e: React.FormEvent) => {
+    e.preventDefault();
+    setIsSubmitting(true);
+    
+    try {
+      // Insert the order into Supabase
+      const { error } = await supabase
+        .from('whatsapp_orders')
+        .insert({
+          customer_name: orderForm.name,
+          customer_email: orderForm.email,
+          customer_phone: orderForm.phone,
+          product_id: null, // We don't have real product IDs yet
+        });
+      
+      if (error) {
+        throw error;
+      }
+      
+      // Construct WhatsApp URL with pre-filled message
+      const whatsappNumber = "7305971450";
+      const message = encodeURIComponent(
+        `Hello, I'm interested in ordering the ${selectedProduct.title}. My name is ${orderForm.name}. Please contact me to discuss the details.`
+      );
+      const whatsappUrl = `https://wa.me/${whatsappNumber}?text=${message}`;
+      
+      // Open WhatsApp in a new tab
+      window.open(whatsappUrl, '_blank');
+      
+      // Show success message
+      toast({
+        title: "Order Request Sent!",
+        description: "Your order has been submitted. You're being redirected to WhatsApp to complete your order.",
+      });
+      
+      // Reset form and close dialog
+      setOrderForm({
+        name: '',
+        email: '',
+        phone: ''
+      });
+      setIsDialogOpen(false);
+    } catch (err) {
+      console.error('Error submitting order:', err);
+      toast({
+        title: "Error",
+        description: "There was a problem submitting your order. Please try again.",
+        variant: "destructive"
+      });
+    } finally {
+      setIsSubmitting(false);
+    }
+  };
+
   return (
     <>
       <Navbar />
@@ -77,9 +168,17 @@ const Products: React.FC = () => {
                   <div className="p-6">
                     <h3 className="text-xl font-semibold mb-2">{category.title}</h3>
                     <p className="text-muted-foreground mb-4">{category.description}</p>
-                    <Link to="/book" className="text-amber-500 font-medium hover:text-amber-600 transition-colors">
-                      Enquire Now →
-                    </Link>
+                    <div className="flex justify-between items-center">
+                      <Link to="/book" className="text-amber-500 font-medium hover:text-amber-600 transition-colors">
+                        Enquire Now
+                      </Link>
+                      <Button 
+                        onClick={() => handleOrderClick(category)}
+                        className="bg-green-600 hover:bg-green-700"
+                      >
+                        Order via WhatsApp
+                      </Button>
+                    </div>
                   </div>
                 </div>
               ))}
@@ -102,6 +201,71 @@ const Products: React.FC = () => {
             </div>
           </div>
         </section>
+
+        {/* WhatsApp Order Dialog */}
+        <Dialog open={isDialogOpen} onOpenChange={setIsDialogOpen}>
+          <DialogContent className="sm:max-w-md">
+            <DialogHeader>
+              <DialogTitle>Order via WhatsApp</DialogTitle>
+              <DialogDescription>
+                Fill in your details below to place an order for {selectedProduct?.title} via WhatsApp.
+              </DialogDescription>
+            </DialogHeader>
+            <form onSubmit={handleSubmitOrder}>
+              <div className="grid gap-4 py-4">
+                <div className="grid grid-cols-4 items-center gap-4">
+                  <Label htmlFor="name" className="text-right">
+                    Name
+                  </Label>
+                  <Input
+                    id="name"
+                    name="name"
+                    value={orderForm.name}
+                    onChange={handleInputChange}
+                    className="col-span-3"
+                    required
+                  />
+                </div>
+                <div className="grid grid-cols-4 items-center gap-4">
+                  <Label htmlFor="email" className="text-right">
+                    Email
+                  </Label>
+                  <Input
+                    id="email"
+                    name="email"
+                    type="email"
+                    value={orderForm.email}
+                    onChange={handleInputChange}
+                    className="col-span-3"
+                  />
+                </div>
+                <div className="grid grid-cols-4 items-center gap-4">
+                  <Label htmlFor="phone" className="text-right">
+                    Phone
+                  </Label>
+                  <Input
+                    id="phone"
+                    name="phone"
+                    value={orderForm.phone}
+                    onChange={handleInputChange}
+                    className="col-span-3"
+                    required
+                  />
+                </div>
+              </div>
+              <DialogFooter>
+                <DialogClose asChild>
+                  <Button type="button" variant="outline">
+                    Cancel
+                  </Button>
+                </DialogClose>
+                <Button type="submit" disabled={isSubmitting}>
+                  {isSubmitting ? 'Processing...' : 'Continue to WhatsApp'}
+                </Button>
+              </DialogFooter>
+            </form>
+          </DialogContent>
+        </Dialog>
       </main>
       <Footer />
     </>

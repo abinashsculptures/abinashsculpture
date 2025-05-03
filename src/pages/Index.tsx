@@ -1,4 +1,3 @@
-
 import React from 'react';
 import { Link } from 'react-router-dom';
 import Navbar from '../components/Navbar';
@@ -18,7 +17,7 @@ const Index: React.FC = () => {
     <>
       <Navbar />
       <main className="bg-sculpture-cream">
-        {/* Hero Section - Updated Layout */}
+        {/* Hero Section - Updated Layout with New Images */}
         <section className="pt-32 pb-16 md:py-24 lg:min-h-[90vh] flex items-center">
           <div className="container mx-auto px-4">
             <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 lg:gap-12 items-center">
@@ -39,44 +38,21 @@ const Index: React.FC = () => {
                 </div>
               </div>
               
-              {/* Right side image grid */}
-              <div className="relative">
-                <div className="grid grid-cols-12 grid-rows-6 gap-3 h-[550px]">
-                  {/* Large center image */}
-                  <div className="col-span-6 col-start-1 row-span-6 row-start-1 bg-white p-2 rounded-md shadow-lg">
-                    <img 
-                      src="/lovable-uploads/4118af4e-c46f-4446-b8b3-1f44ce01c5af.png" 
-                      alt="Temple Deity" 
-                      className="w-full h-full object-cover rounded"
-                    />
-                  </div>
-                  
-                  {/* Top right image */}
-                  <div className="col-span-5 col-start-8 row-span-3 row-start-1 bg-white p-2 rounded-md shadow-lg">
-                    <img 
-                      src="/lovable-uploads/4dd77698-dfcc-4125-a47d-10367a11c0e1.png" 
-                      alt="Lord Krishna Sculpture" 
-                      className="w-full h-full object-cover rounded"
-                    />
-                  </div>
-                  
-                  {/* Middle right image */}
-                  <div className="col-span-5 col-start-8 row-span-3 row-start-4 bg-white p-2 rounded-md shadow-lg">
-                    <img 
-                      src="/lovable-uploads/966a3bb0-7519-4427-a96f-50d82f1d3f73.png" 
-                      alt="Buddha Sculpture" 
-                      className="w-full h-full object-cover rounded"
-                    />
-                  </div>
-                  
-                  {/* Bottom large image */}
-                  <div className="col-span-6 col-start-1 row-span-3 row-start-7 mt-4 bg-white p-2 rounded-md shadow-lg">
-                    <img 
-                      src="/lovable-uploads/0cafab96-a8a1-4bda-ab13-3fc042ddfef3.png" 
-                      alt="Stone Temple" 
-                      className="w-full h-full object-cover rounded"
-                    />
-                  </div>
+              {/* Right side with new images */}
+              <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+                <div className="bg-white p-3 rounded-lg shadow-lg">
+                  <img 
+                    src="/lovable-uploads/636bb5a8-10fc-4b88-b8ea-bb07337d922e.png" 
+                    alt="Sculpture" 
+                    className="w-full h-full object-cover rounded-lg"
+                  />
+                </div>
+                <div className="bg-white p-3 rounded-lg shadow-lg md:mt-12">
+                  <img 
+                    src="/lovable-uploads/fcbef6d2-2918-4e70-8608-d0871c7d9a4f.png" 
+                    alt="Sculpture" 
+                    className="w-full h-full object-cover rounded-lg"
+                  />
                 </div>
               </div>
             </div>

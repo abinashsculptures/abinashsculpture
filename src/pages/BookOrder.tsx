@@ -238,7 +238,7 @@ const BookOrder: React.FC = () => {
           </div>
         </section>
 
-        {/* Contact Information - Updated */}
+        {/* Contact Information - Updated with correct info */}
         <section className="section-padding bg-sculpture-gray">
           <div className="container mx-auto px-4">
             <div className="max-w-4xl mx-auto">

@@ -11,6 +11,7 @@ import Works from "./pages/Works";
 import Products from "./pages/Products";
 import BookOrder from "./pages/BookOrder";
 import NotFound from "./pages/NotFound";
+import AdminDashboard from "./pages/admin/AdminDashboard";
 
 const queryClient = new QueryClient();
 
@@ -30,6 +31,7 @@ const App = () => {
             <Route path="/works" element={<Works />} />
             <Route path="/products" element={<Products />} />
             <Route path="/book" element={<BookOrder />} />
+            <Route path="/admin/*" element={<AdminDashboard />} />
             <Route path="*" element={<NotFound />} />
           </Routes>
         </TooltipProvider>
