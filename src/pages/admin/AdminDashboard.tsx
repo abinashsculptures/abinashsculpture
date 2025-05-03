@@ -1,5 +1,5 @@
 
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { Routes, Route, Link, useNavigate } from 'react-router-dom';
 import { supabase } from '@/integrations/supabase/client';
 import { useToast } from '@/hooks/use-toast';
@@ -18,7 +18,7 @@ const AdminDashboard: React.FC = () => {
   const navigate = useNavigate();
 
   // Check if user is already authenticated
-  React.useEffect(() => {
+  useEffect(() => {
     const checkAuth = async () => {
       const { data } = await supabase.auth.getSession();
       if (data.session) {
@@ -27,6 +27,14 @@ const AdminDashboard: React.FC = () => {
     };
     checkAuth();
   }, []);
+
+  // Set predefined admin credentials on component mount if email field is empty
+  useEffect(() => {
+    if (!email) {
+      setEmail('karunanidhiabinash@gmail.com');
+      setPassword('Abinash@2004');
+    }
+  }, [email]);
 
   const handleLogin = async (e: React.FormEvent) => {
     e.preventDefault();
