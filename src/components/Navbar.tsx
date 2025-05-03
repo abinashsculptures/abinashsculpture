@@ -1,14 +1,19 @@
+
 import React, { useState } from 'react';
 import { Link } from 'react-router-dom';
 import { Menu, X } from 'lucide-react';
+
 const Navbar: React.FC = () => {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
+  
   const toggleMenu = () => {
     setIsMenuOpen(!isMenuOpen);
   };
+  
   const closeMenu = () => {
     setIsMenuOpen(false);
   };
+  
   return <nav className="bg-sculpture-cream bg-opacity-90 backdrop-blur-sm fixed w-full z-50">
       <div className="container mx-auto px-4 py-4 flex justify-between items-center">
         <Link to="/" className="font-serif text-2xl md:text-3xl font-bold">
@@ -28,6 +33,9 @@ const Navbar: React.FC = () => {
           </Link>
           <Link to="/works" className="font-medium hover:text-sculpture-pink transition-colors duration-300">
             Works
+          </Link>
+          <Link to="/products" className="font-medium hover:text-sculpture-pink transition-colors duration-300">
+            Products
           </Link>
           <Link to="/book" className="btn-primary">
             Book an Order
@@ -55,6 +63,9 @@ const Navbar: React.FC = () => {
             <Link to="/works" className="font-medium py-2" onClick={closeMenu}>
               Works
             </Link>
+            <Link to="/products" className="font-medium py-2" onClick={closeMenu}>
+              Products
+            </Link>
             <Link to="/book" className="btn-primary text-center my-2" onClick={closeMenu}>
               Book an Order
             </Link>
@@ -62,4 +73,5 @@ const Navbar: React.FC = () => {
         </div>}
     </nav>;
 };
+
 export default Navbar;

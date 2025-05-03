@@ -18,51 +18,128 @@ const Index: React.FC = () => {
     <>
       <Navbar />
       <main className="bg-sculpture-cream">
-        {/* Hero Section */}
-        <section className="py-16 md:py-24">
+        {/* Hero Section - Updated Layout */}
+        <section className="pt-32 pb-16 md:py-24 lg:min-h-[90vh] flex items-center">
           <div className="container mx-auto px-4">
-            <div className="grid grid-cols-1 md:grid-cols-2 gap-8 items-center">
-              <div className="space-y-6">
-                <div className="text-sculpture-darkpink font-semibold">WELCOME TO</div>
-                <h1 className="text-4xl md:text-5xl lg:text-6xl font-bold">
+            <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 lg:gap-12 items-center">
+              <div className="space-y-6 lg:pr-10">
+                <div className="text-amber-500 font-semibold">WELCOME TO ABINASH SCULPTURES</div>
+                <h1 className="text-4xl md:text-5xl lg:text-6xl font-bold leading-tight">
                   Make The Divine Presence With Beautiful Sculptures
                 </h1>
-                <p className="text-lg text-muted-foreground">
-                  Crafting unique, premium sculptures that embody emotion, creativity, and artistic excellence. 
-                  We specialize in creating stunning religious sculptures that bring divine presence to your space.
+                <p className="text-lg text-gray-700 max-w-2xl">
+                  Abinash Sculptures brings divine artistry to life through handcrafted Hindu gods,
+                  stone temples, and Buddha sculptures. Based in Mamallapuram, we blend tradition
+                  with timeless elegance to create spiritual masterpieces that elevate your space.
                 </p>
-                <div>
+                <div className="pt-4">
                   <Link to="/works" className="bg-amber-500 hover:bg-amber-600 text-white px-8 py-3 rounded inline-block font-medium">
                     Explore More
                   </Link>
                 </div>
               </div>
-              <div className="grid grid-cols-2 gap-4">
-                <div>
-                  <img 
-                    src="/lovable-uploads/f75bff38-a7f3-4c58-a95b-dca223dc1b03.png" 
-                    alt="Ganesha Sculpture" 
-                    className="w-full h-auto rounded-lg mb-4"
-                  />
+              
+              {/* Right side image grid */}
+              <div className="relative">
+                <div className="grid grid-cols-12 grid-rows-6 gap-3 h-[550px]">
+                  {/* Large center image */}
+                  <div className="col-span-6 col-start-1 row-span-6 row-start-1 bg-white p-2 rounded-md shadow-lg">
+                    <img 
+                      src="/lovable-uploads/4118af4e-c46f-4446-b8b3-1f44ce01c5af.png" 
+                      alt="Temple Deity" 
+                      className="w-full h-full object-cover rounded"
+                    />
+                  </div>
+                  
+                  {/* Top right image */}
+                  <div className="col-span-5 col-start-8 row-span-3 row-start-1 bg-white p-2 rounded-md shadow-lg">
+                    <img 
+                      src="/lovable-uploads/4dd77698-dfcc-4125-a47d-10367a11c0e1.png" 
+                      alt="Lord Krishna Sculpture" 
+                      className="w-full h-full object-cover rounded"
+                    />
+                  </div>
+                  
+                  {/* Middle right image */}
+                  <div className="col-span-5 col-start-8 row-span-3 row-start-4 bg-white p-2 rounded-md shadow-lg">
+                    <img 
+                      src="/lovable-uploads/966a3bb0-7519-4427-a96f-50d82f1d3f73.png" 
+                      alt="Buddha Sculpture" 
+                      className="w-full h-full object-cover rounded"
+                    />
+                  </div>
+                  
+                  {/* Bottom large image */}
+                  <div className="col-span-6 col-start-1 row-span-3 row-start-7 mt-4 bg-white p-2 rounded-md shadow-lg">
+                    <img 
+                      src="/lovable-uploads/0cafab96-a8a1-4bda-ab13-3fc042ddfef3.png" 
+                      alt="Stone Temple" 
+                      className="w-full h-full object-cover rounded"
+                    />
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </section>
+
+        {/* New Products Section */}
+        <section className="py-16 bg-white">
+          <div className="container mx-auto px-4">
+            <div className="text-center mb-12">
+              <h3 className="text-amber-500 font-semibold">OUR PRODUCTS</h3>
+              <h2 className="text-3xl md:text-4xl font-bold">
+                Discover Our Divine Collection
+              </h2>
+            </div>
+            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-8">
+              <div className="card hover-scale overflow-hidden">
+                <div className="h-64 overflow-hidden">
                   <img 
                     src="/lovable-uploads/4dd77698-dfcc-4125-a47d-10367a11c0e1.png" 
-                    alt="Lord Krishna Sculpture" 
-                    className="w-full h-auto rounded-lg"
+                    alt="Lord Krishna" 
+                    className="w-full h-full object-cover"
                   />
                 </div>
-                <div className="pt-12">
+                <div className="p-6">
+                  <h3 className="text-xl font-semibold mb-2">Lord Krishna</h3>
+                  <p className="text-gray-600 mb-4">Beautiful sculptures of Lord Krishna in various divine poses.</p>
+                  <Link to="/products" className="text-amber-500 hover:text-amber-600 font-medium">View Collection →</Link>
+                </div>
+              </div>
+              <div className="card hover-scale overflow-hidden">
+                <div className="h-64 overflow-hidden">
                   <img 
-                    src="/lovable-uploads/4dd77698-dfcc-4125-a47d-10367a11c0e1.png" 
-                    alt="Lord Krishna Sculpture" 
-                    className="w-full h-auto rounded-lg mb-4"
+                    src="/lovable-uploads/966a3bb0-7519-4427-a96f-50d82f1d3f73.png" 
+                    alt="Buddha" 
+                    className="w-full h-full object-cover"
                   />
+                </div>
+                <div className="p-6">
+                  <h3 className="text-xl font-semibold mb-2">Buddha Statues</h3>
+                  <p className="text-gray-600 mb-4">Serene Buddha sculptures for meditation spaces and peaceful corners.</p>
+                  <Link to="/products" className="text-amber-500 hover:text-amber-600 font-medium">View Collection →</Link>
+                </div>
+              </div>
+              <div className="card hover-scale overflow-hidden">
+                <div className="h-64 overflow-hidden">
                   <img 
                     src="/lovable-uploads/0cafab96-a8a1-4bda-ab13-3fc042ddfef3.png" 
                     alt="Stone Temple" 
-                    className="w-full h-auto rounded-lg"
+                    className="w-full h-full object-cover"
                   />
                 </div>
+                <div className="p-6">
+                  <h3 className="text-xl font-semibold mb-2">Stone Temples</h3>
+                  <p className="text-gray-600 mb-4">Miniature stone temples inspired by ancient Indian architecture.</p>
+                  <Link to="/products" className="text-amber-500 hover:text-amber-600 font-medium">View Collection →</Link>
+                </div>
               </div>
+            </div>
+            <div className="text-center mt-12">
+              <Link to="/products" className="btn-primary">
+                View All Products
+              </Link>
             </div>
           </div>
         </section>

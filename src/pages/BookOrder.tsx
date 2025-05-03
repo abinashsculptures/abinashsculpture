@@ -1,4 +1,3 @@
-
 import React, { useState } from 'react';
 import { useToast } from '@/hooks/use-toast';
 import Navbar from '../components/Navbar';
@@ -239,7 +238,7 @@ const BookOrder: React.FC = () => {
           </div>
         </section>
 
-        {/* Contact Information */}
+        {/* Contact Information - Updated */}
         <section className="section-padding bg-sculpture-gray">
           <div className="container mx-auto px-4">
             <div className="max-w-4xl mx-auto">
@@ -247,15 +246,15 @@ const BookOrder: React.FC = () => {
               <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
                 <div className="card text-center">
                   <h3 className="text-xl font-semibold mb-2">Phone</h3>
-                  <p className="text-muted-foreground">(555) 123-4567</p>
+                  <p className="text-muted-foreground">+919444425392</p>
                 </div>
                 <div className="card text-center">
                   <h3 className="text-xl font-semibold mb-2">Email</h3>
-                  <p className="text-muted-foreground">info@sculptstudio.com</p>
+                  <p className="text-muted-foreground">abinashsculptures@gmail.com</p>
                 </div>
                 <div className="card text-center">
                   <h3 className="text-xl font-semibold mb-2">Visit Our Studio</h3>
-                  <p className="text-muted-foreground">123 Sculptor Lane, Art District</p>
+                  <p className="text-muted-foreground">Mamallapuram, TamilNadu, India</p>
                 </div>
               </div>
             </div>
