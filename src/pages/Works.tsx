@@ -24,7 +24,7 @@ const portfolioItems = [
   },
   { 
     id: 3, 
-    title: "Stone Temple", 
+    title: "Lord Krishna", 
     category: "Temple", 
     year: 2022,
     image: "/lovable-uploads/fcbef6d2-2918-4e70-8608-d0871c7d9a4f.png",
@@ -32,7 +32,7 @@ const portfolioItems = [
   },
   { 
     id: 4, 
-    title: "Annapoorani", 
+    title: "Stone Temple", 
     category: "Hindu Gods", 
     year: 2022,
     image: "/lovable-uploads/95eaae5e-d594-4c96-94b2-4c16e3c161be.png",
@@ -40,7 +40,7 @@ const portfolioItems = [
   },
   { 
     id: 5, 
-    title: "Lord Krishna", 
+    title: "Annapoorani", 
     category: "Hindu Gods", 
     year: 2021,
     image: "/lovable-uploads/636bb5a8-10fc-4b88-b8ea-bb07337d922e.png",
