@@ -6,7 +6,7 @@ import Footer from '../components/Footer';
 import { Link } from 'react-router-dom';
 import { supabase } from '@/integrations/supabase/client';
 import { Button } from '@/components/ui/button';
-import { WhatsApp } from 'lucide-react';
+import { MessageSquare } from 'lucide-react';
 
 interface Product {
   id: string;
@@ -142,7 +142,7 @@ const Products: React.FC = () => {
                           onClick={() => handleOrderClick(product)}
                           className="bg-green-600 hover:bg-green-700 flex items-center gap-2"
                         >
-                          <WhatsApp className="h-4 w-4" />
+                          <MessageSquare className="h-4 w-4" />
                           Order Now
                         </Button>
                       </div>
