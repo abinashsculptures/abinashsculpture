@@ -4,11 +4,11 @@ import Navbar from '../components/Navbar';
 import Footer from '../components/Footer';
 import { AspectRatio } from '@/components/ui/aspect-ratio';
 
-// Updated portfolio data with real images
+// Updated portfolio data with real images and new names
 const portfolioItems = [
   { 
     id: 1, 
-    title: "Lord Ganesha", 
+    title: "Lord Ganesh", 
     category: "Hindu Gods", 
     year: 2023,
     image: "/lovable-uploads/f75bff38-a7f3-4c58-a95b-dca223dc1b03.png", 
@@ -24,7 +24,7 @@ const portfolioItems = [
   },
   { 
     id: 3, 
-    title: "Temple Doorway", 
+    title: "Stone Temple", 
     category: "Temple", 
     year: 2022,
     image: "/lovable-uploads/fcbef6d2-2918-4e70-8608-d0871c7d9a4f.png",
@@ -32,11 +32,11 @@ const portfolioItems = [
   },
   { 
     id: 4, 
-    title: "Vishnu with Lakshmi", 
+    title: "Annapoorani", 
     category: "Hindu Gods", 
     year: 2022,
     image: "/lovable-uploads/95eaae5e-d594-4c96-94b2-4c16e3c161be.png",
-    description: "Detailed sculpture of Lord Vishnu with Goddess Lakshmi"
+    description: "Detailed sculpture with traditional elements"
   },
   { 
     id: 5, 
@@ -64,11 +64,11 @@ const portfolioItems = [
   },
   { 
     id: 8, 
-    title: "Traditional Devi", 
+    title: "Ramar With Devi", 
     category: "Hindu Gods", 
     year: 2020,
     image: "/lovable-uploads/20755c49-1107-47f4-aad5-daca78334f2b.png",
-    description: "Beautiful goddess sculpture with traditional elements"
+    description: "Beautiful sculpture depicting Lord Rama with goddess"
   },
 ];
 
