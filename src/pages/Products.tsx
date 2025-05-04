@@ -52,20 +52,8 @@ const Products: React.FC = () => {
     }
   };
 
-  const handleOrderClick = async (product: Product) => {
+  const handleOrderClick = (product: Product) => {
     try {
-      // Insert a record of this order
-      const { error } = await supabase
-        .from('whatsapp_orders')
-        .insert({
-          customer_name: 'WhatsApp Order',
-          product_id: product.id,
-        });
-      
-      if (error) {
-        throw error;
-      }
-      
       // Construct WhatsApp URL with pre-filled message
       const whatsappNumber = "917305971450"; // Added country code without the + as it's handled in the URL
       const message = encodeURIComponent(
@@ -78,14 +66,14 @@ const Products: React.FC = () => {
       
       // Show success message
       toast({
-        title: "Order Request Sent!",
-        description: "You've been redirected to WhatsApp to complete your order.",
+        title: "WhatsApp Opening",
+        description: "Redirecting you to WhatsApp to complete your order.",
       });
     } catch (err) {
-      console.error('Error submitting order:', err);
+      console.error('Error opening WhatsApp:', err);
       toast({
         title: "Error",
-        description: "There was a problem with your order. Please try again.",
+        description: "There was a problem opening WhatsApp. Please try again.",
         variant: "destructive"
       });
     }
