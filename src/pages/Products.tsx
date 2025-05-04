@@ -55,7 +55,7 @@ const Products: React.FC = () => {
   const handleOrderClick = (product: Product) => {
     try {
       // Construct WhatsApp URL with pre-filled message
-      const whatsappNumber = "917305971450"; // Added country code without the + as it's handled in the URL
+      const whatsappNumber = "919444425392"; // Added country code without the + as it's handled in the URL
       const message = encodeURIComponent(
         `Hello, I'm interested in ordering the ${product.title}. ${product.description}`
       );
