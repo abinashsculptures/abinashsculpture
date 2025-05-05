@@ -170,19 +170,19 @@ const Index: React.FC = () => {
               We Provide Best Professional Services
             </h2>
             <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 gap-6">
-              <div className="bg-white p-4 rounded-lg text-center hover-scale">
+              <div className="p-4 rounded-lg text-center hover-scale bg-sculpture-cream">
                 <img alt="Hindu Gods" src="https://i.postimg.cc/x84jzpDk/Annapoorani.jpg" className="w-200 h-25 rounded-lg mb-4 object-contain" />
                 <h3 className="font-medium">Hindu Gods</h3>
               </div>
-              <div className="bg-white p-4 rounded-lg text-center hover-scale">
+              <div className="p-4 rounded-lg text-center hover-scale bg-sculpture-cream">
                 <img src="/lovable-uploads/966a3bb0-7519-4427-a96f-50d82f1d3f73.png" alt="Buddhas" className="w-150 h-25 rounded-lg mb-4 object-contain" />
                 <h3 className="font-medium">Buddhas</h3>
               </div>
-              <div className="bg-white p-4 rounded-lg text-center hover-scale">
-                <img src="/lovable-uploads/0cafab96-a8a1-4bda-ab13-3fc042ddfef3.png" alt="Stone Temples" className="w-150 h-25 rounded-lg mb-4 object-contain" />
+              <div className="p-4 rounded-lg text-center hover-scale bg-sculpture-cream">
+                <img src="/lovable-uploads/0cafab96-a8a1-4bda-ab13-3fc042ddfef3.png" alt="Stone Temples" className="w-150 h-50 rounded-lg mb-4 object-contain" />
                 <h3 className="font-medium">Stone Temples</h3>
               </div>
-              <div className="bg-white p-4 rounded-lg text-center hover-scale">
+              <div className="p-4 rounded-lg text-center hover-scale bg-sculpture-cream">
                 <img alt="Lord Krishna" src="https://i.postimg.cc/s2NW1FD8/work4.jpg" className="w-150 h-25 rounded-lg mb-4 object-contain" />
                 <h3 className="font-medium">Lord Murugan</h3>
               </div>
