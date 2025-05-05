@@ -183,7 +183,7 @@ const Index: React.FC = () => {
                 <h3 className="font-medium">Stone Temples</h3>
               </div>
               <div className="bg-white p-4 rounded-lg text-center hover-scale">
-                <img alt="Lord Krishna" src="https://i.postimg.cc/s2NW1FD8/work4.jpg" className="w-200 h-25 rounded-lg mb-4 object-contain" />
+                <img alt="Lord Krishna" src="https://i.postimg.cc/s2NW1FD8/work4.jpg" className="w-150 h-25 rounded-lg mb-4 object-contain" />
                 <h3 className="font-medium">Lord Murugan</h3>
               </div>
             </div>
