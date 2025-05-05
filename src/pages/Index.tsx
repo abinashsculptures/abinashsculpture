@@ -237,15 +237,15 @@ const Index: React.FC = () => {
                 </div>
               </div>
               <div className="relative group overflow-hidden rounded-lg">
-                <img src="/lovable-uploads/0cafab96-a8a1-4bda-ab13-3fc042ddfef3.png" alt="Stone Temple" className="w-full h-64 object-cover" />
+                <img alt="Stone Temple" className="w-full h-64 object-cover" src="https://i.postimg.cc/63xM9B8q/work4.jpg" />
                 <div className="absolute bottom-0 left-0 right-0 bg-white bg-opacity-90 p-2 text-center">
-                  <h4 className="font-medium">Stone Temple</h4>
+                  <h4 className="font-medium">Murugan</h4>
                 </div>
               </div>
               <div className="relative group overflow-hidden rounded-lg">
-                <img src="/lovable-uploads/4dd77698-dfcc-4125-a47d-10367a11c0e1.png" alt="Lord Krishna" className="w-full h-64 object-cover" />
+                <img alt="Lord Krishna" className="w-full h-64 object-cover" src="https://i.postimg.cc/59L6Yb61/Work2.jpg" />
                 <div className="absolute bottom-0 left-0 right-0 bg-white bg-opacity-90 p-2 text-center">
-                  <h4 className="font-medium">Krishna Statue</h4>
+                  <h4 className="font-medium">Amman</h4>
                 </div>
               </div>
             </div>
@@ -271,8 +271,9 @@ const Index: React.FC = () => {
                               <AvatarImage src="https://api.dicebear.com/7.x/avataaars/svg?seed=John" alt="John Smith" />
                               <AvatarFallback>JS</AvatarFallback>
                             </Avatar>
-                            <h4 className="font-semibold text-center mt-2">Client Name</h4>
-                            <p className="text-sm text-center text-muted-foreground">Position</p>
+                            <h4 className="font-semibold text-center mt-2">Client 1</h4>
+                            <p className="text-sm text-center text-muted-foreground">
+                          </p>
                           </div>
                           <div className="bg-amber-500 text-white p-6 rounded-lg">
                             <p className="italic">
