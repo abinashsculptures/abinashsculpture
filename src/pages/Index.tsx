@@ -5,7 +5,38 @@ import Footer from '../components/Footer';
 import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar';
 import { Carousel, CarouselContent, CarouselItem, CarouselNext, CarouselPrevious } from "@/components/ui/carousel";
 import { Card, CardContent } from "@/components/ui/card";
+import { useEffect, useState } from 'react';
+import { supabase } from '@/integrations/supabase/client';
+
+interface Product {
+  id: string;
+  title: string;
+  description: string;
+  image: string;
+  category: string;
+}
+
 const Index: React.FC = () => {
+  const [featuredProducts, setFeaturedProducts] = useState<Product[]>([]);
+  
+  useEffect(() => {
+    const fetchFeaturedProducts = async () => {
+      try {
+        const { data, error } = await supabase
+          .from('products')
+          .select('id, title, description, image, category')
+          .limit(3);
+          
+        if (error) throw error;
+        setFeaturedProducts(data || []);
+      } catch (error) {
+        console.error('Error fetching featured products:', error);
+      }
+    };
+    
+    fetchFeaturedProducts();
+  }, []);
+  
   return <>
       <Navbar />
       <main className="bg-sculpture-cream">
@@ -53,36 +84,53 @@ const Index: React.FC = () => {
               </h2>
             </div>
             <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-8">
-              <div className="card hover-scale overflow-hidden">
-                <div className="h-64 overflow-hidden">
-                  <img alt="Lord Krishna" className="w-full h-full object-cover" src="https://i.postimg.cc/brrTG0QY/Annapoorani.jpg" />
-                </div>
-                <div className="p-6">
-                  <h3 className="text-xl font-semibold mb-2">Hindu Gods</h3>
-                  <p className="text-gray-600 mb-4">Beautiful sculptures of Hindu Gods in various divine poses.</p>
-                  <Link to="/products" className="text-amber-500 hover:text-amber-600 font-medium">View Collection →</Link>
-                </div>
-              </div>
-              <div className="card hover-scale overflow-hidden">
-                <div className="h-64 overflow-hidden">
-                  <img alt="Buddha" src="https://i.postimg.cc/bvQ8MkSv/Buddha-Small.jpg" className="w-full h-full object-cover" />
-                </div>
-                <div className="p-6">
-                  <h3 className="text-xl font-semibold mb-2">Buddha Statues</h3>
-                  <p className="text-gray-600 mb-4">Serene Buddha sculptures for meditation spaces and peaceful corners.</p>
-                  <Link to="/products" className="text-amber-500 hover:text-amber-600 font-medium">View Collection →</Link>
-                </div>
-              </div>
-              <div className="card hover-scale overflow-hidden">
-                <div className="h-64 overflow-hidden">
-                  <img alt="Stone Temple" className="w-full h-full object-cover" src="https://i.postimg.cc/s2NW1FD8/work4.jpg" />
-                </div>
-                <div className="p-6">
-                  <h3 className="text-xl font-semibold mb-2">Lord Murugan</h3>
-                  <p className="text-gray-600 mb-4">Lord Murugan inspired by ancient Indian architecture.</p>
-                  <Link to="/products" className="text-amber-500 hover:text-amber-600 font-medium">View Collection →</Link>
-                </div>
-              </div>
+              {featuredProducts.length > 0 ? (
+                featuredProducts.map((product) => (
+                  <div key={product.id} className="card hover-scale overflow-hidden">
+                    <div className="h-64 overflow-hidden">
+                      <img alt={product.title} className="w-full h-full object-cover" src={product.image} />
+                    </div>
+                    <div className="p-6">
+                      <h3 className="text-xl font-semibold mb-2">{product.title}</h3>
+                      <p className="text-gray-600 mb-4">{product.description}</p>
+                      <Link to="/products" className="text-amber-500 hover:text-amber-600 font-medium">View Collection →</Link>
+                    </div>
+                  </div>
+                ))
+              ) : (
+                <>
+                  <div className="card hover-scale overflow-hidden">
+                    <div className="h-64 overflow-hidden">
+                      <img alt="Lord Krishna" className="w-full h-full object-cover" src="https://i.postimg.cc/brrTG0QY/Annapoorani.jpg" />
+                    </div>
+                    <div className="p-6">
+                      <h3 className="text-xl font-semibold mb-2">Hindu Gods</h3>
+                      <p className="text-gray-600 mb-4">Beautiful sculptures of Hindu Gods in various divine poses.</p>
+                      <Link to="/products" className="text-amber-500 hover:text-amber-600 font-medium">View Collection →</Link>
+                    </div>
+                  </div>
+                  <div className="card hover-scale overflow-hidden">
+                    <div className="h-64 overflow-hidden">
+                      <img alt="Buddha" src="https://i.postimg.cc/bvQ8MkSv/Buddha-Small.jpg" className="w-full h-full object-cover" />
+                    </div>
+                    <div className="p-6">
+                      <h3 className="text-xl font-semibold mb-2">Buddha Statues</h3>
+                      <p className="text-gray-600 mb-4">Serene Buddha sculptures for meditation spaces and peaceful corners.</p>
+                      <Link to="/products" className="text-amber-500 hover:text-amber-600 font-medium">View Collection →</Link>
+                    </div>
+                  </div>
+                  <div className="card hover-scale overflow-hidden">
+                    <div className="h-64 overflow-hidden">
+                      <img alt="Stone Temple" className="w-full h-full object-cover" src="https://i.postimg.cc/s2NW1FD8/work4.jpg" />
+                    </div>
+                    <div className="p-6">
+                      <h3 className="text-xl font-semibold mb-2">Lord Murugan</h3>
+                      <p className="text-gray-600 mb-4">Lord Murugan inspired by ancient Indian architecture.</p>
+                      <Link to="/products" className="text-amber-500 hover:text-amber-600 font-medium">View Collection →</Link>
+                    </div>
+                  </div>
+                </>
+              )}
             </div>
             <div className="text-center mt-12">
               <Link to="/products" className="btn-primary">
@@ -126,6 +174,50 @@ const Index: React.FC = () => {
                     Learn More
                   </Link>
                 </div>
+              </div>
+            </div>
+          </div>
+        </section>
+
+        {/* Vision and Mission Section */}
+        <section className="py-16 bg-white">
+          <div className="container mx-auto px-4">
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-12">
+              {/* Vision */}
+              <div className="bg-amber-50 p-8 rounded-lg shadow-md">
+                <div className="text-center mb-6">
+                  <div className="inline-block bg-amber-100 p-3 rounded-full mb-4">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className="text-amber-600">
+                      <circle cx="12" cy="12" r="10"></circle>
+                      <circle cx="12" cy="12" r="4"></circle>
+                      <line x1="4.93" y1="4.93" x2="9.17" y2="9.17"></line>
+                      <line x1="14.83" y1="14.83" x2="19.07" y2="19.07"></line>
+                      <line x1="14.83" y1="9.17" x2="19.07" y2="4.93"></line>
+                      <line x1="14.83" y1="9.17" x2="18.36" y2="5.64"></line>
+                      <line x1="4.93" y1="19.07" x2="9.17" y2="14.83"></line>
+                    </svg>
+                  </div>
+                  <h2 className="text-3xl font-bold">Our Vision</h2>
+                </div>
+                <p className="text-gray-700 text-center">
+                  To preserve and promote the ancient art of Indian sculpture, creating divine masterpieces that inspire spiritual connection and cultural appreciation across generations and communities worldwide.
+                </p>
+              </div>
+              
+              {/* Mission */}
+              <div className="bg-amber-50 p-8 rounded-lg shadow-md">
+                <div className="text-center mb-6">
+                  <div className="inline-block bg-amber-100 p-3 rounded-full mb-4">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className="text-amber-600">
+                      <rect x="2" y="7" width="20" height="14" rx="2" ry="2"></rect>
+                      <path d="M16 21V5a2 2 0 0 0-2-2h-4a2 2 0 0 0-2 2v16"></path>
+                    </svg>
+                  </div>
+                  <h2 className="text-3xl font-bold">Our Mission</h2>
+                </div>
+                <p className="text-gray-700 text-center">
+                  To handcraft exquisite sculptures that embody divine essence and artistic excellence, using traditional techniques passed down through generations while embracing innovative approaches to meet contemporary needs and preferences.
+                </p>
               </div>
             </div>
           </div>
