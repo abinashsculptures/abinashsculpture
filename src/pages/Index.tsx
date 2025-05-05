@@ -296,7 +296,7 @@ const Index: React.FC = () => {
                               <AvatarFallback>EJ</AvatarFallback>
                             </Avatar>
                             <h4 className="font-semibold text-center mt-2">Client Name</h4>
-                            <p className="text-sm text-center text-muted-foreground">Position</p>
+                            <p className="text-sm text-center text-muted-foreground">Client 2</p>
                           </div>
                           <div className="bg-amber-500 text-white p-6 rounded-lg">
                             <p className="italic">
