@@ -175,7 +175,7 @@ const Index: React.FC = () => {
                 <h3 className="font-medium">Hindu Gods</h3>
               </div>
               <div className="bg-white p-4 rounded-lg text-center hover-scale">
-                <img src="/lovable-uploads/966a3bb0-7519-4427-a96f-50d82f1d3f73.png" alt="Buddhas" className="w-full h-48 rounded-lg mb-4 object-contain" />
+                <img src="/lovable-uploads/966a3bb0-7519-4427-a96f-50d82f1d3f73.png" alt="Buddhas" className="w-150 h-25 rounded-lg mb-4 object-contain" />
                 <h3 className="font-medium">Buddhas</h3>
               </div>
               <div className="bg-white p-4 rounded-lg text-center hover-scale">
