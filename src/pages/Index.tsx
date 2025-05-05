@@ -55,11 +55,11 @@ const Index: React.FC = () => {
             <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-8">
               <div className="card hover-scale overflow-hidden">
                 <div className="h-64 overflow-hidden">
-                  <img src="/lovable-uploads/4dd77698-dfcc-4125-a47d-10367a11c0e1.png" alt="Lord Krishna" className="w-full h-full object-cover" />
+                  <img alt="Lord Krishna" className="w-full h-full object-cover" src="https://i.postimg.cc/brrTG0QY/Annapoorani.jpg" />
                 </div>
                 <div className="p-6">
-                  <h3 className="text-xl font-semibold mb-2">Lord Krishna</h3>
-                  <p className="text-gray-600 mb-4">Beautiful sculptures of Lord Krishna in various divine poses.</p>
+                  <h3 className="text-xl font-semibold mb-2">Hindu Gods</h3>
+                  <p className="text-gray-600 mb-4">Beautiful sculptures of Hindu Gods in various divine poses.</p>
                   <Link to="/products" className="text-amber-500 hover:text-amber-600 font-medium">View Collection →</Link>
                 </div>
               </div>
