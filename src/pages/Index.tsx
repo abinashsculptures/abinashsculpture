@@ -171,19 +171,19 @@ const Index: React.FC = () => {
             </h2>
             <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 gap-6">
               <div className="bg-white p-4 rounded-lg text-center hover-scale">
-                <img alt="Hindu Gods" className="w-full h-48 rounded-lg mb-4 object-cover" src="https://i.postimg.cc/x84jzpDk/Annapoorani.jpg" />
+                <img alt="Hindu Gods" src="https://i.postimg.cc/x84jzpDk/Annapoorani.jpg" className="w-full h-48 rounded-lg mb-4 object-contain" />
                 <h3 className="font-medium">Hindu Gods</h3>
               </div>
               <div className="bg-white p-4 rounded-lg text-center hover-scale">
-                <img src="/lovable-uploads/966a3bb0-7519-4427-a96f-50d82f1d3f73.png" alt="Buddhas" className="w-full h-48 object-cover rounded-lg mb-4" />
+                <img src="/lovable-uploads/966a3bb0-7519-4427-a96f-50d82f1d3f73.png" alt="Buddhas" className="w-full h-48 rounded-lg mb-4 object-contain" />
                 <h3 className="font-medium">Buddhas</h3>
               </div>
               <div className="bg-white p-4 rounded-lg text-center hover-scale">
-                <img src="/lovable-uploads/0cafab96-a8a1-4bda-ab13-3fc042ddfef3.png" alt="Stone Temples" className="w-full h-48 object-cover rounded-lg mb-4" />
+                <img src="/lovable-uploads/0cafab96-a8a1-4bda-ab13-3fc042ddfef3.png" alt="Stone Temples" className="w-full h-48 rounded-lg mb-4 object-contain" />
                 <h3 className="font-medium">Stone Temples</h3>
               </div>
               <div className="bg-white p-4 rounded-lg text-center hover-scale">
-                <img src="/lovable-uploads/4dd77698-dfcc-4125-a47d-10367a11c0e1.png" alt="Lord Krishna" className="w-full h-48 object-cover rounded-lg mb-4" />
+                <img src="/lovable-uploads/4dd77698-dfcc-4125-a47d-10367a11c0e1.png" alt="Lord Krishna" className="w-full h-48 rounded-lg mb-4 object-contain" />
                 <h3 className="font-medium">Lord Krishna</h3>
               </div>
             </div>
