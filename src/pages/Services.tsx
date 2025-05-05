@@ -3,8 +3,11 @@ import React from 'react';
 import { Link } from 'react-router-dom';
 import Navbar from '../components/Navbar';
 import Footer from '../components/Footer';
+import { useIsMobile } from '../hooks/use-mobile';
 
 const Services: React.FC = () => {
+  const isMobile = useIsMobile();
+  
   const services = [
     {
       title: "Custom Sculptures",
@@ -145,6 +148,33 @@ const Services: React.FC = () => {
                 <p>
                   Our skilled sculptors bring the design to life with meticulous craftsmanship. We provide progress updates throughout, and deliver the finished piece with professional installation if needed.
                 </p>
+              </div>
+            </div>
+          </div>
+        </section>
+
+        {/* Services Section - Modified for mobile responsiveness */}
+        <section className="py-16 bg-white">
+          <div className="container mx-auto px-4">
+            <h2 className="text-3xl md:text-4xl font-bold text-center mb-12">
+              We Provide Best Professional Services
+            </h2>
+            <div className="grid grid-cols-2 md:grid-cols-4 gap-6">
+              <div className="bg-white p-4 rounded-lg text-center hover-scale">
+                <img alt="Hindu Gods" src="https://i.postimg.cc/x84jzpDk/Annapoorani.jpg" className="w-full h-48 rounded-lg mb-4 object-contain" />
+                <h3 className="font-medium">Hindu Gods</h3>
+              </div>
+              <div className="bg-white p-4 rounded-lg text-center hover-scale">
+                <img src="/lovable-uploads/966a3bb0-7519-4427-a96f-50d82f1d3f73.png" alt="Buddhas" className="w-full h-48 rounded-lg mb-4 object-contain" />
+                <h3 className="font-medium">Buddhas</h3>
+              </div>
+              <div className="bg-white p-4 rounded-lg text-center hover-scale">
+                <img src="/lovable-uploads/0cafab96-a8a1-4bda-ab13-3fc042ddfef3.png" alt="Stone Temples" className="w-full h-48 rounded-lg mb-4 object-contain" />
+                <h3 className="font-medium">Stone Temples</h3>
+              </div>
+              <div className="bg-white p-4 rounded-lg text-center hover-scale">
+                <img src="/lovable-uploads/4dd77698-dfcc-4125-a47d-10367a11c0e1.png" alt="Lord Krishna" className="w-full h-48 rounded-lg mb-4 object-contain" />
+                <h3 className="font-medium">Lord Krishna</h3>
               </div>
             </div>
           </div>
