@@ -65,7 +65,7 @@ const Index: React.FC = () => {
               </div>
               <div className="card hover-scale overflow-hidden">
                 <div className="h-64 overflow-hidden">
-                  <img src="/lovable-uploads/966a3bb0-7519-4427-a96f-50d82f1d3f73.png" alt="Buddha" className="w-full h-full object-cover" />
+                  <img alt="Buddha" className="w-full h-full object-cover" src="https://i.postimg.cc/bvQ8MkSv/Buddha-Small.jpg" />
                 </div>
                 <div className="p-6">
                   <h3 className="text-xl font-semibold mb-2">Buddha Statues</h3>
