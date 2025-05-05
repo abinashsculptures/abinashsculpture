@@ -207,7 +207,7 @@ const Index: React.FC = () => {
                 </div>
               </div>
               <div className="relative group overflow-hidden rounded-lg">
-                <img src="/lovable-uploads/f75bff38-a7f3-4c58-a95b-dca223dc1b03.png" alt="Ganesha" className="w-full h-64 object-cover" />
+                <img alt="Ganesha" className="w-full h-64 object-contain" src="https://i.postimg.cc/BvzXCxFw/Work1.jpg" />
                 <div className="absolute bottom-0 left-0 right-0 bg-white bg-opacity-90 p-2 text-center">
                   <h4 className="font-medium">Ganesha</h4>
                 </div>
