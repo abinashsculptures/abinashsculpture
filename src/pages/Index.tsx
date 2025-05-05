@@ -65,7 +65,7 @@ const Index: React.FC = () => {
               </div>
               <div className="card hover-scale overflow-hidden">
                 <div className="h-64 overflow-hidden">
-                  <img alt="Buddha" src="https://i.postimg.cc/bvQ8MkSv/Buddha-Small.jpg" className="w-full h-full object-fill" />
+                  <img alt="Buddha" src="https://i.postimg.cc/bvQ8MkSv/Buddha-Small.jpg" className="w-full h-full object-cover" />
                 </div>
                 <div className="p-6">
                   <h3 className="text-xl font-semibold mb-2">Buddha Statues</h3>
@@ -75,11 +75,11 @@ const Index: React.FC = () => {
               </div>
               <div className="card hover-scale overflow-hidden">
                 <div className="h-64 overflow-hidden">
-                  <img src="/lovable-uploads/0cafab96-a8a1-4bda-ab13-3fc042ddfef3.png" alt="Stone Temple" className="w-full h-full object-cover" />
+                  <img alt="Stone Temple" className="w-full h-full object-cover" src="https://i.postimg.cc/s2NW1FD8/work4.jpg" />
                 </div>
                 <div className="p-6">
-                  <h3 className="text-xl font-semibold mb-2">Stone Temples</h3>
-                  <p className="text-gray-600 mb-4">Miniature stone temples inspired by ancient Indian architecture.</p>
+                  <h3 className="text-xl font-semibold mb-2">Lord Murugan</h3>
+                  <p className="text-gray-600 mb-4">Lord Murugan inspired by ancient Indian architecture.</p>
                   <Link to="/products" className="text-amber-500 hover:text-amber-600 font-medium">View Collection →</Link>
                 </div>
               </div>
@@ -171,7 +171,7 @@ const Index: React.FC = () => {
             </h2>
             <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 gap-6">
               <div className="bg-white p-4 rounded-lg text-center hover-scale">
-                <img alt="Hindu Gods" src="https://i.postimg.cc/x84jzpDk/Annapoorani.jpg" className="w-full h-48 rounded-lg mb-4 object-contain" />
+                <img alt="Hindu Gods" src="https://i.postimg.cc/x84jzpDk/Annapoorani.jpg" className="w-full h-48 rounded-lg mb-4 object-cover" />
                 <h3 className="font-medium">Hindu Gods</h3>
               </div>
               <div className="bg-white p-4 rounded-lg text-center hover-scale">
@@ -183,8 +183,8 @@ const Index: React.FC = () => {
                 <h3 className="font-medium">Stone Temples</h3>
               </div>
               <div className="bg-white p-4 rounded-lg text-center hover-scale">
-                <img src="/lovable-uploads/4dd77698-dfcc-4125-a47d-10367a11c0e1.png" alt="Lord Krishna" className="w-full h-48 rounded-lg mb-4 object-contain" />
-                <h3 className="font-medium">Lord Krishna</h3>
+                <img alt="Lord Krishna" src="https://i.postimg.cc/s2NW1FD8/work4.jpg" className="w-200 h-25 rounded-lg mb-4 object-contain" />
+                <h3 className="font-medium">Lord Murugan</h3>
               </div>
             </div>
           </div>
