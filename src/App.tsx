@@ -14,6 +14,7 @@ import BookOrder from "./pages/BookOrder";
 import NotFound from "./pages/NotFound";
 import AdminDashboard from "./pages/admin/AdminDashboard";
 
+// Create a new QueryClient instance
 const queryClient = new QueryClient();
 
 // Create a properly structured App component with HelmetProvider for SEO
@@ -22,7 +23,6 @@ const App = () => {
     <QueryClientProvider client={queryClient}>
       <HelmetProvider>
         <BrowserRouter>
-          {/* Place TooltipProvider inside BrowserRouter */}
           <TooltipProvider>
             <Toaster />
             <Sonner />
