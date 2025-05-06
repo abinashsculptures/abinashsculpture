@@ -441,6 +441,9 @@ const Index: React.FC = () => {
             </Carousel>
           </div>
         </section>
+
+        {/* FAQ Section */}
+        <SEOFaq />
       </main>
       <Footer />
     </>;
