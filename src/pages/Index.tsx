@@ -7,6 +7,8 @@ import { Carousel, CarouselContent, CarouselItem, CarouselNext, CarouselPrevious
 import { Card, CardContent } from "@/components/ui/card";
 import { useEffect, useState } from 'react';
 import { supabase } from '@/integrations/supabase/client';
+import { Helmet } from 'react-helmet';
+import SEOFaq from '../components/SEOFaq';
 
 interface Product {
   id: string;
@@ -37,7 +39,38 @@ const Index: React.FC = () => {
     fetchFeaturedProducts();
   }, []);
   
+  // JSON-LD Schema for homepage with organization and products
+  const homePageSchema = {
+    "@context": "https://schema.org",
+    "@type": "Organization",
+    "name": "Abinash Sculptures",
+    "url": "https://abinashsculptures.in",
+    "logo": "https://i.postimg.cc/d3Nc49kF/Screenshot-2025-05-03-152040.png",
+    "description": "Handcrafted Hindu god sculptures, Buddha statues, stone temples, and ammikal by master artisans from Mamallapuram.",
+    "telephone": "+919444425392",
+    "sameAs": [
+      "https://facebook.com/abinashsculptures",
+      "https://instagram.com/abinashsculptures"
+    ],
+    "address": {
+      "@type": "PostalAddress",
+      "streetAddress": "Mamallapuram",
+      "addressLocality": "Chennai",
+      "addressRegion": "Tamil Nadu",
+      "postalCode": "603104",
+      "addressCountry": "IN"
+    }
+  };
+  
   return <>
+      <Helmet>
+        <title>Abinash Sculptures - Handcrafted Hindu God Sculptures & Stone Art</title>
+        <meta name="description" content="Abinash Sculptures brings divine artistry to life through handcrafted Hindu gods sculptures, stone temples, and Buddha statues. Based in Mamallapuram, we blend tradition with timeless elegance." />
+        <meta name="keywords" content="Hindu god sculptures, Buddha statues, stone temples, ammikal, handmade sculptures, Ganesha statue, Krishna sculpture, Mamallapuram stone art" />
+        <script type="application/ld+json">
+          {JSON.stringify(homePageSchema)}
+        </script>
+      </Helmet>
       <Navbar />
       <main className="bg-sculpture-cream">
         {/* Hero Section - Updated Layout with New Images */}
@@ -64,10 +97,10 @@ const Index: React.FC = () => {
               {/* Right side with new images */}
               <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
                 <div className="bg-white p-3 rounded-lg shadow-lg">
-                  <img src="/lovable-uploads/636bb5a8-10fc-4b88-b8ea-bb07337d922e.png" alt="Sculpture" className="w-full h-full object-cover rounded-lg" />
+                  <img src="/lovable-uploads/636bb5a8-10fc-4b88-b8ea-bb07337d922e.png" alt="Hand-carved Hindu deity stone sculpture - Abinash Sculptures" className="w-full h-full object-cover rounded-lg" loading="lazy" />
                 </div>
                 <div className="bg-white p-3 rounded-lg shadow-lg md:mt-12">
-                  <img src="/lovable-uploads/fcbef6d2-2918-4e70-8608-d0871c7d9a4f.png" alt="Sculpture" className="w-full h-full object-cover rounded-lg" />
+                  <img src="/lovable-uploads/fcbef6d2-2918-4e70-8608-d0871c7d9a4f.png" alt="Traditional Buddha statue from Abinash master stone sculptors" className="w-full h-full object-cover rounded-lg" loading="lazy" />
                 </div>
               </div>
             </div>
@@ -88,7 +121,7 @@ const Index: React.FC = () => {
                 featuredProducts.map((product) => (
                   <div key={product.id} className="card hover-scale overflow-hidden">
                     <div className="h-64 overflow-hidden">
-                      <img alt={product.title} className="w-full h-full object-cover" src={product.image} />
+                      <img alt={`Handcrafted ${product.title} stone sculpture by Abinash Sculptures`} className="w-full h-full object-cover" src={product.image} loading="lazy" />
                     </div>
                     <div className="p-6">
                       <h3 className="text-xl font-semibold mb-2">{product.title}</h3>
@@ -101,7 +134,7 @@ const Index: React.FC = () => {
                 <>
                   <div className="card hover-scale overflow-hidden">
                     <div className="h-64 overflow-hidden">
-                      <img alt="Lord Krishna" className="w-full h-full object-cover" src="https://i.postimg.cc/brrTG0QY/Annapoorani.jpg" />
+                      <img alt="Hand-carved Hindu deity Annapoorani sculpture from Abinash Sculptures" className="w-full h-full object-cover" src="https://i.postimg.cc/brrTG0QY/Annapoorani.jpg" loading="lazy" />
                     </div>
                     <div className="p-6">
                       <h3 className="text-xl font-semibold mb-2">Hindu Gods</h3>
@@ -111,7 +144,7 @@ const Index: React.FC = () => {
                   </div>
                   <div className="card hover-scale overflow-hidden">
                     <div className="h-64 overflow-hidden">
-                      <img alt="Buddha" src="https://i.postimg.cc/bvQ8MkSv/Buddha-Small.jpg" className="w-full h-full object-cover" />
+                      <img alt="Serene Buddha stone statue for meditation spaces by Abinash Sculptures" src="https://i.postimg.cc/bvQ8MkSv/Buddha-Small.jpg" className="w-full h-full object-cover" loading="lazy" />
                     </div>
                     <div className="p-6">
                       <h3 className="text-xl font-semibold mb-2">Buddha Statues</h3>
@@ -121,7 +154,7 @@ const Index: React.FC = () => {
                   </div>
                   <div className="card hover-scale overflow-hidden">
                     <div className="h-64 overflow-hidden">
-                      <img alt="Stone Temple" className="w-full h-full object-cover" src="https://i.postimg.cc/s2NW1FD8/work4.jpg" />
+                      <img alt="Exquisite Lord Murugan stone sculpture handcrafted by Abinash artisans" className="w-full h-full object-cover" src="https://i.postimg.cc/s2NW1FD8/work4.jpg" loading="lazy" />
                     </div>
                     <div className="p-6">
                       <h3 className="text-xl font-semibold mb-2">Lord Murugan</h3>
@@ -145,8 +178,8 @@ const Index: React.FC = () => {
           <div className="container mx-auto px-4">
             <div className="grid grid-cols-1 md:grid-cols-2 gap-12 items-center">
               <div className="grid grid-cols-2 gap-4">
-                <img src="/lovable-uploads/f75bff38-a7f3-4c58-a95b-dca223dc1b03.png" alt="Ganesha Sculpture" className="w-full h-auto rounded-lg" />
-                <img src="/lovable-uploads/4dd77698-dfcc-4125-a47d-10367a11c0e1.png" alt="Lord Krishna Sculpture" className="w-full h-auto rounded-lg mt-12" />
+                <img src="/lovable-uploads/f75bff38-a7f3-4c58-a95b-dca223dc1b03.png" alt="Traditional Ganesha Sculpture handmade by Abinash master artisans" className="w-full h-auto rounded-lg" loading="lazy" />
+                <img src="/lovable-uploads/4dd77698-dfcc-4125-a47d-10367a11c0e1.png" alt="Detailed Lord Krishna Stone Sculpture from Abinash Sculptures" className="w-full h-auto rounded-lg mt-12" loading="lazy" />
               </div>
               <div className="space-y-6">
                 <div className="text-sculpture-darkpink font-semibold">ABOUT US</div>
@@ -263,19 +296,19 @@ const Index: React.FC = () => {
             </h2>
             <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 gap-6">
               <div className="p-4 rounded-lg text-center hover-scale bg-sculpture-cream">
-                <img alt="Hindu Gods" src="https://i.postimg.cc/x84jzpDk/Annapoorani.jpg" className="w-200 h-25 rounded-lg mb-4 object-contain" />
+                <img alt="Traditional handcrafted Hindu Gods stone sculptures by Abinash artisans" src="https://i.postimg.cc/x84jzpDk/Annapoorani.jpg" className="w-200 h-25 rounded-lg mb-4 object-contain" loading="lazy" />
                 <h3 className="font-medium">Hindu Gods</h3>
               </div>
               <div className="p-4 rounded-lg text-center hover-scale bg-sculpture-cream">
-                <img src="/lovable-uploads/966a3bb0-7519-4427-a96f-50d82f1d3f73.png" alt="Buddhas" className="w-150 h-25 rounded-lg mb-4 object-contain" />
+                <img src="/lovable-uploads/966a3bb0-7519-4427-a96f-50d82f1d3f73.png" alt="Peaceful Buddha stone statues for meditation spaces - Abinash Sculptures" className="w-150 h-25 rounded-lg mb-4 object-contain" loading="lazy" />
                 <h3 className="font-medium">Buddhas</h3>
               </div>
               <div className="p-4 rounded-lg text-center hover-scale bg-sculpture-cream">
-                <img src="/lovable-uploads/0cafab96-a8a1-4bda-ab13-3fc042ddfef3.png" alt="Stone Temples" className="w-150 h-50 rounded-lg mb-4 object-contain" />
+                <img src="/lovable-uploads/0cafab96-a8a1-4bda-ab13-3fc042ddfef3.png" alt="Handcrafted miniature stone temples for home and worship - Abinash Sculptures" className="w-150 h-50 rounded-lg mb-4 object-contain" loading="lazy" />
                 <h3 className="font-medium">Stone Temples</h3>
               </div>
               <div className="p-4 rounded-lg text-center hover-scale bg-sculpture-cream">
-                <img alt="Lord Krishna" src="https://i.postimg.cc/s2NW1FD8/work4.jpg" className="w-150 h-25 rounded-lg mb-4 object-contain" />
+                <img alt="Lord Murugan hand-carved stone sculpture from Abinash master craftsmen" src="https://i.postimg.cc/s2NW1FD8/work4.jpg" className="w-150 h-25 rounded-lg mb-4 object-contain" loading="lazy" />
                 <h3 className="font-medium">Lord Murugan</h3>
               </div>
             </div>
@@ -293,49 +326,49 @@ const Index: React.FC = () => {
             </div>
             <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 gap-4">
               <div className="relative group overflow-hidden rounded-lg">
-                <img src="/lovable-uploads/966a3bb0-7519-4427-a96f-50d82f1d3f73.png" alt="Buddha" className="w-full h-64 object-cover" />
+                <img src="/lovable-uploads/966a3bb0-7519-4427-a96f-50d82f1d3f73.png" alt="Serene Buddha statue handcrafted in stone by Abinash Sculptures" className="w-full h-64 object-cover" loading="lazy" />
                 <div className="absolute bottom-0 left-0 right-0 bg-white bg-opacity-90 p-2 text-center">
                   <h4 className="font-medium">Buddha</h4>
                 </div>
               </div>
               <div className="relative group overflow-hidden rounded-lg">
-                <img alt="Ganesha" src="https://i.postimg.cc/BvzXCxFw/Work1.jpg" className="w-full h-64 object-cover" />
+                <img alt="Traditional Karuppar deity sculpture handcrafted in stone" src="https://i.postimg.cc/BvzXCxFw/Work1.jpg" className="w-full h-64 object-cover" loading="lazy" />
                 <div className="absolute bottom-0 left-0 right-0 bg-white bg-opacity-90 p-2 text-center">
                   <h4 className="font-medium">Karuppar</h4>
                 </div>
               </div>
               <div className="relative group overflow-hidden rounded-lg">
-                <img src="/lovable-uploads/20755c49-1107-47f4-aad5-daca78334f2b.png" alt="Traditional Devi" className="w-full h-64 object-cover" />
+                <img src="/lovable-uploads/20755c49-1107-47f4-aad5-daca78334f2b.png" alt="Lord Ramar with Devi stone sculpture for temples and home altars" className="w-full h-64 object-cover" loading="lazy" />
                 <div className="absolute bottom-0 left-0 right-0 bg-white bg-opacity-90 p-2 text-center">
                   <h4 className="font-medium">Ramar With Devi</h4>
                 </div>
               </div>
               <div className="relative group overflow-hidden rounded-lg">
-                <img src="/lovable-uploads/4dd77698-dfcc-4125-a47d-10367a11c0e1.png" alt="Lord Krishna" className="w-full h-64 object-cover" />
+                <img src="/lovable-uploads/4dd77698-dfcc-4125-a47d-10367a11c0e1.png" alt="Elegant Lord Krishna stone sculpture handcrafted by Abinash artisans" className="w-full h-64 object-cover" loading="lazy" />
                 <div className="absolute bottom-0 left-0 right-0 bg-white bg-opacity-90 p-2 text-center">
                   <h4 className="font-medium">Lord Krishna</h4>
                 </div>
               </div>
               <div className="relative group overflow-hidden rounded-lg">
-                <img src="/lovable-uploads/95eaae5e-d594-4c96-94b2-4c16e3c161be.png" alt="Vishnu with Lakshmi" className="w-full h-64 object-cover" />
+                <img src="/lovable-uploads/95eaae5e-d594-4c96-94b2-4c16e3c161be.png" alt="Miniature stone temple for home worship and decoration" className="w-full h-64 object-cover" loading="lazy" />
                 <div className="absolute bottom-0 left-0 right-0 bg-white bg-opacity-90 p-2 text-center">
                   <h4 className="font-medium">Stone Temple</h4>
                 </div>
               </div>
               <div className="relative group overflow-hidden rounded-lg">
-                <img alt="Lord Krishna" className="w-full h-64 object-cover" src="https://i.postimg.cc/x84jzpDk/Annapoorani.jpg" />
+                <img alt="Traditional Annapoorani goddess sculpture for prosperity and abundance" className="w-full h-64 object-cover" src="https://i.postimg.cc/x84jzpDk/Annapoorani.jpg" loading="lazy" />
                 <div className="absolute bottom-0 left-0 right-0 bg-white bg-opacity-90 p-2 text-center">
                   <h4 className="font-medium">Annapoorani</h4>
                 </div>
               </div>
               <div className="relative group overflow-hidden rounded-lg">
-                <img alt="Stone Temple" className="w-full h-64 object-cover" src="https://i.postimg.cc/63xM9B8q/work4.jpg" />
+                <img alt="Lord Murugan stone sculpture for temples and religious ceremonies" className="w-full h-64 object-cover" src="https://i.postimg.cc/63xM9B8q/work4.jpg" loading="lazy" />
                 <div className="absolute bottom-0 left-0 right-0 bg-white bg-opacity-90 p-2 text-center">
                   <h4 className="font-medium">Murugan</h4>
                 </div>
               </div>
               <div className="relative group overflow-hidden rounded-lg">
-                <img alt="Lord Krishna" className="w-full h-64 object-cover" src="https://i.postimg.cc/59L6Yb61/Work2.jpg" />
+                <img alt="Traditional Amman goddess stone sculpture for divine protection" className="w-full h-64 object-cover" src="https://i.postimg.cc/59L6Yb61/Work2.jpg" loading="lazy" />
                 <div className="absolute bottom-0 left-0 right-0 bg-white bg-opacity-90 p-2 text-center">
                   <h4 className="font-medium">Amman</h4>
                 </div>
