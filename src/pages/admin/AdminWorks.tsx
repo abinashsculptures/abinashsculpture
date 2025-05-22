@@ -193,11 +193,14 @@ const AdminWorks: React.FC = () => {
           description: "The work has been updated successfully."
         });
       } else {
-        // Create new work
+        // Create new work - Fix: Explicitly include all required fields
         const { error } = await supabase
           .from('works')
           .insert({
-            ...values,
+            title: values.title,
+            description: values.description,
+            category: values.category,
+            year: values.year,
             image: imagePath,
           });
         
