@@ -9,6 +9,7 @@ import AdminOrders from './AdminOrders';
 import AdminProducts from './AdminProducts';
 import AdminAnalytics from './AdminAnalytics';
 import AdminOrderRequests from './AdminOrderRequests';
+import AdminWorks from './AdminWorks';
 
 const AdminDashboard: React.FC = () => {
   const [email, setEmail] = useState('');
@@ -151,6 +152,12 @@ const AdminDashboard: React.FC = () => {
             Products
           </Link>
           <Link 
+            to="/admin/works" 
+            className="block py-2 px-4 rounded hover:bg-gray-800 transition-colors"
+          >
+            Works
+          </Link>
+          <Link 
             to="/admin/analytics" 
             className="block py-2 px-4 rounded hover:bg-gray-800 transition-colors"
           >
@@ -172,6 +179,7 @@ const AdminDashboard: React.FC = () => {
           <Route path="/orders" element={<AdminOrders />} />
           <Route path="/order-requests" element={<AdminOrderRequests />} />
           <Route path="/products" element={<AdminProducts />} />
+          <Route path="/works" element={<AdminWorks />} />
           <Route path="/analytics" element={<AdminAnalytics />} />
         </Routes>
       </div>

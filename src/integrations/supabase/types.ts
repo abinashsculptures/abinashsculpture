@@ -134,6 +134,39 @@ export type Database = {
           },
         ]
       }
+      works: {
+        Row: {
+          category: string
+          created_at: string
+          description: string
+          id: string
+          image: string
+          title: string
+          updated_at: string
+          year: number
+        }
+        Insert: {
+          category: string
+          created_at?: string
+          description: string
+          id?: string
+          image: string
+          title: string
+          updated_at?: string
+          year: number
+        }
+        Update: {
+          category?: string
+          created_at?: string
+          description?: string
+          id?: string
+          image?: string
+          title?: string
+          updated_at?: string
+          year?: number
+        }
+        Relationships: []
+      }
     }
     Views: {
       [_ in never]: never

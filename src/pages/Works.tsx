@@ -1,85 +1,55 @@
 
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
+import { supabase } from '@/integrations/supabase/client';
 import Navbar from '../components/Navbar';
 import Footer from '../components/Footer';
 import { AspectRatio } from '@/components/ui/aspect-ratio';
+import { Loader2 } from 'lucide-react';
 
-// Updated portfolio data with real images and new names
-const portfolioItems = [
-  { 
-    id: 1, 
-    title: "Lord Ganesh", 
-    category: "Hindu Gods", 
-    year: 2023,
-    image: "/lovable-uploads/f75bff38-a7f3-4c58-a95b-dca223dc1b03.png", 
-    description: "Exquisitely detailed Ganesha sculpture with intricate carving"
-  },
-  { 
-    id: 2, 
-    title: "Meditating Buddha", 
-    category: "Buddha", 
-    year: 2023,
-    image: "/lovable-uploads/966a3bb0-7519-4427-a96f-50d82f1d3f73.png",
-    description: "Serene Buddha sculpture in traditional meditation pose"
-  },
-  { 
-    id: 3, 
-    title: "Lord Krishna", 
-    category: "Temple", 
-    year: 2022,
-    image: "/lovable-uploads/fcbef6d2-2918-4e70-8608-d0871c7d9a4f.png",
-    description: "Elegant stone temple doorway with traditional architecture"
-  },
-  { 
-    id: 4, 
-    title: "Stone Temple", 
-    category: "Hindu Gods", 
-    year: 2022,
-    image: "/lovable-uploads/95eaae5e-d594-4c96-94b2-4c16e3c161be.png",
-    description: "Detailed sculpture with traditional elements"
-  },
-  { 
-    id: 5, 
-    title: "Annapoorani", 
-    category: "Hindu Gods", 
-    year: 2021,
-    image: "/lovable-uploads/636bb5a8-10fc-4b88-b8ea-bb07337d922e.png",
-    description: "Beautiful sculpture of Lord Krishna playing the flute"
-  },
-  { 
-    id: 6, 
-    title: "Standing Warrior", 
-    category: "Custom", 
-    year: 2021,
-    image: "/lovable-uploads/daeca681-c10c-447f-8787-e6a09e09577f.png",
-    description: "Majestic warrior sculpture with traditional details"
-  },
-  { 
-    id: 7, 
-    title: "Lord Murugan", 
-    category: "Hindu Gods", 
-    year: 2020,
-    image: "/lovable-uploads/87f797e2-3d15-4e6c-857c-ee05dee9daf4.png",
-    description: "Impressive sculpture of Lord Murugan with ornate details"
-  },
-  { 
-    id: 8, 
-    title: "Ramar With Devi", 
-    category: "Hindu Gods", 
-    year: 2020,
-    image: "/lovable-uploads/20755c49-1107-47f4-aad5-daca78334f2b.png",
-    description: "Beautiful sculpture depicting Lord Rama with goddess"
-  },
-];
+// Define the work item type
+type WorkItem = {
+  id: string;
+  title: string;
+  description: string;
+  category: string;
+  year: number;
+  image: string;
+};
 
 const categories = ["All", "Hindu Gods", "Buddha", "Temple", "Custom"];
 
 const Works: React.FC = () => {
   const [selectedCategory, setSelectedCategory] = useState("All");
+  const [works, setWorks] = useState<WorkItem[]>([]);
+  const [loading, setLoading] = useState(true);
+  const [error, setError] = useState<string | null>(null);
+
+  // Fetch works from Supabase
+  useEffect(() => {
+    const fetchWorks = async () => {
+      setLoading(true);
+      try {
+        const { data, error } = await supabase
+          .from('works')
+          .select('*')
+          .order('year', { ascending: false });
+        
+        if (error) throw error;
+        setWorks(data || []);
+      } catch (err: any) {
+        console.error('Error fetching works:', err);
+        setError(err.message);
+      } finally {
+        setLoading(false);
+      }
+    };
+
+    fetchWorks();
+  }, []);
 
   const filteredItems = selectedCategory === "All"
-    ? portfolioItems
-    : portfolioItems.filter(item => item.category === selectedCategory);
+    ? works
+    : works.filter(item => item.category === selectedCategory);
 
   return (
     <>
@@ -121,27 +91,43 @@ const Works: React.FC = () => {
         {/* Portfolio Grid */}
         <section className="section-padding">
           <div className="container mx-auto px-4">
-            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
-              {filteredItems.map((item) => (
-                <div key={item.id} className="card hover-scale">
-                  <div className="rounded-lg overflow-hidden mb-4">
-                    <AspectRatio ratio={3/4} className="bg-sculpture-gray">
-                      <img 
-                        src={item.image} 
-                        alt={item.title} 
-                        className="w-full h-full object-cover" 
-                      />
-                    </AspectRatio>
+            {loading ? (
+              <div className="flex justify-center items-center py-16">
+                <Loader2 className="h-10 w-10 animate-spin text-sculpture-blue" />
+              </div>
+            ) : error ? (
+              <div className="text-center py-16">
+                <p className="text-red-500">Error loading works: {error}</p>
+              </div>
+            ) : (
+              <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+                {filteredItems.length === 0 ? (
+                  <div className="col-span-full text-center py-16">
+                    <p className="text-lg text-muted-foreground">No works found in this category.</p>
                   </div>
-                  <h3 className="text-xl font-serif font-semibold mb-1">{item.title}</h3>
-                  <p className="text-sm text-muted-foreground mb-2">{item.description}</p>
-                  <div className="flex justify-between text-muted-foreground">
-                    <span>{item.category}</span>
-                    <span>{item.year}</span>
-                  </div>
-                </div>
-              ))}
-            </div>
+                ) : (
+                  filteredItems.map((item) => (
+                    <div key={item.id} className="card hover-scale">
+                      <div className="rounded-lg overflow-hidden mb-4">
+                        <AspectRatio ratio={3/4} className="bg-sculpture-gray">
+                          <img 
+                            src={item.image} 
+                            alt={item.title} 
+                            className="w-full h-full object-cover" 
+                          />
+                        </AspectRatio>
+                      </div>
+                      <h3 className="text-xl font-serif font-semibold mb-1">{item.title}</h3>
+                      <p className="text-sm text-muted-foreground mb-2">{item.description}</p>
+                      <div className="flex justify-between text-muted-foreground">
+                        <span>{item.category}</span>
+                        <span>{item.year}</span>
+                      </div>
+                    </div>
+                  ))
+                )}
+              </div>
+            )}
           </div>
         </section>
 
