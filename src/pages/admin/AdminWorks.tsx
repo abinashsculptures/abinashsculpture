@@ -1,7 +1,6 @@
-
 import React, { useState, useEffect } from 'react';
 import { supabase } from '@/integrations/supabase/client';
-import { PlusCircle, Pencil, Trash2, Upload, X, Loader2 } from 'lucide-react';
+import { PlusCircle, Pencil, Trash2, Upload, X, Loader2, Link } from 'lucide-react';
 import { useToast } from '@/hooks/use-toast';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
@@ -60,6 +59,8 @@ const AdminWorks: React.FC = () => {
   const [searchQuery, setSearchQuery] = useState('');
   const [imageFile, setImageFile] = useState<File | null>(null);
   const [imagePreview, setImagePreview] = useState<string | null>(null);
+  const [imageUrl, setImageUrl] = useState('');
+  const [imageInputType, setImageInputType] = useState<'upload' | 'url'>('upload');
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [editingWork, setEditingWork] = useState<Work | null>(null);
   const { toast } = useToast();
@@ -106,6 +107,7 @@ const AdminWorks: React.FC = () => {
     if (!file) return;
     
     setImageFile(file);
+    setImageUrl(''); // Clear URL when file is selected
     
     // Create a preview
     const reader = new FileReader();
@@ -115,8 +117,16 @@ const AdminWorks: React.FC = () => {
     reader.readAsDataURL(file);
   };
 
+  const handleImageUrlChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const url = e.target.value;
+    setImageUrl(url);
+    setImageFile(null); // Clear file when URL is entered
+    setImagePreview(url); // Use URL for preview
+  };
+
   const clearImage = () => {
     setImageFile(null);
+    setImageUrl('');
     setImagePreview(null);
     const input = document.getElementById('image-upload') as HTMLInputElement;
     if (input) input.value = '';
@@ -131,7 +141,9 @@ const AdminWorks: React.FC = () => {
       year: new Date().getFullYear(),
     });
     setImageFile(null);
+    setImageUrl('');
     setImagePreview(null);
+    setImageInputType('upload');
     setIsModalOpen(true);
   };
 
@@ -144,7 +156,9 @@ const AdminWorks: React.FC = () => {
       year: work.year,
     });
     setImageFile(null);
+    setImageUrl(work.image);
     setImagePreview(work.image);
+    setImageInputType('url');
     setIsModalOpen(true);
   };
 
@@ -169,10 +183,13 @@ const AdminWorks: React.FC = () => {
         // Get the public URL
         const { data } = supabase.storage.from('works').getPublicUrl(filePath);
         imagePath = data.publicUrl;
+      } else if (imageUrl) {
+        // Use the provided URL
+        imagePath = imageUrl;
       }
       
-      if (!imagePath && !imageFile) {
-        throw new Error('Please upload an image');
+      if (!imagePath && !imageFile && !imageUrl) {
+        throw new Error('Please upload an image or provide an image URL');
       }
       
       if (editingWork) {
@@ -180,7 +197,10 @@ const AdminWorks: React.FC = () => {
         const { error } = await supabase
           .from('works')
           .update({
-            ...values,
+            title: values.title,
+            description: values.description,
+            category: values.category,
+            year: values.year,
             image: imagePath,
             updated_at: new Date().toISOString(),
           })
@@ -401,43 +421,94 @@ const AdminWorks: React.FC = () => {
               />
               
               <div>
-                <FormLabel htmlFor="image-upload">Image</FormLabel>
-                <div className="mt-1 flex items-center gap-4">
-                  <Button 
-                    type="button" 
-                    variant="outline" 
-                    onClick={() => document.getElementById('image-upload')?.click()}
+                <FormLabel>Image</FormLabel>
+                
+                {/* Image input type toggle */}
+                <div className="flex gap-2 mt-1 mb-2">
+                  <Button
+                    type="button"
+                    variant={imageInputType === 'upload' ? 'default' : 'outline'}
+                    size="sm"
+                    onClick={() => setImageInputType('upload')}
                   >
                     <Upload className="h-4 w-4 mr-2" />
-                    Upload Image
+                    Upload File
                   </Button>
-                  <Input
-                    id="image-upload"
-                    type="file"
-                    accept="image/*"
-                    onChange={handleImageChange}
-                    className="hidden"
-                  />
-                  {imagePreview && (
-                    <div className="relative w-16 h-16">
-                      <img 
-                        src={imagePreview} 
-                        alt="Preview" 
-                        className="w-full h-full object-cover rounded border"
-                      />
-                      <button
-                        type="button"
-                        onClick={clearImage}
-                        className="absolute -top-2 -right-2 bg-red-500 rounded-full p-1 text-white"
-                      >
-                        <X className="h-3 w-3" />
-                      </button>
-                    </div>
-                  )}
+                  <Button
+                    type="button"
+                    variant={imageInputType === 'url' ? 'default' : 'outline'}
+                    size="sm"
+                    onClick={() => setImageInputType('url')}
+                  >
+                    <Link className="h-4 w-4 mr-2" />
+                    Image URL
+                  </Button>
                 </div>
-                {!imageFile && !editingWork?.image && (
+
+                {imageInputType === 'upload' ? (
+                  <div className="flex items-center gap-4">
+                    <Button 
+                      type="button" 
+                      variant="outline" 
+                      onClick={() => document.getElementById('image-upload')?.click()}
+                    >
+                      <Upload className="h-4 w-4 mr-2" />
+                      Upload Image
+                    </Button>
+                    <Input
+                      id="image-upload"
+                      type="file"
+                      accept="image/*"
+                      onChange={handleImageChange}
+                      className="hidden"
+                    />
+                    {imagePreview && (
+                      <div className="relative w-16 h-16">
+                        <img 
+                          src={imagePreview} 
+                          alt="Preview" 
+                          className="w-full h-full object-cover rounded border"
+                        />
+                        <button
+                          type="button"
+                          onClick={clearImage}
+                          className="absolute -top-2 -right-2 bg-red-500 rounded-full p-1 text-white"
+                        >
+                          <X className="h-3 w-3" />
+                        </button>
+                      </div>
+                    )}
+                  </div>
+                ) : (
+                  <div className="space-y-2">
+                    <Input
+                      placeholder="Enter image URL"
+                      value={imageUrl}
+                      onChange={handleImageUrlChange}
+                    />
+                    {imagePreview && (
+                      <div className="relative w-16 h-16">
+                        <img 
+                          src={imagePreview} 
+                          alt="Preview" 
+                          className="w-full h-full object-cover rounded border"
+                          onError={() => setImagePreview(null)}
+                        />
+                        <button
+                          type="button"
+                          onClick={clearImage}
+                          className="absolute -top-2 -right-2 bg-red-500 rounded-full p-1 text-white"
+                        >
+                          <X className="h-3 w-3" />
+                        </button>
+                      </div>
+                    )}
+                  </div>
+                )}
+                
+                {!imageFile && !imageUrl && (
                   <p className="text-sm text-red-500 mt-1">
-                    Please upload an image
+                    Please upload an image or provide an image URL
                   </p>
                 )}
               </div>
