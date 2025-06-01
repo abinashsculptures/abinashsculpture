@@ -9,7 +9,6 @@ import { useEffect, useState } from 'react';
 import { supabase } from '@/integrations/supabase/client';
 import { Helmet } from 'react-helmet';
 import SEOFaq from '../components/SEOFaq';
-
 interface Product {
   id: string;
   title: string;
@@ -17,7 +16,6 @@ interface Product {
   image: string;
   category: string;
 }
-
 interface Sale {
   id: string;
   title: string;
@@ -26,45 +24,40 @@ interface Sale {
   poster_image: string;
   is_active: boolean;
 }
-
 const Index: React.FC = () => {
   const [featuredProducts, setFeaturedProducts] = useState<Product[]>([]);
   const [activeSales, setActiveSales] = useState<Sale[]>([]);
-  
   useEffect(() => {
     const fetchFeaturedProducts = async () => {
       try {
-        const { data, error } = await supabase
-          .from('products')
-          .select('id, title, description, image, category')
-          .limit(3);
-          
+        const {
+          data,
+          error
+        } = await supabase.from('products').select('id, title, description, image, category').limit(3);
         if (error) throw error;
         setFeaturedProducts(data || []);
       } catch (error) {
         console.error('Error fetching featured products:', error);
       }
     };
-
     const fetchActiveSales = async () => {
       try {
-        const { data, error } = await supabase
-          .from('sales')
-          .select('*')
-          .eq('is_active', true)
-          .order('created_at', { ascending: false });
-          
+        const {
+          data,
+          error
+        } = await supabase.from('sales').select('*').eq('is_active', true).order('created_at', {
+          ascending: false
+        });
         if (error) throw error;
         setActiveSales(data || []);
       } catch (error) {
         console.error('Error fetching sales:', error);
       }
     };
-    
     fetchFeaturedProducts();
     fetchActiveSales();
   }, []);
-  
+
   // JSON-LD Schema for homepage with organization and products
   const homePageSchema = {
     "@context": "https://schema.org",
@@ -74,10 +67,7 @@ const Index: React.FC = () => {
     "logo": "https://i.postimg.cc/d3Nc49kF/Screenshot-2025-05-03-152040.png",
     "description": "Handcrafted Hindu god sculptures, Buddha statues, stone temples, and ammikal by master artisans from Mamallapuram.",
     "telephone": "+919444425392",
-    "sameAs": [
-      "https://facebook.com/abinashsculptures",
-      "https://instagram.com/abinashsculptures"
-    ],
+    "sameAs": ["https://facebook.com/abinashsculptures", "https://instagram.com/abinashsculptures"],
     "address": {
       "@type": "PostalAddress",
       "streetAddress": "Mamallapuram",
@@ -87,7 +77,6 @@ const Index: React.FC = () => {
       "addressCountry": "IN"
     }
   };
-  
   return <>
       <Helmet>
         <title>Abinash Sculptures - Handcrafted Hindu God Sculptures & Stone Art</title>
@@ -146,9 +135,7 @@ const Index: React.FC = () => {
               </h2>
             </div>
             <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-8">
-              {featuredProducts.length > 0 ? (
-                featuredProducts.map((product) => (
-                  <div key={product.id} className="card hover-scale overflow-hidden">
+              {featuredProducts.length > 0 ? featuredProducts.map(product => <div key={product.id} className="card hover-scale overflow-hidden">
                     <div className="h-64 overflow-hidden">
                       <img alt={`Handcrafted ${product.title} stone sculpture by Abinash Sculptures`} className="w-full h-full object-cover" src={product.image} loading="lazy" />
                     </div>
@@ -157,10 +144,7 @@ const Index: React.FC = () => {
                       <p className="text-gray-600 mb-4">{product.description}</p>
                       <Link to="/products" className="text-amber-500 hover:text-amber-600 font-medium">View Collection →</Link>
                     </div>
-                  </div>
-                ))
-              ) : (
-                <>
+                  </div>) : <>
                   <div className="card hover-scale overflow-hidden">
                     <div className="h-64 overflow-hidden">
                       <img alt="Hand-carved Hindu deity Annapoorani sculpture from Abinash Sculptures" className="w-full h-full object-cover" src="https://i.postimg.cc/brrTG0QY/Annapoorani.jpg" loading="lazy" />
@@ -191,8 +175,7 @@ const Index: React.FC = () => {
                       <Link to="/products" className="text-amber-500 hover:text-amber-600 font-medium">View Collection →</Link>
                     </div>
                   </div>
-                </>
-              )}
+                </>}
             </div>
             <div className="text-center mt-12">
               <Link to="/products" className="btn-primary">
@@ -203,8 +186,7 @@ const Index: React.FC = () => {
         </section>
 
         {/* Sales Section - New */}
-        {activeSales.length > 0 && (
-          <section className="py-16 bg-sculpture-cream">
+        {activeSales.length > 0 && <section className="py-16 bg-sculpture-cream">
             <div className="container mx-auto px-4">
               <div className="text-center mb-12">
                 <h3 className="text-amber-500 font-semibold">SPECIAL OFFERS</h3>
@@ -213,16 +195,10 @@ const Index: React.FC = () => {
                 </h2>
               </div>
               <div className="space-y-12">
-                {activeSales.map((sale) => (
-                  <div key={sale.id} className="grid grid-cols-1 lg:grid-cols-2 gap-8 lg:gap-12 items-center bg-white rounded-lg shadow-lg overflow-hidden">
+                {activeSales.map(sale => <div key={sale.id} className="grid grid-cols-1 lg:grid-cols-2 gap-8 lg:gap-12 items-center bg-white rounded-lg shadow-lg overflow-hidden">
                     {/* Left side - Poster Image */}
                     <div className="h-64 lg:h-96">
-                      <img 
-                        src={sale.poster_image} 
-                        alt={sale.title}
-                        className="w-full h-full object-cover"
-                        loading="lazy"
-                      />
+                      <img src={sale.poster_image} alt={sale.title} loading="lazy" className="w-full h-full object-contain" />
                     </div>
                     
                     {/* Right side - Details */}
@@ -234,9 +210,7 @@ const Index: React.FC = () => {
                         {sale.description}
                       </p>
                       <div className="text-gray-600 leading-relaxed">
-                        {sale.details.split('\n').map((line, index) => (
-                          <p key={index} className="mb-2">{line}</p>
-                        ))}
+                        {sale.details.split('\n').map((line, index) => <p key={index} className="mb-2">{line}</p>)}
                       </div>
                       <div className="pt-4">
                         <Link to="/book" className="bg-amber-500 hover:bg-amber-600 text-white px-6 py-3 rounded inline-block font-medium">
@@ -244,12 +218,10 @@ const Index: React.FC = () => {
                         </Link>
                       </div>
                     </div>
-                  </div>
-                ))}
+                  </div>)}
               </div>
             </div>
-          </section>
-        )}
+          </section>}
 
         {/* About Us Section */}
         <section className="py-16 bg-white">
@@ -526,5 +498,4 @@ const Index: React.FC = () => {
       <Footer />
     </>;
 };
-
 export default Index;
