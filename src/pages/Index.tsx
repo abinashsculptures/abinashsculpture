@@ -18,8 +18,18 @@ interface Product {
   category: string;
 }
 
+interface Sale {
+  id: string;
+  title: string;
+  description: string;
+  details: string;
+  poster_image: string;
+  is_active: boolean;
+}
+
 const Index: React.FC = () => {
   const [featuredProducts, setFeaturedProducts] = useState<Product[]>([]);
+  const [activeSales, setActiveSales] = useState<Sale[]>([]);
   
   useEffect(() => {
     const fetchFeaturedProducts = async () => {
@@ -35,8 +45,24 @@ const Index: React.FC = () => {
         console.error('Error fetching featured products:', error);
       }
     };
+
+    const fetchActiveSales = async () => {
+      try {
+        const { data, error } = await supabase
+          .from('sales')
+          .select('*')
+          .eq('is_active', true)
+          .order('created_at', { ascending: false });
+          
+        if (error) throw error;
+        setActiveSales(data || []);
+      } catch (error) {
+        console.error('Error fetching sales:', error);
+      }
+    };
     
     fetchFeaturedProducts();
+    fetchActiveSales();
   }, []);
   
   // JSON-LD Schema for homepage with organization and products
@@ -73,7 +99,7 @@ const Index: React.FC = () => {
       </Helmet>
       <Navbar />
       <main className="bg-sculpture-cream">
-        {/* Hero Section - Updated Layout with New Images */}
+        {/* Hero Section - Updated with Book an Order button */}
         <section className="pt-32 pb-16 md:py-24 lg:min-h-[90vh] flex items-center">
           <div className="container mx-auto px-4">
             <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 lg:gap-12 items-center">
@@ -87,9 +113,12 @@ const Index: React.FC = () => {
                   stone temples, and Buddha sculptures. Based in Mamallapuram, we blend tradition
                   with timeless elegance to create spiritual masterpieces that elevate your space.
                 </p>
-                <div className="pt-4">
+                <div className="pt-4 flex gap-4">
                   <Link to="/works" className="bg-amber-500 hover:bg-amber-600 text-white px-8 py-3 rounded inline-block font-medium">
                     Explore More
+                  </Link>
+                  <Link to="/book" className="bg-sculpture-pink hover:bg-sculpture-darkpink text-white px-8 py-3 rounded inline-block font-medium">
+                    Book an Order
                   </Link>
                 </div>
               </div>
@@ -172,6 +201,55 @@ const Index: React.FC = () => {
             </div>
           </div>
         </section>
+
+        {/* Sales Section - New */}
+        {activeSales.length > 0 && (
+          <section className="py-16 bg-sculpture-cream">
+            <div className="container mx-auto px-4">
+              <div className="text-center mb-12">
+                <h3 className="text-amber-500 font-semibold">SPECIAL OFFERS</h3>
+                <h2 className="text-3xl md:text-4xl font-bold">
+                  Current Sales & Promotions
+                </h2>
+              </div>
+              <div className="space-y-12">
+                {activeSales.map((sale) => (
+                  <div key={sale.id} className="grid grid-cols-1 lg:grid-cols-2 gap-8 lg:gap-12 items-center bg-white rounded-lg shadow-lg overflow-hidden">
+                    {/* Left side - Poster Image */}
+                    <div className="h-64 lg:h-96">
+                      <img 
+                        src={sale.poster_image} 
+                        alt={sale.title}
+                        className="w-full h-full object-cover"
+                        loading="lazy"
+                      />
+                    </div>
+                    
+                    {/* Right side - Details */}
+                    <div className="p-8 space-y-4">
+                      <h3 className="text-2xl md:text-3xl font-bold text-amber-600">
+                        {sale.title}
+                      </h3>
+                      <p className="text-lg text-gray-700">
+                        {sale.description}
+                      </p>
+                      <div className="text-gray-600 leading-relaxed">
+                        {sale.details.split('\n').map((line, index) => (
+                          <p key={index} className="mb-2">{line}</p>
+                        ))}
+                      </div>
+                      <div className="pt-4">
+                        <Link to="/book" className="bg-amber-500 hover:bg-amber-600 text-white px-6 py-3 rounded inline-block font-medium">
+                          Order Now
+                        </Link>
+                      </div>
+                    </div>
+                  </div>
+                ))}
+              </div>
+            </div>
+          </section>
+        )}
 
         {/* About Us Section */}
         <section className="py-16 bg-white">
@@ -448,4 +526,5 @@ const Index: React.FC = () => {
       <Footer />
     </>;
 };
+
 export default Index;

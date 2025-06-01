@@ -78,6 +78,39 @@ export type Database = {
         }
         Relationships: []
       }
+      sales: {
+        Row: {
+          created_at: string
+          description: string
+          details: string
+          id: string
+          is_active: boolean
+          poster_image: string
+          title: string
+          updated_at: string
+        }
+        Insert: {
+          created_at?: string
+          description: string
+          details: string
+          id?: string
+          is_active?: boolean
+          poster_image: string
+          title: string
+          updated_at?: string
+        }
+        Update: {
+          created_at?: string
+          description?: string
+          details?: string
+          id?: string
+          is_active?: boolean
+          poster_image?: string
+          title?: string
+          updated_at?: string
+        }
+        Relationships: []
+      }
       user_roles: {
         Row: {
           id: string
