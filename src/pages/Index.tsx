@@ -140,8 +140,7 @@ const Index: React.FC = () => {
                       <img alt={`Handcrafted ${product.title} stone sculpture by Abinash Sculptures`} src={product.image} loading="lazy" className="w-full h-full object-contain" />
                     </div>
                     <div className="p-6">
-                      <h3 className="text-xl font-semibold mb-2">{product.title}</h3>
-                      <p className="text-gray-600 mb-4">{product.description}</p>
+                      <h3 className="text-xl font-semibold mb-4">{product.title}</h3>
                       <Link to="/products" className="text-amber-500 hover:text-amber-600 font-medium">View Collection →</Link>
                     </div>
                   </div>) : <>
@@ -150,8 +149,7 @@ const Index: React.FC = () => {
                       <img alt="Hand-carved Hindu deity Annapoorani sculpture from Abinash Sculptures" className="w-full h-full object-cover" src="https://i.postimg.cc/brrTG0QY/Annapoorani.jpg" loading="lazy" />
                     </div>
                     <div className="p-6">
-                      <h3 className="text-xl font-semibold mb-2">Hindu Gods</h3>
-                      <p className="text-gray-600 mb-4">Beautiful sculptures of Hindu Gods in various divine poses.</p>
+                      <h3 className="text-xl font-semibold mb-4">Hindu Gods</h3>
                       <Link to="/products" className="text-amber-500 hover:text-amber-600 font-medium">View Collection →</Link>
                     </div>
                   </div>
@@ -160,8 +158,7 @@ const Index: React.FC = () => {
                       <img alt="Serene Buddha stone statue for meditation spaces by Abinash Sculptures" src="https://i.postimg.cc/bvQ8MkSv/Buddha-Small.jpg" className="w-full h-full object-cover" loading="lazy" />
                     </div>
                     <div className="p-6">
-                      <h3 className="text-xl font-semibold mb-2">Buddha Statues</h3>
-                      <p className="text-gray-600 mb-4">Serene Buddha sculptures for meditation spaces and peaceful corners.</p>
+                      <h3 className="text-xl font-semibold mb-4">Buddha Statues</h3>
                       <Link to="/products" className="text-amber-500 hover:text-amber-600 font-medium">View Collection →</Link>
                     </div>
                   </div>
@@ -170,8 +167,7 @@ const Index: React.FC = () => {
                       <img alt="Exquisite Lord Murugan stone sculpture handcrafted by Abinash artisans" className="w-full h-full object-cover" src="https://i.postimg.cc/s2NW1FD8/work4.jpg" loading="lazy" />
                     </div>
                     <div className="p-6">
-                      <h3 className="text-xl font-semibold mb-2">Lord Murugan</h3>
-                      <p className="text-gray-600 mb-4">Lord Murugan inspired by ancient Indian architecture.</p>
+                      <h3 className="text-xl font-semibold mb-4">Lord Murugan</h3>
                       <Link to="/products" className="text-amber-500 hover:text-amber-600 font-medium">View Collection →</Link>
                     </div>
                   </div>
