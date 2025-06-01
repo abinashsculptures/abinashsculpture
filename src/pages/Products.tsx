@@ -151,7 +151,7 @@ const Products: React.FC = () => {
               <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
                 {products.map((product) => (
                   <div key={product.id} className="card overflow-hidden group shadow-md rounded-lg">
-                    <div className="relative overflow-hidden h-64">
+                    <div className="relative overflow-hidden h-80">
                       <img 
                         src={product.image} 
                         alt={`Handcrafted ${product.title} - Abinash Sculptures stone art`}

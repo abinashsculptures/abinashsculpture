@@ -136,7 +136,7 @@ const Index: React.FC = () => {
             </div>
             <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-8">
               {featuredProducts.length > 0 ? featuredProducts.map(product => <div key={product.id} className="card hover-scale overflow-hidden">
-                    <div className="h-64 overflow-hidden">
+                    <div className="h-80 overflow-hidden">
                       <img alt={`Handcrafted ${product.title} stone sculpture by Abinash Sculptures`} src={product.image} loading="lazy" className="w-full h-full object-cover" />
                     </div>
                     <div className="p-6">
@@ -145,7 +145,7 @@ const Index: React.FC = () => {
                     </div>
                   </div>) : <>
                   <div className="card hover-scale overflow-hidden">
-                    <div className="h-64 overflow-hidden">
+                    <div className="h-80 overflow-hidden">
                       <img alt="Hand-carved Hindu deity Annapoorani sculpture from Abinash Sculptures" className="w-full h-full object-cover" src="https://i.postimg.cc/brrTG0QY/Annapoorani.jpg" loading="lazy" />
                     </div>
                     <div className="p-6">
@@ -154,7 +154,7 @@ const Index: React.FC = () => {
                     </div>
                   </div>
                   <div className="card hover-scale overflow-hidden">
-                    <div className="h-64 overflow-hidden">
+                    <div className="h-80 overflow-hidden">
                       <img alt="Serene Buddha stone statue for meditation spaces by Abinash Sculptures" src="https://i.postimg.cc/bvQ8MkSv/Buddha-Small.jpg" className="w-full h-full object-cover" loading="lazy" />
                     </div>
                     <div className="p-6">
@@ -163,7 +163,7 @@ const Index: React.FC = () => {
                     </div>
                   </div>
                   <div className="card hover-scale overflow-hidden">
-                    <div className="h-64 overflow-hidden">
+                    <div className="h-80 overflow-hidden">
                       <img alt="Exquisite Lord Murugan stone sculpture handcrafted by Abinash artisans" className="w-full h-full object-cover" src="https://i.postimg.cc/s2NW1FD8/work4.jpg" loading="lazy" />
                     </div>
                     <div className="p-6">
@@ -193,7 +193,7 @@ const Index: React.FC = () => {
               <div className="space-y-12">
                 {activeSales.map(sale => <div key={sale.id} className="grid grid-cols-1 lg:grid-cols-2 gap-8 lg:gap-12 items-center bg-white rounded-lg shadow-lg overflow-hidden">
                     {/* Left side - Poster Image */}
-                    <div className="h-64 lg:h-96">
+                    <div className="h-80 lg:h-96">
                       <img src={sale.poster_image} alt={sale.title} loading="lazy" className="w-full h-full object-contain" />
                     </div>
                     
