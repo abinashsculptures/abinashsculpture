@@ -1,4 +1,3 @@
-
 import React, { useState, useEffect } from 'react';
 import { useToast } from '@/hooks/use-toast';
 import Navbar from '../components/Navbar';
@@ -8,13 +7,7 @@ import { supabase } from '@/integrations/supabase/client';
 import { Button } from '@/components/ui/button';
 import { MessageSquare, X } from 'lucide-react';
 import { Helmet } from 'react-helmet';
-import {
-  Dialog,
-  DialogContent,
-  DialogHeader,
-  DialogTitle,
-} from '@/components/ui/dialog';
-
+import { Dialog, DialogContent, DialogHeader, DialogTitle } from '@/components/ui/dialog';
 interface Product {
   id: string;
   title: string;
@@ -24,29 +17,28 @@ interface Product {
   price: number | null;
   created_at: string;
 }
-
 const Products: React.FC = () => {
-  const { toast } = useToast();
+  const {
+    toast
+  } = useToast();
   const [products, setProducts] = useState<Product[]>([]);
   const [loading, setLoading] = useState(true);
   const [selectedProduct, setSelectedProduct] = useState<Product | null>(null);
-
   useEffect(() => {
     fetchProducts();
   }, []);
-
   const fetchProducts = async () => {
     try {
       setLoading(true);
-      const { data, error } = await supabase
-        .from('products')
-        .select('*')
-        .order('created_at', { ascending: false });
-
+      const {
+        data,
+        error
+      } = await supabase.from('products').select('*').order('created_at', {
+        ascending: false
+      });
       if (error) {
         throw error;
       }
-
       setProducts(data || []);
     } catch (error: any) {
       console.error('Error fetching products:', error.message);
@@ -59,23 +51,20 @@ const Products: React.FC = () => {
       setLoading(false);
     }
   };
-
   const handleOrderClick = (product: Product) => {
     try {
       // Construct WhatsApp URL with pre-filled message
       const whatsappNumber = "919444425392"; // Added country code without the + as it's handled in the URL
-      const message = encodeURIComponent(
-        `Hello, I'm interested in ordering the ${product.title}. ${product.description}`
-      );
+      const message = encodeURIComponent(`Hello, I'm interested in ordering the ${product.title}. ${product.description}`);
       const whatsappUrl = `https://wa.me/+${whatsappNumber}?text=${message}`;
-      
+
       // Open WhatsApp in a new tab
       window.open(whatsappUrl, '_blank');
-      
+
       // Show success message
       toast({
         title: "WhatsApp Opening",
-        description: "Redirecting you to WhatsApp to complete your order.",
+        description: "Redirecting you to WhatsApp to complete your order."
       });
     } catch (err) {
       console.error('Error opening WhatsApp:', err);
@@ -89,10 +78,7 @@ const Products: React.FC = () => {
 
   // Create URL-friendly slug from product title
   const createSlug = (title: string) => {
-    return title
-      .toLowerCase()
-      .replace(/[^\w\s-]/g, '')
-      .replace(/\s+/g, '-');
+    return title.toLowerCase().replace(/[^\w\s-]/g, '').replace(/\s+/g, '-');
   };
 
   // Truncate description to 2-3 lines (approximately 100-120 characters)
@@ -121,9 +107,7 @@ const Products: React.FC = () => {
     "openingHours": "Mo-Sa 09:00-18:00",
     "priceRange": "₹₹-₹₹₹₹"
   };
-
-  return (
-    <>
+  return <>
       <Helmet>
         <title>Divine Stone Sculptures & Products | Abinash Sculptures</title>
         <meta name="description" content="Browse our exquisite collection of handcrafted Hindu god sculptures, Buddha statues, stone temples, and traditional ammikal. Each piece is meticulously created by master artisans." />
@@ -151,26 +135,15 @@ const Products: React.FC = () => {
         <section className="py-16">
           <div className="container mx-auto px-4">
             <h2 className="text-3xl font-bold mb-8 text-center">Explore Our Handcrafted Collection</h2>
-            {loading ? (
-              <div className="flex justify-center items-center py-16">
+            {loading ? <div className="flex justify-center items-center py-16">
                 <p className="text-lg">Loading products...</p>
-              </div>
-            ) : products.length === 0 ? (
-              <div className="text-center py-16">
+              </div> : products.length === 0 ? <div className="text-center py-16">
                 <p className="text-xl">No products available at the moment.</p>
                 <p className="mt-2">Please check back later or contact us for custom orders.</p>
-              </div>
-            ) : (
-              <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
-                {products.map((product) => (
-                  <div key={product.id} className="card overflow-hidden group shadow-md rounded-lg">
+              </div> : <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+                {products.map(product => <div key={product.id} className="card overflow-hidden group shadow-md rounded-lg">
                     <div className="relative overflow-hidden h-96">
-                      <img 
-                        src={product.image} 
-                        alt={`Handcrafted ${product.title} - Abinash Sculptures stone art`}
-                        className="w-full h-full object-cover transition-transform duration-300 group-hover:scale-105 lazyload"
-                        loading="lazy"
-                      />
+                      <img src={product.image} alt={`Handcrafted ${product.title} - Abinash Sculptures stone art`} loading="lazy" className="w-full h-full transition-transform duration-300 group-hover:scale-105 lazyload object-contain" />
                     </div>
                     <div className="p-6">
                       <h3 className="text-xl font-semibold mb-2">{product.title}</h3>
@@ -178,29 +151,18 @@ const Products: React.FC = () => {
                         {truncateDescription(product.description)}
                       </p>
                       <div className="flex justify-between items-center mb-3">
-                        <Button
-                          variant="ghost"
-                          onClick={() => setSelectedProduct(product)}
-                          className="text-amber-500 font-medium hover:text-amber-600 transition-colors p-0"
-                        >
+                        <Button variant="ghost" onClick={() => setSelectedProduct(product)} className="text-amber-500 font-medium hover:text-amber-600 transition-colors p-0">
                           View More
                         </Button>
-                        <Button 
-                          onClick={() => handleOrderClick(product)}
-                          className="bg-green-600 hover:bg-green-700 flex items-center gap-2"
-                        >
+                        <Button onClick={() => handleOrderClick(product)} className="bg-green-600 hover:bg-green-700 flex items-center gap-2">
                           <MessageSquare className="h-4 w-4" />
                           Order Now
                         </Button>
                       </div>
-                      {product.price && (
-                        <p className="text-lg font-medium">₹{product.price}</p>
-                      )}
+                      {product.price && <p className="text-lg font-medium">₹{product.price}</p>}
                     </div>
-                  </div>
-                ))}
-              </div>
-            )}
+                  </div>)}
+              </div>}
           </div>
         </section>
 
@@ -224,18 +186,13 @@ const Products: React.FC = () => {
       {/* Product Detail Dialog */}
       <Dialog open={!!selectedProduct} onOpenChange={() => setSelectedProduct(null)}>
         <DialogContent className="max-w-4xl max-h-[90vh] overflow-y-auto">
-          {selectedProduct && (
-            <>
+          {selectedProduct && <>
               <DialogHeader>
                 <DialogTitle className="text-2xl font-bold">{selectedProduct.title}</DialogTitle>
               </DialogHeader>
               <div className="grid md:grid-cols-2 gap-6">
                 <div className="relative overflow-hidden rounded-lg">
-                  <img 
-                    src={selectedProduct.image} 
-                    alt={`Handcrafted ${selectedProduct.title} - Abinash Sculptures stone art`}
-                    className="w-full h-96 object-cover"
-                  />
+                  <img src={selectedProduct.image} alt={`Handcrafted ${selectedProduct.title} - Abinash Sculptures stone art`} className="w-full h-96 object-cover" />
                 </div>
                 <div className="space-y-4">
                   <div>
@@ -248,37 +205,26 @@ const Products: React.FC = () => {
                     <h4 className="font-semibold text-lg mb-2">Category</h4>
                     <p className="text-muted-foreground">{selectedProduct.category}</p>
                   </div>
-                  {selectedProduct.price && (
-                    <div>
+                  {selectedProduct.price && <div>
                       <h4 className="font-semibold text-lg mb-2">Price</h4>
                       <p className="text-2xl font-bold text-amber-600">₹{selectedProduct.price}</p>
-                    </div>
-                  )}
+                    </div>}
                   <div className="flex gap-4 pt-4">
-                    <Button 
-                      onClick={() => handleOrderClick(selectedProduct)}
-                      className="bg-green-600 hover:bg-green-700 flex items-center gap-2 flex-1"
-                    >
+                    <Button onClick={() => handleOrderClick(selectedProduct)} className="bg-green-600 hover:bg-green-700 flex items-center gap-2 flex-1">
                       <MessageSquare className="h-4 w-4" />
                       Order Now
                     </Button>
-                    <Link 
-                      to={`/products/${createSlug(selectedProduct.title)}-${selectedProduct.id}`} 
-                      className="btn-primary flex-1 text-center"
-                    >
+                    <Link to={`/products/${createSlug(selectedProduct.title)}-${selectedProduct.id}`} className="btn-primary flex-1 text-center">
                       Enquire Now
                     </Link>
                   </div>
                 </div>
               </div>
-            </>
-          )}
+            </>}
         </DialogContent>
       </Dialog>
 
       <Footer />
-    </>
-  );
+    </>;
 };
-
 export default Products;
