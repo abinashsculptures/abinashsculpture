@@ -6,8 +6,14 @@ import Footer from '../components/Footer';
 import { Link } from 'react-router-dom';
 import { supabase } from '@/integrations/supabase/client';
 import { Button } from '@/components/ui/button';
-import { MessageSquare } from 'lucide-react';
+import { MessageSquare, X } from 'lucide-react';
 import { Helmet } from 'react-helmet';
+import {
+  Dialog,
+  DialogContent,
+  DialogHeader,
+  DialogTitle,
+} from '@/components/ui/dialog';
 
 interface Product {
   id: string;
@@ -23,6 +29,7 @@ const Products: React.FC = () => {
   const { toast } = useToast();
   const [products, setProducts] = useState<Product[]>([]);
   const [loading, setLoading] = useState(true);
+  const [selectedProduct, setSelectedProduct] = useState<Product | null>(null);
 
   useEffect(() => {
     fetchProducts();
@@ -88,6 +95,12 @@ const Products: React.FC = () => {
       .replace(/\s+/g, '-');
   };
 
+  // Truncate description to 2-3 lines (approximately 100-120 characters)
+  const truncateDescription = (description: string, maxLength: number = 120) => {
+    if (description.length <= maxLength) return description;
+    return description.substring(0, maxLength) + '...';
+  };
+
   // JSON-LD Schema for Local Business
   const localBusinessSchema = {
     "@context": "https://schema.org",
@@ -151,7 +164,7 @@ const Products: React.FC = () => {
               <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
                 {products.map((product) => (
                   <div key={product.id} className="card overflow-hidden group shadow-md rounded-lg">
-                    <div className="relative overflow-hidden h-80">
+                    <div className="relative overflow-hidden h-96">
                       <img 
                         src={product.image} 
                         alt={`Handcrafted ${product.title} - Abinash Sculptures stone art`}
@@ -161,11 +174,17 @@ const Products: React.FC = () => {
                     </div>
                     <div className="p-6">
                       <h3 className="text-xl font-semibold mb-2">{product.title}</h3>
-                      <p className="text-muted-foreground mb-4">{product.description}</p>
-                      <div className="flex justify-between items-center">
-                        <Link to={`/products/${createSlug(product.title)}-${product.id}`} className="text-amber-500 font-medium hover:text-amber-600 transition-colors">
-                          Enquire Now
-                        </Link>
+                      <p className="text-muted-foreground mb-4">
+                        {truncateDescription(product.description)}
+                      </p>
+                      <div className="flex justify-between items-center mb-3">
+                        <Button
+                          variant="ghost"
+                          onClick={() => setSelectedProduct(product)}
+                          className="text-amber-500 font-medium hover:text-amber-600 transition-colors p-0"
+                        >
+                          View More
+                        </Button>
                         <Button 
                           onClick={() => handleOrderClick(product)}
                           className="bg-green-600 hover:bg-green-700 flex items-center gap-2"
@@ -175,7 +194,7 @@ const Products: React.FC = () => {
                         </Button>
                       </div>
                       {product.price && (
-                        <p className="mt-3 text-lg font-medium">₹{product.price}</p>
+                        <p className="text-lg font-medium">₹{product.price}</p>
                       )}
                     </div>
                   </div>
@@ -201,6 +220,62 @@ const Products: React.FC = () => {
           </div>
         </section>
       </main>
+
+      {/* Product Detail Dialog */}
+      <Dialog open={!!selectedProduct} onOpenChange={() => setSelectedProduct(null)}>
+        <DialogContent className="max-w-4xl max-h-[90vh] overflow-y-auto">
+          {selectedProduct && (
+            <>
+              <DialogHeader>
+                <DialogTitle className="text-2xl font-bold">{selectedProduct.title}</DialogTitle>
+              </DialogHeader>
+              <div className="grid md:grid-cols-2 gap-6">
+                <div className="relative overflow-hidden rounded-lg">
+                  <img 
+                    src={selectedProduct.image} 
+                    alt={`Handcrafted ${selectedProduct.title} - Abinash Sculptures stone art`}
+                    className="w-full h-96 object-cover"
+                  />
+                </div>
+                <div className="space-y-4">
+                  <div>
+                    <h4 className="font-semibold text-lg mb-2">Description</h4>
+                    <p className="text-muted-foreground leading-relaxed">
+                      {selectedProduct.description}
+                    </p>
+                  </div>
+                  <div>
+                    <h4 className="font-semibold text-lg mb-2">Category</h4>
+                    <p className="text-muted-foreground">{selectedProduct.category}</p>
+                  </div>
+                  {selectedProduct.price && (
+                    <div>
+                      <h4 className="font-semibold text-lg mb-2">Price</h4>
+                      <p className="text-2xl font-bold text-amber-600">₹{selectedProduct.price}</p>
+                    </div>
+                  )}
+                  <div className="flex gap-4 pt-4">
+                    <Button 
+                      onClick={() => handleOrderClick(selectedProduct)}
+                      className="bg-green-600 hover:bg-green-700 flex items-center gap-2 flex-1"
+                    >
+                      <MessageSquare className="h-4 w-4" />
+                      Order Now
+                    </Button>
+                    <Link 
+                      to={`/products/${createSlug(selectedProduct.title)}-${selectedProduct.id}`} 
+                      className="btn-primary flex-1 text-center"
+                    >
+                      Enquire Now
+                    </Link>
+                  </div>
+                </div>
+              </div>
+            </>
+          )}
+        </DialogContent>
+      </Dialog>
+
       <Footer />
     </>
   );
