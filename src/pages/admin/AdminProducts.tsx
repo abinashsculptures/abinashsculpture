@@ -22,6 +22,13 @@ import {
   DialogClose,
 } from "@/components/ui/dialog";
 import { Label } from "@/components/ui/label";
+import {
+  Select,
+  SelectContent,
+  SelectItem,
+  SelectTrigger,
+  SelectValue,
+} from "@/components/ui/select";
 
 interface Product {
   id: string;
@@ -30,6 +37,7 @@ interface Product {
   category: string;
   image: string;
   price: number | null;
+  availability: string;
   created_at: string;
 }
 
@@ -44,7 +52,8 @@ const AdminProducts: React.FC = () => {
     description: '',
     category: '',
     image: '',
-    price: ''
+    price: '',
+    availability: 'in_stock'
   });
   const { toast } = useToast();
 
@@ -83,7 +92,8 @@ const AdminProducts: React.FC = () => {
       description: '',
       category: '',
       image: '',
-      price: ''
+      price: '',
+      availability: 'in_stock'
     });
     setIsDialogOpen(true);
   };
@@ -96,7 +106,8 @@ const AdminProducts: React.FC = () => {
       description: product.description,
       category: product.category,
       image: product.image,
-      price: product.price ? product.price.toString() : ''
+      price: product.price ? product.price.toString() : '',
+      availability: product.availability || 'in_stock'
     });
     setIsDialogOpen(true);
   };
@@ -106,6 +117,13 @@ const AdminProducts: React.FC = () => {
     setFormData(prev => ({
       ...prev,
       [name]: value
+    }));
+  };
+
+  const handleAvailabilityChange = (value: string) => {
+    setFormData(prev => ({
+      ...prev,
+      availability: value
     }));
   };
 
@@ -122,7 +140,8 @@ const AdminProducts: React.FC = () => {
             description: formData.description,
             category: formData.category,
             image: formData.image,
-            price: formData.price ? parseFloat(formData.price) : null
+            price: formData.price ? parseFloat(formData.price) : null,
+            availability: formData.availability
           })
           .eq('id', currentProduct.id);
 
@@ -141,7 +160,8 @@ const AdminProducts: React.FC = () => {
             description: formData.description,
             category: formData.category,
             image: formData.image,
-            price: formData.price ? parseFloat(formData.price) : null
+            price: formData.price ? parseFloat(formData.price) : null,
+            availability: formData.availability
           });
 
         if (error) throw error;
@@ -192,6 +212,13 @@ const AdminProducts: React.FC = () => {
     }
   };
 
+  const getAvailabilityBadge = (availability: string) => {
+    if (availability === 'in_stock') {
+      return <span className="badge-available">In Stock</span>;
+    }
+    return <span className="badge-out-of-stock">Out of Stock</span>;
+  };
+
   if (loading) {
     return <div className="text-center py-10">Loading products...</div>;
   }
@@ -214,6 +241,7 @@ const AdminProducts: React.FC = () => {
               <TableHead>Title</TableHead>
               <TableHead>Category</TableHead>
               <TableHead>Price</TableHead>
+              <TableHead>Availability</TableHead>
               <TableHead>Actions</TableHead>
             </TableRow>
           </TableHeader>
@@ -223,6 +251,7 @@ const AdminProducts: React.FC = () => {
                 <TableCell className="font-medium">{product.title}</TableCell>
                 <TableCell>{product.category}</TableCell>
                 <TableCell>{product.price ? `₹${product.price}` : 'N/A'}</TableCell>
+                <TableCell>{getAvailabilityBadge(product.availability)}</TableCell>
                 <TableCell>
                   <div className="flex space-x-2">
                     <Button 
@@ -325,6 +354,23 @@ const AdminProducts: React.FC = () => {
                   className="col-span-3"
                   placeholder="Optional"
                 />
+              </div>
+              <div className="grid grid-cols-4 items-center gap-4">
+                <Label htmlFor="availability" className="text-right">
+                  Availability
+                </Label>
+                <Select 
+                  value={formData.availability} 
+                  onValueChange={handleAvailabilityChange}
+                >
+                  <SelectTrigger className="col-span-3">
+                    <SelectValue placeholder="Select availability" />
+                  </SelectTrigger>
+                  <SelectContent>
+                    <SelectItem value="in_stock">In Stock</SelectItem>
+                    <SelectItem value="out_of_stock">Out of Stock</SelectItem>
+                  </SelectContent>
+                </Select>
               </div>
             </div>
             <DialogFooter>
