@@ -15,6 +15,7 @@ interface Product {
   description: string;
   image: string;
   category: string;
+  availability: string;
 }
 interface Sale {
   id: string;
@@ -33,7 +34,7 @@ const Index: React.FC = () => {
         const {
           data,
           error
-        } = await supabase.from('products').select('id, title, description, image, category').limit(3);
+        } = await supabase.from('products').select('id, title, description, image, category, availability').limit(3);
         if (error) throw error;
         setFeaturedProducts(data || []);
       } catch (error) {
@@ -136,8 +137,14 @@ const Index: React.FC = () => {
             </div>
             <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-8">
               {featuredProducts.length > 0 ? featuredProducts.map(product => <div key={product.id} className="card hover-scale overflow-hidden">
-                    <div className="h-80 overflow-hidden">
-                      <img alt={`Handcrafted ${product.title} stone sculpture by Abinash Sculptures`} src={product.image} loading="lazy" className="w-full h-full object-cover" />
+                    <div className="relative h-80 overflow-hidden">
+                      <img alt={`Handcrafted ${product.title} stone sculpture by Abinash Sculptures`} src={product.image} loading="lazy" className="responsive-img h-full" />
+                      <div className="absolute top-3 right-3">
+                        {product.availability === 'in_stock' 
+                          ? <span className="badge-available">Available</span>
+                          : <span className="badge-out-of-stock">Out of Stock</span>
+                        }
+                      </div>
                     </div>
                     <div className="p-6">
                       <h3 className="text-xl font-semibold mb-4">{product.title}</h3>
