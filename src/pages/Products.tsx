@@ -56,7 +56,7 @@ const Products: React.FC = () => {
 
   const handleOrderClick = (product: Product) => {
     try {
-      const whatsappNumber = "919444425392";
+      const whatsappNumber = "917305971450";
       const message = encodeURIComponent(`Hello, I'm interested in ordering the ${product.title}. ${product.description}`);
       const whatsappUrl = `https://wa.me/+${whatsappNumber}?text=${message}`;
       window.open(whatsappUrl, '_blank');
@@ -104,7 +104,7 @@ const Products: React.FC = () => {
       "postalCode": "603104",
       "addressCountry": "IN"
     },
-    "telephone": "+919444425392",
+    "telephone": "+917305971450",
     "url": "https://abinashsculptures.in",
     "openingHours": "Mo-Sa 09:00-18:00",
     "priceRange": "₹₹-₹₹₹₹"
