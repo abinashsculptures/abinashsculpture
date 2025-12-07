@@ -246,7 +246,7 @@ const BookOrder: React.FC = () => {
               <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
                 <div className="card text-center">
                   <h3 className="text-xl font-semibold mb-2">Phone</h3>
-                  <p className="text-muted-foreground">+919444425392</p>
+                  <p className="text-muted-foreground">+917305971450</p>
                 </div>
                 <div className="card text-center">
                   <h3 className="text-xl font-semibold mb-2">Email</h3>

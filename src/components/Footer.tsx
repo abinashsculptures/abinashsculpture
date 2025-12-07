@@ -54,7 +54,7 @@ const Footer: React.FC = () => {
             <h4 className="font-serif text-lg font-semibold mb-4">Contact</h4>
             <ul className="space-y-2 text-muted-foreground">
               <li className="flex items-center">
-                <Phone size={16} className="mr-2" /> +91 9444425392
+                <Phone size={16} className="mr-2" /> +91 7305971450
               </li>
               <li className="flex items-center">
                 <Mail size={16} className="mr-2" /> abinashsculptures@gmail.com

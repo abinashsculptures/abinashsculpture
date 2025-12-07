@@ -67,7 +67,7 @@ const Index: React.FC = () => {
     "url": "https://abinashsculptures.in",
     "logo": "https://i.postimg.cc/d3Nc49kF/Screenshot-2025-05-03-152040.png",
     "description": "Handcrafted Hindu god sculptures, Buddha statues, stone temples, and ammikal by master artisans from Mamallapuram.",
-    "telephone": "+919444425392",
+    "telephone": "+917305971450",
     "sameAs": ["https://facebook.com/abinashsculptures", "https://instagram.com/abinashsculptures"],
     "address": {
       "@type": "PostalAddress",
