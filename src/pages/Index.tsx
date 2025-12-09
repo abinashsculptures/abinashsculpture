@@ -138,7 +138,7 @@ const Index: React.FC = () => {
             <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-8">
               {featuredProducts.length > 0 ? featuredProducts.map(product => <div key={product.id} className="card hover-scale overflow-hidden">
                     <div className="relative h-80 overflow-hidden">
-                      <img alt={`Handcrafted ${product.title} stone sculpture by Abinash Sculptures`} src={product.image} loading="lazy" className="responsive-img h-full" />
+                      <img alt={`Handcrafted ${product.title} stone sculpture by Abinash Sculptures`} src={product.image} loading="lazy" className={`responsive-img h-full ${product.availability === 'out_of_stock' ? 'out-of-stock-image' : ''}`} />
                       <div className="absolute top-3 right-3">
                         {product.availability === 'in_stock' 
                           ? <span className="badge-available">Available</span>

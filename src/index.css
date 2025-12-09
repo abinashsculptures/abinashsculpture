@@ -146,6 +146,14 @@
 
 /* Global image responsiveness */
 img {
+  width: 100%;
   max-width: 100%;
   height: auto;
+  object-fit: cover;
+  display: block;
+}
+
+/* Out of stock image opacity */
+.out-of-stock-image {
+  opacity: 0.6;
 }

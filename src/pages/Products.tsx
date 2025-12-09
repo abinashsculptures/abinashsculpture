@@ -157,7 +157,7 @@ const Products: React.FC = () => {
                         src={product.image} 
                         alt={`Handcrafted ${product.title} - Abinash Sculptures stone art`} 
                         loading="lazy" 
-                        className="responsive-img aspect-[4/3] transition-transform duration-300 group-hover:scale-105" 
+                        className={`responsive-img aspect-[4/3] transition-transform duration-300 group-hover:scale-105 ${product.availability === 'out_of_stock' ? 'out-of-stock-image' : ''}`}
                       />
                       <div className="absolute top-3 right-3">
                         {getAvailabilityBadge(product.availability)}
@@ -178,11 +178,11 @@ const Products: React.FC = () => {
                         </Button>
                         <Button 
                           onClick={() => handleOrderClick(product)} 
-                          className="bg-green-600 hover:bg-green-700 flex items-center gap-2"
+                          className={`flex items-center gap-2 ${product.availability === 'out_of_stock' ? 'bg-gray-400 cursor-not-allowed' : 'bg-green-600 hover:bg-green-700'}`}
                           disabled={product.availability === 'out_of_stock'}
                         >
                           <MessageSquare className="h-4 w-4" />
-                          Order Now
+                          {product.availability === 'out_of_stock' ? 'Unavailable' : 'Order Now'}
                         </Button>
                       </div>
                       {product.price && <p className="text-lg font-medium">₹{product.price}</p>}
@@ -224,7 +224,7 @@ const Products: React.FC = () => {
                   <img 
                     src={selectedProduct.image} 
                     alt={`Handcrafted ${selectedProduct.title} - Abinash Sculptures stone art`} 
-                    className="responsive-img aspect-square" 
+                    className={`responsive-img aspect-square ${selectedProduct.availability === 'out_of_stock' ? 'out-of-stock-image' : ''}`}
                   />
                   <div className="absolute top-3 right-3">
                     {getAvailabilityBadge(selectedProduct.availability)}
@@ -250,11 +250,11 @@ const Products: React.FC = () => {
                   <div className="flex gap-4 pt-4">
                     <Button 
                       onClick={() => handleOrderClick(selectedProduct)} 
-                      className="bg-green-600 hover:bg-green-700 flex items-center gap-2 flex-1"
+                      className={`flex items-center gap-2 flex-1 ${selectedProduct.availability === 'out_of_stock' ? 'bg-gray-400 cursor-not-allowed' : 'bg-green-600 hover:bg-green-700'}`}
                       disabled={selectedProduct.availability === 'out_of_stock'}
                     >
                       <MessageSquare className="h-4 w-4" />
-                      Order Now
+                      {selectedProduct.availability === 'out_of_stock' ? 'Unavailable' : 'Order Now'}
                     </Button>
                     <Link 
                       to={`/products/${createSlug(selectedProduct.title)}-${selectedProduct.id}`} 
