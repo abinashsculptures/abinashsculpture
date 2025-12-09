@@ -1,12 +1,9 @@
-
 import React from 'react';
 import Navbar from '../components/Navbar';
 import Footer from '../components/Footer';
 import CartoonAvatar from '../components/CartoonAvatar';
-
 const About: React.FC = () => {
-  return (
-    <>
+  return <>
       <Navbar />
       <main className="pt-20">
         {/* Hero Section */}
@@ -38,11 +35,7 @@ const About: React.FC = () => {
                 </p>
               </div>
               <div className="rounded-lg overflow-hidden h-80">
-                <img 
-                  src="/lovable-uploads/87f797e2-3d15-4e6c-857c-ee05dee9daf4.png" 
-                  alt="Lord Murugan Sculpture" 
-                  className="w-full h-full object-cover"
-                />
+                <img alt="Lord Murugan Sculpture" src="https://i.postimg.cc/VLRTSTNm/20191003-064701.jpg" className="w-full h-full object-cover" />
               </div>
             </div>
           </div>
@@ -85,12 +78,16 @@ const About: React.FC = () => {
           <div className="container mx-auto px-4">
             <h2 className="text-3xl font-bold text-center mb-12">Meet Our Master Sculptors</h2>
             <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
-              {[
-                { name: "Abinash Kumar", role: "Founder & Lead Sculptor" },
-                { name: "Rajiv Mehta", role: "Stone Specialist" },
-                { name: "Priya Sharma", role: "Detail Work Expert" }
-              ].map((member) => (
-                <div key={member.name} className="card text-center">
+              {[{
+              name: "Abinash Kumar",
+              role: "Founder & Lead Sculptor"
+            }, {
+              name: "Rajiv Mehta",
+              role: "Stone Specialist"
+            }, {
+              name: "Priya Sharma",
+              role: "Detail Work Expert"
+            }].map(member => <div key={member.name} className="card text-center">
                   <div className="mx-auto mb-4 flex justify-center">
                     <CartoonAvatar name={member.name} />
                   </div>
@@ -99,8 +96,7 @@ const About: React.FC = () => {
                   <p>
                     With over a decade of experience in sculpture arts, specializing in creating expressive and spiritually resonant pieces.
                   </p>
-                </div>
-              ))}
+                </div>)}
             </div>
           </div>
         </section>
@@ -110,11 +106,7 @@ const About: React.FC = () => {
           <div className="container mx-auto px-4">
             <div className="grid grid-cols-1 md:grid-cols-2 gap-12 items-center">
               <div className="rounded-lg overflow-hidden h-80 order-2 md:order-1">
-                <img 
-                  src="/lovable-uploads/966a3bb0-7519-4427-a96f-50d82f1d3f73.png" 
-                  alt="Our Studio Space" 
-                  className="w-full h-full object-cover"
-                />
+                <img src="/lovable-uploads/966a3bb0-7519-4427-a96f-50d82f1d3f73.png" alt="Our Studio Space" className="w-full h-full object-contain" />
               </div>
               <div className="order-1 md:order-2">
                 <h2 className="text-3xl font-bold mb-6">Our Studio Space</h2>
@@ -130,8 +122,6 @@ const About: React.FC = () => {
         </section>
       </main>
       <Footer />
-    </>
-  );
+    </>;
 };
-
 export default About;
