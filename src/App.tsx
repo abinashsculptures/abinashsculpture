@@ -13,6 +13,8 @@ import Products from "./pages/Products";
 import BookOrder from "./pages/BookOrder";
 import NotFound from "./pages/NotFound";
 import AdminDashboard from "./pages/admin/AdminDashboard";
+import TermsConditions from "./pages/TermsConditions";
+import PrivacyPolicy from "./pages/PrivacyPolicy";
 
 // Create a new QueryClient instance
 const queryClient = new QueryClient();
@@ -33,6 +35,8 @@ const App = () => {
               <Route path="/works" element={<Works />} />
               <Route path="/products" element={<Products />} />
               <Route path="/book" element={<BookOrder />} />
+              <Route path="/terms-conditions" element={<TermsConditions />} />
+              <Route path="/privacy-policy" element={<PrivacyPolicy />} />
               <Route path="/admin/*" element={<AdminDashboard />} />
               <Route path="*" element={<NotFound />} />
             </Routes>
