@@ -1,10 +1,8 @@
 import { Helmet } from 'react-helmet-async';
 import Navbar from '@/components/Navbar';
 import Footer from '@/components/Footer';
-
 const PrivacyPolicy = () => {
-  return (
-    <div className="min-h-screen flex flex-col bg-background">
+  return <div className="min-h-screen flex flex-col bg-background">
       <Helmet>
         <title>Privacy Policy | Abinash Sculptures</title>
         <meta name="description" content="Privacy policy for Abinash Sculptures - learn how we collect, use, and protect your personal information." />
@@ -14,7 +12,7 @@ const PrivacyPolicy = () => {
       
       <main className="flex-1 container mx-auto px-4 py-12">
         <div className="max-w-4xl mx-auto prose prose-stone dark:prose-invert">
-          <h1 className="text-3xl md:text-4xl font-bold text-foreground mb-2">
+          <h1 className="text-3xl md:text-4xl font-bold text-foreground mb-2 my-[25px]">
             🔒 CUSTOM PRIVACY POLICY — ABINASH SCULPTURES
           </h1>
           <p className="text-muted-foreground mb-8">Last Updated: 09-12-2025</p>
@@ -128,8 +126,6 @@ const PrivacyPolicy = () => {
       </main>
       
       <Footer />
-    </div>
-  );
+    </div>;
 };
-
 export default PrivacyPolicy;
