@@ -68,12 +68,12 @@ const Footer: React.FC = () => {
             &copy; {currentYear} Abinash Sculptures. All rights reserved.
           </p>
           <div className="flex space-x-4 mt-4 md:mt-0">
-            <a href="#" className="text-muted-foreground hover:text-sculpture-pink transition-colors duration-300">
+            <Link to="/privacy-policy" className="text-muted-foreground hover:text-sculpture-pink transition-colors duration-300">
               Privacy Policy
-            </a>
-            <a href="#" className="text-muted-foreground hover:text-sculpture-pink transition-colors duration-300">
-              Terms of Service
-            </a>
+            </Link>
+            <Link to="/terms-conditions" className="text-muted-foreground hover:text-sculpture-pink transition-colors duration-300">
+              Terms & Conditions
+            </Link>
           </div>
         </div>
       </div>
