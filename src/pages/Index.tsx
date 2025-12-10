@@ -119,7 +119,7 @@ const Index: React.FC = () => {
                   <img src="/lovable-uploads/636bb5a8-10fc-4b88-b8ea-bb07337d922e.png" alt="Hand-carved Hindu deity stone sculpture - Abinash Sculptures" className="w-full h-full object-cover rounded-lg" loading="lazy" />
                 </div>
                 <div className="bg-white p-3 rounded-lg shadow-lg md:mt-12">
-                  <img src="/lovable-uploads/fcbef6d2-2918-4e70-8608-d0871c7d9a4f.png" alt="Traditional Buddha statue from Abinash master stone sculptors" className="w-full h-full object-cover rounded-lg" loading="lazy" />
+                  <img alt="Traditional Buddha statue from Abinash master stone sculptors" className="w-full h-full object-cover rounded-lg" loading="lazy" src="https://i.postimg.cc/XYNqJB79/image.png" />
                 </div>
               </div>
             </div>
@@ -140,10 +140,7 @@ const Index: React.FC = () => {
                     <div className="relative h-80 overflow-hidden">
                       <img alt={`Handcrafted ${product.title} stone sculpture by Abinash Sculptures`} src={product.image} loading="lazy" className={`responsive-img h-full ${product.availability === 'out_of_stock' ? 'out-of-stock-image' : ''}`} />
                       <div className="absolute top-3 right-3">
-                        {product.availability === 'in_stock' 
-                          ? <span className="badge-available">Available</span>
-                          : <span className="badge-out-of-stock">Out of Stock</span>
-                        }
+                        {product.availability === 'in_stock' ? <span className="badge-available">Available</span> : <span className="badge-out-of-stock">Out of Stock</span>}
                       </div>
                     </div>
                     <div className="p-6">
