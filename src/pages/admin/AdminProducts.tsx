@@ -141,7 +141,15 @@ const AdminProducts: React.FC = () => {
       price: '',
       availability: 'in_stock'
     });
+    setVariants([]);
   };
+
+  const addVariant = () =>
+    setVariants(prev => [...prev, { size: '', price: '', imagesText: '' }]);
+  const removeVariant = (idx: number) =>
+    setVariants(prev => prev.filter((_, i) => i !== idx));
+  const updateVariant = (idx: number, field: keyof VariantForm, value: string) =>
+    setVariants(prev => prev.map((v, i) => (i === idx ? { ...v, [field]: value } : v)));
 
   const handleAddNewClick = () => {
     setIsEditing(false);
