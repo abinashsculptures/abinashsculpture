@@ -174,6 +174,7 @@ const AdminProducts: React.FC = () => {
       price: product.price ? product.price.toString() : '',
       availability: product.availability || 'in_stock'
     });
+    setVariants(variantsFromDb(product.variants));
     setIsDialogOpen(true);
   };
 
