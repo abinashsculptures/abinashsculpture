@@ -59,9 +59,12 @@ export type Database = {
           category: string
           created_at: string
           description: string
+          features: string[]
           id: string
           image: string
+          images: string[]
           price: number | null
+          specifications: Json
           title: string
         }
         Insert: {
@@ -69,9 +72,12 @@ export type Database = {
           category: string
           created_at?: string
           description: string
+          features?: string[]
           id?: string
           image: string
+          images?: string[]
           price?: number | null
+          specifications?: Json
           title: string
         }
         Update: {
@@ -79,9 +85,12 @@ export type Database = {
           category?: string
           created_at?: string
           description?: string
+          features?: string[]
           id?: string
           image?: string
+          images?: string[]
           price?: number | null
+          specifications?: Json
           title?: string
         }
         Relationships: []
