@@ -203,6 +203,25 @@ const AdminProducts: React.FC = () => {
       return;
     }
 
+    const cleanedVariants = variants
+      .map(v => ({
+        size: v.size.trim(),
+        price: v.price.trim() === '' ? null : parseFloat(v.price),
+        images: linesToArray(v.imagesText),
+      }))
+      .filter(v => v.size);
+
+    for (const v of cleanedVariants) {
+      if (v.price !== null && Number.isNaN(v.price)) {
+        toast({
+          title: 'Invalid variant price',
+          description: `Price for size "${v.size}" is not a valid number.`,
+          variant: 'destructive',
+        });
+        return;
+      }
+    }
+
     const payload = {
       title: formData.title,
       description: formData.description,
@@ -211,6 +230,7 @@ const AdminProducts: React.FC = () => {
       images,
       features,
       specifications,
+      variants: cleanedVariants,
       price: formData.price ? parseFloat(formData.price) : null,
       availability: formData.availability
     };
