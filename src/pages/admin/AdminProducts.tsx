@@ -36,6 +36,12 @@ interface SpecItem {
   value: string;
 }
 
+interface VariantForm {
+  size: string;
+  price: string;
+  imagesText: string;
+}
+
 interface Product {
   id: string;
   title: string;
@@ -45,6 +51,7 @@ interface Product {
   images: string[] | null;
   features: string[] | null;
   specifications: SpecItem[] | null;
+  variants: any;
   price: number | null;
   availability: string;
   created_at: string;
@@ -69,6 +76,15 @@ const linesToArray = (text: string): string[] =>
   text.split('\n').map(l => l.trim()).filter(Boolean);
 
 const arrayToLines = (arr: string[] | null) => (arr || []).join('\n');
+
+const variantsFromDb = (raw: any): VariantForm[] => {
+  if (!Array.isArray(raw)) return [];
+  return raw.map((v: any) => ({
+    size: typeof v?.size === 'string' ? v.size : '',
+    price: v?.price === null || v?.price === undefined ? '' : String(v.price),
+    imagesText: Array.isArray(v?.images) ? v.images.join('\n') : '',
+  }));
+};
 
 const AdminProducts: React.FC = () => {
   const [products, setProducts] = useState<Product[]>([]);
