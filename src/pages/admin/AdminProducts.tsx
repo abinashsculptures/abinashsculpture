@@ -102,6 +102,7 @@ const AdminProducts: React.FC = () => {
     price: '',
     availability: 'in_stock'
   });
+  const [variants, setVariants] = useState<VariantForm[]>([]);
   const { toast } = useToast();
 
   useEffect(() => {
