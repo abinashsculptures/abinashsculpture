@@ -28,6 +28,18 @@
   </head>
 
   <body>
+    <script>
+      // Restore path saved by 404.html SPA fallback
+      (function () {
+        try {
+          var redirect = sessionStorage.getItem('spa-redirect');
+          if (redirect && redirect !== '/' ) {
+            sessionStorage.removeItem('spa-redirect');
+            history.replaceState(null, '', redirect);
+          }
+        } catch (e) {}
+      })();
+    </script>
     <div id="root"></div>
     <!-- IMPORTANT: DO NOT REMOVE THIS SCRIPT TAG OR THIS VERY COMMENT! -->
     <script src="https://cdn.gpteng.co/gptengineer.js" type="module"></script>
