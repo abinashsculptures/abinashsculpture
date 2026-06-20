@@ -36,6 +36,12 @@ interface SpecItem {
   value: string;
 }
 
+interface VariantForm {
+  size: string;
+  price: string;
+  imagesText: string;
+}
+
 interface Product {
   id: string;
   title: string;
@@ -45,6 +51,7 @@ interface Product {
   images: string[] | null;
   features: string[] | null;
   specifications: SpecItem[] | null;
+  variants: any;
   price: number | null;
   availability: string;
   created_at: string;
@@ -70,6 +77,15 @@ const linesToArray = (text: string): string[] =>
 
 const arrayToLines = (arr: string[] | null) => (arr || []).join('\n');
 
+const variantsFromDb = (raw: any): VariantForm[] => {
+  if (!Array.isArray(raw)) return [];
+  return raw.map((v: any) => ({
+    size: typeof v?.size === 'string' ? v.size : '',
+    price: v?.price === null || v?.price === undefined ? '' : String(v.price),
+    imagesText: Array.isArray(v?.images) ? v.images.join('\n') : '',
+  }));
+};
+
 const AdminProducts: React.FC = () => {
   const [products, setProducts] = useState<Product[]>([]);
   const [loading, setLoading] = useState(true);
@@ -86,6 +102,7 @@ const AdminProducts: React.FC = () => {
     price: '',
     availability: 'in_stock'
   });
+  const [variants, setVariants] = useState<VariantForm[]>([]);
   const { toast } = useToast();
 
   useEffect(() => {
@@ -124,7 +141,15 @@ const AdminProducts: React.FC = () => {
       price: '',
       availability: 'in_stock'
     });
+    setVariants([]);
   };
+
+  const addVariant = () =>
+    setVariants(prev => [...prev, { size: '', price: '', imagesText: '' }]);
+  const removeVariant = (idx: number) =>
+    setVariants(prev => prev.filter((_, i) => i !== idx));
+  const updateVariant = (idx: number, field: keyof VariantForm, value: string) =>
+    setVariants(prev => prev.map((v, i) => (i === idx ? { ...v, [field]: value } : v)));
 
   const handleAddNewClick = () => {
     setIsEditing(false);
@@ -149,6 +174,7 @@ const AdminProducts: React.FC = () => {
       price: product.price ? product.price.toString() : '',
       availability: product.availability || 'in_stock'
     });
+    setVariants(variantsFromDb(product.variants));
     setIsDialogOpen(true);
   };
 
@@ -177,6 +203,25 @@ const AdminProducts: React.FC = () => {
       return;
     }
 
+    const cleanedVariants = variants
+      .map(v => ({
+        size: v.size.trim(),
+        price: v.price.trim() === '' ? null : parseFloat(v.price),
+        images: linesToArray(v.imagesText),
+      }))
+      .filter(v => v.size);
+
+    for (const v of cleanedVariants) {
+      if (v.price !== null && Number.isNaN(v.price)) {
+        toast({
+          title: 'Invalid variant price',
+          description: `Price for size "${v.size}" is not a valid number.`,
+          variant: 'destructive',
+        });
+        return;
+      }
+    }
+
     const payload = {
       title: formData.title,
       description: formData.description,
@@ -185,6 +230,7 @@ const AdminProducts: React.FC = () => {
       images,
       features,
       specifications,
+      variants: cleanedVariants,
       price: formData.price ? parseFloat(formData.price) : null,
       availability: formData.availability
     };
@@ -341,6 +387,70 @@ const AdminProducts: React.FC = () => {
                   placeholder={'Material: Black Granite\nHeight: 24 inches\nWeight: 18 kg'}
                 />
               </div>
+
+              <div className="grid gap-3 border rounded-md p-4 bg-muted/30">
+                <div className="flex items-center justify-between">
+                  <div>
+                    <Label className="text-base">Sizes / Variants</Label>
+                    <p className="text-xs text-muted-foreground mt-1">
+                      Add multiple sizes of the same product. Each size can have its own price and images. Leave empty if the product has only one size.
+                    </p>
+                  </div>
+                  <Button type="button" size="sm" variant="outline" onClick={addVariant}>
+                    + Add Size
+                  </Button>
+                </div>
+
+                {variants.length === 0 && (
+                  <p className="text-sm text-muted-foreground italic">No size variants added.</p>
+                )}
+
+                {variants.map((v, idx) => (
+                  <div key={idx} className="border rounded-md p-3 bg-background space-y-3">
+                    <div className="flex items-center justify-between">
+                      <p className="font-medium text-sm">Variant #{idx + 1}</p>
+                      <Button
+                        type="button"
+                        size="sm"
+                        variant="outline"
+                        className="bg-red-50 text-red-600 hover:bg-red-100 border-red-200"
+                        onClick={() => removeVariant(idx)}
+                      >
+                        Remove
+                      </Button>
+                    </div>
+                    <div className="grid grid-cols-2 gap-3">
+                      <div className="grid gap-1">
+                        <Label className="text-xs">Size</Label>
+                        <Input
+                          value={v.size}
+                          onChange={(e) => updateVariant(idx, 'size', e.target.value)}
+                          placeholder="e.g. 12 inch"
+                        />
+                      </div>
+                      <div className="grid gap-1">
+                        <Label className="text-xs">Price (₹)</Label>
+                        <Input
+                          type="number"
+                          value={v.price}
+                          onChange={(e) => updateVariant(idx, 'price', e.target.value)}
+                          placeholder="Optional"
+                        />
+                      </div>
+                    </div>
+                    <div className="grid gap-1">
+                      <Label className="text-xs">Images for this size (one URL per line — optional, falls back to main images)</Label>
+                      <Textarea
+                        rows={3}
+                        value={v.imagesText}
+                        onChange={(e) => updateVariant(idx, 'imagesText', e.target.value)}
+                        placeholder={'https://example.com/size12-img1.jpg\nhttps://example.com/size12-img2.jpg'}
+                      />
+                    </div>
+                  </div>
+                ))}
+              </div>
+
               <div className="grid grid-cols-2 gap-4">
                 <div className="grid gap-2">
                   <Label htmlFor="price">Price</Label>

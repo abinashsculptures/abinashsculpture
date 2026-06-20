@@ -66,6 +66,7 @@ export type Database = {
           price: number | null
           specifications: Json
           title: string
+          variants: Json
         }
         Insert: {
           availability?: string
@@ -79,6 +80,7 @@ export type Database = {
           price?: number | null
           specifications?: Json
           title: string
+          variants?: Json
         }
         Update: {
           availability?: string
@@ -92,6 +94,7 @@ export type Database = {
           price?: number | null
           specifications?: Json
           title?: string
+          variants?: Json
         }
         Relationships: []
       }

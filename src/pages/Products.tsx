@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useMemo } from 'react';
 import { useToast } from '@/hooks/use-toast';
 import Navbar from '../components/Navbar';
 import Footer from '../components/Footer';
@@ -15,6 +15,12 @@ interface SpecItem {
   value: string;
 }
 
+interface Variant {
+  size: string;
+  price: number | null;
+  images: string[];
+}
+
 interface Product {
   id: string;
   title: string;
@@ -24,25 +30,53 @@ interface Product {
   images: string[] | null;
   features: string[] | null;
   specifications: SpecItem[] | null;
+  variants: Variant[] | null;
   price: number | null;
   availability: string;
   created_at: string;
 }
 
-const getProductImages = (product: Product): string[] => {
+const getBaseImages = (product: Product): string[] => {
   const list = (product.images && product.images.length > 0)
     ? product.images
     : (product.image ? [product.image] : []);
   return list.filter(Boolean);
 };
 
+const normalizeVariants = (raw: any): Variant[] => {
+  if (!Array.isArray(raw)) return [];
+  return raw
+    .map((v: any) => ({
+      size: typeof v?.size === 'string' ? v.size : '',
+      price: v?.price === null || v?.price === undefined || v?.price === '' ? null : Number(v.price),
+      images: Array.isArray(v?.images) ? v.images.filter((s: any) => typeof s === 'string' && s.trim()) : [],
+    }))
+    .filter(v => v.size.trim());
+};
+
 const ProductDetail: React.FC<{
   product: Product;
-  onOrder: (p: Product) => void;
-  createSlug: (t: string) => string;
-}> = ({ product, onOrder, createSlug }) => {
-  const images = getProductImages(product);
-  const [activeImage, setActiveImage] = useState(images[0] || '');
+  onOrder: (p: Product, variant?: Variant | null) => void;
+}> = ({ product, onOrder }) => {
+  const variants = normalizeVariants(product.variants);
+  const hasVariants = variants.length > 0;
+  const [selectedVariantIdx, setSelectedVariantIdx] = useState(0);
+  const selectedVariant = hasVariants ? variants[selectedVariantIdx] : null;
+
+  const baseImages = getBaseImages(product);
+  const displayImages = useMemo(() => {
+    if (selectedVariant && selectedVariant.images.length > 0) return selectedVariant.images;
+    return baseImages;
+  }, [selectedVariant, baseImages]);
+
+  const displayPrice = selectedVariant?.price ?? product.price ?? null;
+
+  const [activeImage, setActiveImage] = useState(displayImages[0] || '');
+
+  useEffect(() => {
+    setActiveImage(displayImages[0] || '');
+  }, [displayImages]);
+
   const features = product.features || [];
   const specs = product.specifications || [];
 
@@ -67,11 +101,11 @@ const ProductDetail: React.FC<{
                 : <span className="badge-out-of-stock">Out of Stock</span>}
             </div>
           </div>
-          {images.length > 1 && (
+          {displayImages.length > 1 && (
             <div className="mt-3 flex gap-2 flex-wrap">
-              {images.map((src, i) => (
+              {displayImages.map((src, i) => (
                 <button
-                  key={i}
+                  key={`${src}-${i}`}
                   type="button"
                   onClick={() => setActiveImage(src)}
                   className={`w-20 h-20 rounded-md overflow-hidden border-2 transition ${activeImage === src ? 'border-amber-500' : 'border-transparent hover:border-muted-foreground/40'}`}
@@ -87,16 +121,42 @@ const ProductDetail: React.FC<{
         <div className="space-y-4">
           <div>
             <p className="text-sm uppercase tracking-wide text-muted-foreground">{product.category}</p>
-            {product.price && (
-              <p className="text-3xl font-bold text-amber-600 mt-1">₹{product.price}</p>
+            {displayPrice !== null && !Number.isNaN(displayPrice) && (
+              <p className="text-3xl font-bold text-amber-600 mt-1">₹{displayPrice}</p>
             )}
           </div>
+
+          {hasVariants && (
+            <div>
+              <p className="text-sm font-medium mb-2">Available sizes</p>
+              <div className="flex flex-wrap gap-2">
+                {variants.map((v, i) => (
+                  <button
+                    key={`${v.size}-${i}`}
+                    type="button"
+                    onClick={() => setSelectedVariantIdx(i)}
+                    className={`px-3 py-2 rounded-md border text-sm transition ${
+                      i === selectedVariantIdx
+                        ? 'border-amber-500 bg-amber-50 text-amber-700'
+                        : 'border-muted-foreground/30 hover:border-amber-400'
+                    }`}
+                  >
+                    <span className="font-medium">{v.size}</span>
+                    {v.price !== null && !Number.isNaN(v.price) && (
+                      <span className="ml-2 text-muted-foreground">₹{v.price}</span>
+                    )}
+                  </button>
+                ))}
+              </div>
+            </div>
+          )}
+
           <p className="text-muted-foreground leading-relaxed">
             {product.description}
           </p>
           <div className="flex gap-3 pt-2">
             <Button
-              onClick={() => onOrder(product)}
+              onClick={() => onOrder(product, selectedVariant)}
               className={`flex items-center gap-2 flex-1 ${product.availability === 'out_of_stock' ? 'bg-gray-400 cursor-not-allowed' : 'bg-green-600 hover:bg-green-700'}`}
               disabled={product.availability === 'out_of_stock'}
             >
@@ -104,7 +164,7 @@ const ProductDetail: React.FC<{
               {product.availability === 'out_of_stock' ? 'Unavailable' : 'Order Now'}
             </Button>
             <Link
-              to={`/book?product=${encodeURIComponent(product.title)}`}
+              to={`/book?product=${encodeURIComponent(product.title)}${selectedVariant ? `&size=${encodeURIComponent(selectedVariant.size)}` : ''}`}
               className="btn-primary flex-1 text-center"
             >
               Enquire Now
@@ -139,20 +199,45 @@ const ProductDetail: React.FC<{
         </TabsContent>
 
         <TabsContent value="specifications" className="pt-4">
-          {specs.length === 0 ? (
+          {specs.length === 0 && !hasVariants ? (
             <p className="text-muted-foreground">No specifications available.</p>
           ) : (
-            <div className="overflow-x-auto">
-              <table className="w-full text-sm border rounded-md">
-                <tbody>
-                  {specs.map((s, i) => (
-                    <tr key={i} className="border-b last:border-0">
-                      <th className="text-left p-3 bg-muted/40 w-1/3 font-medium">{s.label}</th>
-                      <td className="p-3 text-muted-foreground">{s.value}</td>
-                    </tr>
-                  ))}
-                </tbody>
-              </table>
+            <div className="overflow-x-auto space-y-4">
+              {specs.length > 0 && (
+                <table className="w-full text-sm border rounded-md">
+                  <tbody>
+                    {specs.map((s, i) => (
+                      <tr key={i} className="border-b last:border-0">
+                        <th className="text-left p-3 bg-muted/40 w-1/3 font-medium">{s.label}</th>
+                        <td className="p-3 text-muted-foreground">{s.value}</td>
+                      </tr>
+                    ))}
+                  </tbody>
+                </table>
+              )}
+              {hasVariants && (
+                <div>
+                  <p className="text-sm font-medium mb-2">Sizes & Pricing</p>
+                  <table className="w-full text-sm border rounded-md">
+                    <thead>
+                      <tr className="bg-muted/40">
+                        <th className="text-left p-3 font-medium">Size</th>
+                        <th className="text-left p-3 font-medium">Price</th>
+                      </tr>
+                    </thead>
+                    <tbody>
+                      {variants.map((v, i) => (
+                        <tr key={i} className="border-b last:border-0">
+                          <td className="p-3">{v.size}</td>
+                          <td className="p-3 text-muted-foreground">
+                            {v.price !== null && !Number.isNaN(v.price) ? `₹${v.price}` : '—'}
+                          </td>
+                        </tr>
+                      ))}
+                    </tbody>
+                  </table>
+                </div>
+              )}
             </div>
           )}
         </TabsContent>
@@ -200,10 +285,14 @@ const Products: React.FC = () => {
     }
   };
 
-  const handleOrderClick = (product: Product) => {
+  const handleOrderClick = (product: Product, variant?: Variant | null) => {
     try {
       const whatsappNumber = "917305971450";
-      const message = encodeURIComponent(`Hello, I'm interested in ordering the ${product.title}. ${product.description}`);
+      const sizeText = variant?.size ? ` (Size: ${variant.size})` : '';
+      const priceText = (variant?.price ?? product.price) ? ` - ₹${variant?.price ?? product.price}` : '';
+      const message = encodeURIComponent(
+        `Hello, I'm interested in ordering the ${product.title}${sizeText}${priceText}. ${product.description}`
+      );
       const whatsappUrl = `https://wa.me/+${whatsappNumber}?text=${message}`;
       window.open(whatsappUrl, '_blank');
       toast({
@@ -220,9 +309,6 @@ const Products: React.FC = () => {
     }
   };
 
-  const createSlug = (title: string) =>
-    title.toLowerCase().replace(/[^\w\s-]/g, '').replace(/\s+/g, '-');
-
   const truncateDescription = (description: string, maxLength: number = 120) => {
     if (!description) return '';
     if (description.length <= maxLength) return description;
@@ -233,6 +319,15 @@ const Products: React.FC = () => {
     availability === 'in_stock'
       ? <span className="badge-available">Available</span>
       : <span className="badge-out-of-stock">Out of Stock</span>;
+
+  const getDisplayPrice = (product: Product): number | null => {
+    const variants = normalizeVariants(product.variants);
+    if (variants.length > 0) {
+      const prices = variants.map(v => v.price).filter((p): p is number => p !== null && !Number.isNaN(p));
+      if (prices.length > 0) return Math.min(...prices);
+    }
+    return product.price;
+  };
 
   const localBusinessSchema = {
     "@context": "https://schema.org",
@@ -293,7 +388,10 @@ const Products: React.FC = () => {
             ) : (
               <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
                 {products.map((product) => {
-                  const cardImage = getProductImages(product)[0] || product.image;
+                  const variants = normalizeVariants(product.variants);
+                  const firstVariantImages = variants[0]?.images || [];
+                  const cardImage = firstVariantImages[0] || getBaseImages(product)[0] || product.image;
+                  const displayPrice = getDisplayPrice(product);
                   return (
                     <div key={product.id} className="card overflow-hidden group shadow-md rounded-lg">
                       <div className="relative overflow-hidden">
@@ -312,6 +410,11 @@ const Products: React.FC = () => {
                         <p className="text-muted-foreground mb-4">
                           {truncateDescription(product.description)}
                         </p>
+                        {variants.length > 0 && (
+                          <p className="text-xs text-muted-foreground mb-2">
+                            Available in {variants.length} size{variants.length > 1 ? 's' : ''}: {variants.map(v => v.size).join(', ')}
+                          </p>
+                        )}
                         <div className="flex justify-between items-center mb-3">
                           <Button
                             variant="ghost"
@@ -321,7 +424,7 @@ const Products: React.FC = () => {
                             View More
                           </Button>
                           <Button
-                            onClick={() => handleOrderClick(product)}
+                            onClick={() => handleOrderClick(product, variants[0] || null)}
                             className={`flex items-center gap-2 ${product.availability === 'out_of_stock' ? 'bg-gray-400 cursor-not-allowed' : 'bg-green-600 hover:bg-green-700'}`}
                             disabled={product.availability === 'out_of_stock'}
                           >
@@ -329,7 +432,11 @@ const Products: React.FC = () => {
                             {product.availability === 'out_of_stock' ? 'Unavailable' : 'Order Now'}
                           </Button>
                         </div>
-                        {product.price && <p className="text-lg font-medium">₹{product.price}</p>}
+                        {displayPrice !== null && (
+                          <p className="text-lg font-medium">
+                            {variants.length > 1 ? 'From ' : ''}₹{displayPrice}
+                          </p>
+                        )}
                       </div>
                     </div>
                   );
@@ -366,7 +473,6 @@ const Products: React.FC = () => {
                 key={selectedProduct.id}
                 product={selectedProduct}
                 onOrder={handleOrderClick}
-                createSlug={createSlug}
               />
             </>
           )}
