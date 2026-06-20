@@ -387,6 +387,70 @@ const AdminProducts: React.FC = () => {
                   placeholder={'Material: Black Granite\nHeight: 24 inches\nWeight: 18 kg'}
                 />
               </div>
+
+              <div className="grid gap-3 border rounded-md p-4 bg-muted/30">
+                <div className="flex items-center justify-between">
+                  <div>
+                    <Label className="text-base">Sizes / Variants</Label>
+                    <p className="text-xs text-muted-foreground mt-1">
+                      Add multiple sizes of the same product. Each size can have its own price and images. Leave empty if the product has only one size.
+                    </p>
+                  </div>
+                  <Button type="button" size="sm" variant="outline" onClick={addVariant}>
+                    + Add Size
+                  </Button>
+                </div>
+
+                {variants.length === 0 && (
+                  <p className="text-sm text-muted-foreground italic">No size variants added.</p>
+                )}
+
+                {variants.map((v, idx) => (
+                  <div key={idx} className="border rounded-md p-3 bg-background space-y-3">
+                    <div className="flex items-center justify-between">
+                      <p className="font-medium text-sm">Variant #{idx + 1}</p>
+                      <Button
+                        type="button"
+                        size="sm"
+                        variant="outline"
+                        className="bg-red-50 text-red-600 hover:bg-red-100 border-red-200"
+                        onClick={() => removeVariant(idx)}
+                      >
+                        Remove
+                      </Button>
+                    </div>
+                    <div className="grid grid-cols-2 gap-3">
+                      <div className="grid gap-1">
+                        <Label className="text-xs">Size</Label>
+                        <Input
+                          value={v.size}
+                          onChange={(e) => updateVariant(idx, 'size', e.target.value)}
+                          placeholder="e.g. 12 inch"
+                        />
+                      </div>
+                      <div className="grid gap-1">
+                        <Label className="text-xs">Price (₹)</Label>
+                        <Input
+                          type="number"
+                          value={v.price}
+                          onChange={(e) => updateVariant(idx, 'price', e.target.value)}
+                          placeholder="Optional"
+                        />
+                      </div>
+                    </div>
+                    <div className="grid gap-1">
+                      <Label className="text-xs">Images for this size (one URL per line — optional, falls back to main images)</Label>
+                      <Textarea
+                        rows={3}
+                        value={v.imagesText}
+                        onChange={(e) => updateVariant(idx, 'imagesText', e.target.value)}
+                        placeholder={'https://example.com/size12-img1.jpg\nhttps://example.com/size12-img2.jpg'}
+                      />
+                    </div>
+                  </div>
+                ))}
+              </div>
+
               <div className="grid grid-cols-2 gap-4">
                 <div className="grid gap-2">
                   <Label htmlFor="price">Price</Label>
