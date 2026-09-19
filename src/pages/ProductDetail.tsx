@@ -81,6 +81,12 @@ const ProductDetail: React.FC = () => {
   const variants = useMemo(() => normalizeVariants(product?.variants), [product]);
   const selectedVariant = variants[variantIdx] || null;
 
+  useEffect(() => {
+    if (!requestedSize || variants.length === 0) return;
+    const idx = variants.findIndex(v => v.size.toLowerCase() === requestedSize.toLowerCase());
+    if (idx >= 0) setVariantIdx(idx);
+  }, [requestedSize, variants]);
+
   const images = useMemo(() => {
     if (selectedVariant?.images.length) return selectedVariant.images;
     const base = Array.isArray(product?.images) && product.images.length ? product.images : (product?.image ? [product.image] : []);
