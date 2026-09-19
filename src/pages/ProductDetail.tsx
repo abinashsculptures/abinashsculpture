@@ -1,5 +1,5 @@
 import React, { useEffect, useMemo, useState } from 'react';
-import { Link, useNavigate, useParams } from 'react-router-dom';
+import { Link, useNavigate, useParams, useSearchParams } from 'react-router-dom';
 import { Helmet } from 'react-helmet';
 import Navbar from '../components/Navbar';
 import Footer from '../components/Footer';
@@ -26,6 +26,8 @@ const normalizeVariants = (raw: any): Variant[] => {
 
 const ProductDetail: React.FC = () => {
   const { slug } = useParams();
+  const [searchParams] = useSearchParams();
+  const requestedSize = searchParams.get('size');
   const navigate = useNavigate();
   const { user } = useAuth();
   const { addItem } = useCart();
