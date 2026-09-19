@@ -43,7 +43,12 @@ const ProductDetail: React.FC = () => {
   useEffect(() => {
     const load = async () => {
       setLoading(true);
-      const { data } = await supabase.from('products').select('*').eq('slug', slug).maybeSingle();
+      const isUuid = !!slug && /^[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}$/i.test(slug);
+      const { data } = await supabase
+        .from('products')
+        .select('*')
+        .eq(isUuid ? 'id' : 'slug', slug as string)
+        .maybeSingle();
       setProduct(data);
       if (data) {
         const { data: r } = await supabase
