@@ -1,5 +1,5 @@
 import React, { useEffect, useMemo, useState } from 'react';
-import { Link, useNavigate, useParams } from 'react-router-dom';
+import { Link, useNavigate, useParams, useSearchParams } from 'react-router-dom';
 import { Helmet } from 'react-helmet';
 import Navbar from '../components/Navbar';
 import Footer from '../components/Footer';
@@ -26,6 +26,8 @@ const normalizeVariants = (raw: any): Variant[] => {
 
 const ProductDetail: React.FC = () => {
   const { slug } = useParams();
+  const [searchParams] = useSearchParams();
+  const requestedSize = searchParams.get('size');
   const navigate = useNavigate();
   const { user } = useAuth();
   const { addItem } = useCart();
@@ -41,7 +43,12 @@ const ProductDetail: React.FC = () => {
   useEffect(() => {
     const load = async () => {
       setLoading(true);
-      const { data } = await supabase.from('products').select('*').eq('slug', slug).maybeSingle();
+      const isUuid = !!slug && /^[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}$/i.test(slug);
+      const { data } = await supabase
+        .from('products')
+        .select('*')
+        .eq(isUuid ? 'id' : 'slug', slug as string)
+        .maybeSingle();
       setProduct(data);
       if (data) {
         const { data: r } = await supabase
@@ -73,6 +80,12 @@ const ProductDetail: React.FC = () => {
 
   const variants = useMemo(() => normalizeVariants(product?.variants), [product]);
   const selectedVariant = variants[variantIdx] || null;
+
+  useEffect(() => {
+    if (!requestedSize || variants.length === 0) return;
+    const idx = variants.findIndex(v => v.size.toLowerCase() === requestedSize.toLowerCase());
+    if (idx >= 0) setVariantIdx(idx);
+  }, [requestedSize, variants]);
 
   const images = useMemo(() => {
     if (selectedVariant?.images.length) return selectedVariant.images;
