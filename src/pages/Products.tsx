@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useMemo } from 'react';
+import React, { useState, useEffect } from 'react';
 import { useToast } from '@/hooks/use-toast';
 import Navbar from '../components/Navbar';
 import Footer from '../components/Footer';
@@ -7,8 +7,6 @@ import { supabase } from '@/integrations/supabase/client';
 import { Button } from '@/components/ui/button';
 import { MessageSquare } from 'lucide-react';
 import { Helmet } from 'react-helmet';
-import { Dialog, DialogContent, DialogHeader, DialogTitle } from '@/components/ui/dialog';
-import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
 
 interface SpecItem {
   label: string;
@@ -23,6 +21,7 @@ interface Variant {
 
 interface Product {
   id: string;
+  slug: string;
   title: string;
   description: string;
   category: string;
@@ -54,210 +53,10 @@ const normalizeVariants = (raw: any): Variant[] => {
     .filter(v => v.size.trim());
 };
 
-const ProductDetail: React.FC<{
-  product: Product;
-  onOrder: (p: Product, variant?: Variant | null) => void;
-}> = ({ product, onOrder }) => {
-  const variants = normalizeVariants(product.variants);
-  const hasVariants = variants.length > 0;
-  const [selectedVariantIdx, setSelectedVariantIdx] = useState(0);
-  const selectedVariant = hasVariants ? variants[selectedVariantIdx] : null;
-
-  const baseImages = getBaseImages(product);
-  const displayImages = useMemo(() => {
-    if (selectedVariant && selectedVariant.images.length > 0) return selectedVariant.images;
-    return baseImages;
-  }, [selectedVariant, baseImages]);
-
-  const displayPrice = selectedVariant?.price ?? product.price ?? null;
-
-  const [activeImage, setActiveImage] = useState(displayImages[0] || '');
-
-  useEffect(() => {
-    setActiveImage(displayImages[0] || '');
-  }, [displayImages]);
-
-  const features = product.features || [];
-  const specs = product.specifications || [];
-
-  return (
-    <div className="space-y-6">
-      <div className="grid md:grid-cols-2 gap-6">
-        {/* Gallery */}
-        <div>
-          <div className="relative overflow-hidden rounded-lg border bg-muted">
-            {activeImage ? (
-              <img
-                src={activeImage}
-                alt={`Handcrafted ${product.title} - Abinash Sculptures stone art`}
-                className={`responsive-img aspect-square ${product.availability === 'out_of_stock' ? 'out-of-stock-image' : ''}`}
-              />
-            ) : (
-              <div className="aspect-square flex items-center justify-center text-muted-foreground">No image</div>
-            )}
-            <div className="absolute top-3 right-3">
-              {product.availability === 'in_stock'
-                ? <span className="badge-available">Available</span>
-                : <span className="badge-out-of-stock">Out of Stock</span>}
-            </div>
-          </div>
-          {displayImages.length > 1 && (
-            <div className="mt-3 flex gap-2 flex-wrap">
-              {displayImages.map((src, i) => (
-                <button
-                  key={`${src}-${i}`}
-                  type="button"
-                  onClick={() => setActiveImage(src)}
-                  className={`w-20 h-20 rounded-md overflow-hidden border-2 transition ${activeImage === src ? 'border-amber-500' : 'border-transparent hover:border-muted-foreground/40'}`}
-                >
-                  <img src={src} alt={`${product.title} thumbnail ${i + 1}`} className="w-full h-full object-cover" />
-                </button>
-              ))}
-            </div>
-          )}
-        </div>
-
-        {/* Summary + actions */}
-        <div className="space-y-4">
-          <div>
-            <p className="text-sm uppercase tracking-wide text-muted-foreground">{product.category}</p>
-            {displayPrice !== null && !Number.isNaN(displayPrice) && (
-              <p className="text-3xl font-bold text-amber-600 mt-1">₹{displayPrice}</p>
-            )}
-          </div>
-
-          {hasVariants && (
-            <div>
-              <p className="text-sm font-medium mb-2">Available sizes</p>
-              <div className="flex flex-wrap gap-2">
-                {variants.map((v, i) => (
-                  <button
-                    key={`${v.size}-${i}`}
-                    type="button"
-                    onClick={() => setSelectedVariantIdx(i)}
-                    className={`px-3 py-2 rounded-md border text-sm transition ${
-                      i === selectedVariantIdx
-                        ? 'border-amber-500 bg-amber-50 text-amber-700'
-                        : 'border-muted-foreground/30 hover:border-amber-400'
-                    }`}
-                  >
-                    <span className="font-medium">{v.size}</span>
-                    {v.price !== null && !Number.isNaN(v.price) && (
-                      <span className="ml-2 text-muted-foreground">₹{v.price}</span>
-                    )}
-                  </button>
-                ))}
-              </div>
-            </div>
-          )}
-
-          <p className="text-muted-foreground leading-relaxed">
-            {product.description}
-          </p>
-          <div className="flex gap-3 pt-2">
-            <Button
-              onClick={() => onOrder(product, selectedVariant)}
-              className={`flex items-center gap-2 flex-1 ${product.availability === 'out_of_stock' ? 'bg-gray-400 cursor-not-allowed' : 'bg-green-600 hover:bg-green-700'}`}
-              disabled={product.availability === 'out_of_stock'}
-            >
-              <MessageSquare className="h-4 w-4" />
-              {product.availability === 'out_of_stock' ? 'Unavailable' : 'Order Now'}
-            </Button>
-            <Link
-              to={`/book?product=${encodeURIComponent(product.title)}${selectedVariant ? `&size=${encodeURIComponent(selectedVariant.size)}` : ''}`}
-              className="btn-primary flex-1 text-center"
-            >
-              Enquire Now
-            </Link>
-          </div>
-        </div>
-      </div>
-
-      {/* Tabs */}
-      <Tabs defaultValue="description" className="w-full">
-        <TabsList className="grid w-full grid-cols-4">
-          <TabsTrigger value="description">Description</TabsTrigger>
-          <TabsTrigger value="features">Features</TabsTrigger>
-          <TabsTrigger value="specifications">Specifications</TabsTrigger>
-          <TabsTrigger value="reviews">Reviews</TabsTrigger>
-        </TabsList>
-
-        <TabsContent value="description" className="pt-4">
-          <p className="text-muted-foreground leading-relaxed whitespace-pre-line">
-            {product.description}
-          </p>
-        </TabsContent>
-
-        <TabsContent value="features" className="pt-4">
-          {features.length === 0 ? (
-            <p className="text-muted-foreground">No features listed for this product.</p>
-          ) : (
-            <ul className="list-disc pl-5 space-y-2 text-muted-foreground">
-              {features.map((f, i) => <li key={i}>{f}</li>)}
-            </ul>
-          )}
-        </TabsContent>
-
-        <TabsContent value="specifications" className="pt-4">
-          {specs.length === 0 && !hasVariants ? (
-            <p className="text-muted-foreground">No specifications available.</p>
-          ) : (
-            <div className="overflow-x-auto space-y-4">
-              {specs.length > 0 && (
-                <table className="w-full text-sm border rounded-md">
-                  <tbody>
-                    {specs.map((s, i) => (
-                      <tr key={i} className="border-b last:border-0">
-                        <th className="text-left p-3 bg-muted/40 w-1/3 font-medium">{s.label}</th>
-                        <td className="p-3 text-muted-foreground">{s.value}</td>
-                      </tr>
-                    ))}
-                  </tbody>
-                </table>
-              )}
-              {hasVariants && (
-                <div>
-                  <p className="text-sm font-medium mb-2">Sizes & Pricing</p>
-                  <table className="w-full text-sm border rounded-md">
-                    <thead>
-                      <tr className="bg-muted/40">
-                        <th className="text-left p-3 font-medium">Size</th>
-                        <th className="text-left p-3 font-medium">Price</th>
-                      </tr>
-                    </thead>
-                    <tbody>
-                      {variants.map((v, i) => (
-                        <tr key={i} className="border-b last:border-0">
-                          <td className="p-3">{v.size}</td>
-                          <td className="p-3 text-muted-foreground">
-                            {v.price !== null && !Number.isNaN(v.price) ? `₹${v.price}` : '—'}
-                          </td>
-                        </tr>
-                      ))}
-                    </tbody>
-                  </table>
-                </div>
-              )}
-            </div>
-          )}
-        </TabsContent>
-
-        <TabsContent value="reviews" className="pt-4">
-          <div className="text-center py-8 border rounded-md bg-muted/30">
-            <p className="text-muted-foreground">Customer reviews coming soon.</p>
-            <p className="text-sm text-muted-foreground/80 mt-1">Be the first to share your experience with us.</p>
-          </div>
-        </TabsContent>
-      </Tabs>
-    </div>
-  );
-};
-
 const Products: React.FC = () => {
   const { toast } = useToast();
   const [products, setProducts] = useState<Product[]>([]);
   const [loading, setLoading] = useState(true);
-  const [selectedProduct, setSelectedProduct] = useState<Product | null>(null);
 
   useEffect(() => {
     fetchProducts();
@@ -329,6 +128,11 @@ const Products: React.FC = () => {
     return product.price;
   };
 
+  const detailPath = (product: Product, size?: string) => {
+    const base = `/products/${encodeURIComponent(product.slug || product.id)}`;
+    return size ? `${base}?size=${encodeURIComponent(size)}` : base;
+  };
+
   const localBusinessSchema = {
     "@context": "https://schema.org",
     "@type": "LocalBusiness",
@@ -394,7 +198,7 @@ const Products: React.FC = () => {
                   const displayPrice = getDisplayPrice(product);
                   return (
                     <div key={product.id} className="card overflow-hidden group shadow-md rounded-lg">
-                      <div className="relative overflow-hidden">
+                      <Link to={detailPath(product)} className="block relative overflow-hidden">
                         <img
                           src={cardImage}
                           alt={`Handcrafted ${product.title} - Abinash Sculptures stone art`}
@@ -404,25 +208,41 @@ const Products: React.FC = () => {
                         <div className="absolute top-3 right-3">
                           {getAvailabilityBadge(product.availability)}
                         </div>
-                      </div>
+                      </Link>
                       <div className="p-6">
-                        <h3 className="text-xl font-semibold mb-2">{product.title}</h3>
+                        <h3 className="text-xl font-semibold mb-2">
+                          <Link to={detailPath(product)} className="hover:text-amber-600 transition-colors">
+                            {product.title}
+                          </Link>
+                        </h3>
                         <p className="text-muted-foreground mb-4">
                           {truncateDescription(product.description)}
                         </p>
                         {variants.length > 0 && (
-                          <p className="text-xs text-muted-foreground mb-2">
-                            Available in {variants.length} size{variants.length > 1 ? 's' : ''}: {variants.map(v => v.size).join(', ')}
-                          </p>
+                          <div className="mb-3">
+                            <p className="text-xs text-muted-foreground mb-2">
+                              Available in {variants.length} size{variants.length > 1 ? 's' : ''}
+                            </p>
+                            <div className="flex flex-wrap gap-2">
+                              {variants.map((v, i) => (
+                                <Link
+                                  key={`${v.size}-${i}`}
+                                  to={detailPath(product, v.size)}
+                                  className="px-2.5 py-1 rounded-md border border-muted-foreground/30 text-xs hover:border-amber-400 hover:text-amber-600 transition"
+                                >
+                                  {v.size}
+                                </Link>
+                              ))}
+                            </div>
+                          </div>
                         )}
                         <div className="flex justify-between items-center mb-3">
-                          <Button
-                            variant="ghost"
-                            onClick={() => setSelectedProduct(product)}
-                            className="text-amber-500 font-medium hover:text-amber-600 transition-colors p-0"
+                          <Link
+                            to={detailPath(product)}
+                            className="text-amber-500 font-medium hover:text-amber-600 transition-colors"
                           >
                             View More
-                          </Button>
+                          </Link>
                           <Button
                             onClick={() => handleOrderClick(product, variants[0] || null)}
                             className={`flex items-center gap-2 ${product.availability === 'out_of_stock' ? 'bg-gray-400 cursor-not-allowed' : 'bg-green-600 hover:bg-green-700'}`}
@@ -461,23 +281,6 @@ const Products: React.FC = () => {
           </div>
         </section>
       </main>
-
-      <Dialog open={!!selectedProduct} onOpenChange={() => setSelectedProduct(null)}>
-        <DialogContent className="max-w-4xl max-h-[90vh] overflow-y-auto">
-          {selectedProduct && (
-            <>
-              <DialogHeader>
-                <DialogTitle className="text-2xl font-bold">{selectedProduct.title}</DialogTitle>
-              </DialogHeader>
-              <ProductDetail
-                key={selectedProduct.id}
-                product={selectedProduct}
-                onOrder={handleOrderClick}
-              />
-            </>
-          )}
-        </DialogContent>
-      </Dialog>
 
       <Footer />
     </>
