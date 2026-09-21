@@ -6,10 +6,14 @@ import Footer from '../components/Footer';
 import { Button } from '@/components/ui/button';
 import { Trash2, Minus, Plus } from 'lucide-react';
 import { useCart } from '@/contexts/CartContext';
+import { useAuth } from '@/contexts/AuthContext';
+
 
 const Cart: React.FC = () => {
   const { lines, subtotal, updateQuantity, removeItem, loading } = useCart();
+  const { user, loading: authLoading } = useAuth();
   const navigate = useNavigate();
+
 
   return (
     <>
