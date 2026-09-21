@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { useToast } from '@/hooks/use-toast';
 import Navbar from '../components/Navbar';
 import Footer from '../components/Footer';
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import { supabase } from '@/integrations/supabase/client';
 import { Button } from '@/components/ui/button';
 import { MessageSquare, ShoppingCart } from 'lucide-react';
@@ -58,6 +58,8 @@ const normalizeVariants = (raw: any): Variant[] => {
 const Products: React.FC = () => {
   const { toast } = useToast();
   const { addItem } = useCart();
+  const navigate = useNavigate();
+
 
   const [products, setProducts] = useState<Product[]>([]);
   const [loading, setLoading] = useState(true);
