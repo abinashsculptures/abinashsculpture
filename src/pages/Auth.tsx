@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import { useNavigate } from 'react-router-dom';
+import { useNavigate, useSearchParams } from 'react-router-dom';
 import { Helmet } from 'react-helmet';
 import Navbar from '../components/Navbar';
 import Footer from '../components/Footer';
@@ -13,21 +13,23 @@ const Auth: React.FC = () => {
   const { user } = useAuth();
   const navigate = useNavigate();
   const { toast } = useToast();
+  const [searchParams] = useSearchParams();
+  const next = searchParams.get('next') || '/account';
   const [email, setEmail] = useState('');
   const [otp, setOtp] = useState('');
   const [otpSent, setOtpSent] = useState(false);
   const [loading, setLoading] = useState(false);
 
   useEffect(() => {
-    if (user) navigate('/account');
-  }, [user, navigate]);
+    if (user) navigate(next, { replace: true });
+  }, [user, navigate, next]);
 
   const sendOtp = async (e: React.FormEvent) => {
     e.preventDefault();
     setLoading(true);
     const { error } = await supabase.auth.signInWithOtp({
       email,
-      options: { emailRedirectTo: `${window.location.origin}/account` },
+      options: { emailRedirectTo: `${window.location.origin}${next}` },
     });
     setLoading(false);
     if (error) {
@@ -47,16 +49,17 @@ const Auth: React.FC = () => {
       toast({ title: 'Invalid code', description: error.message, variant: 'destructive' });
       return;
     }
-    navigate('/account');
+    navigate(next, { replace: true });
   };
 
   const google = async () => {
     const { error } = await supabase.auth.signInWithOAuth({
       provider: 'google',
-      options: { redirectTo: `${window.location.origin}/account` },
+      options: { redirectTo: `${window.location.origin}${next}` },
     });
     if (error) toast({ title: 'Google sign-in failed', description: error.message, variant: 'destructive' });
   };
+
 
   return (
     <>
