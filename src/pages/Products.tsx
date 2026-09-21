@@ -5,7 +5,9 @@ import Footer from '../components/Footer';
 import { Link } from 'react-router-dom';
 import { supabase } from '@/integrations/supabase/client';
 import { Button } from '@/components/ui/button';
-import { MessageSquare } from 'lucide-react';
+import { MessageSquare, ShoppingCart } from 'lucide-react';
+import { useCart } from '@/contexts/CartContext';
+
 import { Helmet } from 'react-helmet';
 
 interface SpecItem {
@@ -244,14 +246,29 @@ const Products: React.FC = () => {
                             View More
                           </Link>
                           <Button
+                            variant="outline"
+                            onClick={async () => {
+                              await addItem({ product_id: product.id, variant_name: variants[0]?.size ?? null, quantity: 1 });
+                              toast({ title: 'Added to cart', description: product.title });
+                            }}
+                            disabled={product.availability === 'out_of_stock'}
+                            className="flex items-center gap-2"
+                          >
+                            <ShoppingCart className="h-4 w-4" />
+                            Add to Cart
+                          </Button>
+                        </div>
+                        <div className="mb-3">
+                          <Button
                             onClick={() => handleOrderClick(product, variants[0] || null)}
-                            className={`flex items-center gap-2 ${product.availability === 'out_of_stock' ? 'bg-gray-400 cursor-not-allowed' : 'bg-green-600 hover:bg-green-700'}`}
+                            className={`w-full flex items-center justify-center gap-2 ${product.availability === 'out_of_stock' ? 'bg-gray-400 cursor-not-allowed' : 'bg-green-600 hover:bg-green-700'}`}
                             disabled={product.availability === 'out_of_stock'}
                           >
                             <MessageSquare className="h-4 w-4" />
-                            {product.availability === 'out_of_stock' ? 'Unavailable' : 'Order Now'}
+                            {product.availability === 'out_of_stock' ? 'Unavailable' : 'Order on WhatsApp'}
                           </Button>
                         </div>
+
                         {displayPrice !== null && (
                           <p className="text-lg font-medium">
                             {variants.length > 1 ? 'From ' : ''}₹{displayPrice}
