@@ -24,10 +24,18 @@ const Cart: React.FC = () => {
       <Navbar />
       <main className="pt-28 pb-20 min-h-screen">
         <div className="container mx-auto px-4">
-          <h1 className="text-3xl font-bold mb-8">Your Cart</h1>
+          <h1 className="text-2xl sm:text-3xl font-bold mb-8">Your Cart</h1>
 
-          {loading ? (
+          {loading || authLoading ? (
             <p>Loading your cart…</p>
+          ) : !user ? (
+            <div className="text-center py-16 border rounded-lg bg-muted/30 px-4">
+              <p className="text-lg mb-2">Please sign in to use your cart.</p>
+              <p className="text-sm text-muted-foreground mb-6">
+                Create an account or log in — anything you picked will be added right after.
+              </p>
+              <Link to="/auth?next=%2Fcart" className="btn-primary">Sign In / Sign Up</Link>
+            </div>
           ) : lines.length === 0 ? (
             <div className="text-center py-16 border rounded-lg bg-muted/30">
               <p className="text-lg mb-4">Your cart is empty.</p>
@@ -37,12 +45,13 @@ const Cart: React.FC = () => {
             <div className="grid lg:grid-cols-3 gap-8">
               <div className="lg:col-span-2 space-y-4">
                 {lines.map(line => (
-                  <div key={line.id} className="flex gap-4 border rounded-lg p-4 items-center">
+                  <div key={line.id} className="flex flex-col sm:flex-row gap-4 border rounded-lg p-4 sm:items-center">
                     <img
                       src={line.image || '/placeholder.svg'}
                       alt={line.title}
-                      className="w-24 h-24 object-cover rounded-md flex-shrink-0"
+                      className="w-full h-40 sm:w-24 sm:h-24 object-cover rounded-md flex-shrink-0"
                     />
+
                     <div className="flex-1 min-w-0">
                       <h2 className="font-semibold truncate">{line.title}</h2>
                       {line.variant_name && (
