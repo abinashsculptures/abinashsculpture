@@ -112,18 +112,9 @@ export const CartProvider: React.FC<{ children: React.ReactNode }> = ({ children
           .order('created_at', { ascending: true });
         setLines(await hydrate((data as any) || []));
       } else {
-        const guest = readGuest();
-        setLines(
-          await hydrate(
-            guest.map(g => ({
-              id: `${g.product_id}::${g.variant_name ?? ''}`,
-              product_id: g.product_id,
-              variant_name: g.variant_name,
-              quantity: g.quantity,
-            }))
-          )
-        );
+        setLines([]);
       }
+
     } finally {
       setLoading(false);
     }
