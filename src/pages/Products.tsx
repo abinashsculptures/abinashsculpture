@@ -57,6 +57,8 @@ const normalizeVariants = (raw: any): Variant[] => {
 
 const Products: React.FC = () => {
   const { toast } = useToast();
+  const { addItem } = useCart();
+
   const [products, setProducts] = useState<Product[]>([]);
   const [loading, setLoading] = useState(true);
 
