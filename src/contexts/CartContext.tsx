@@ -38,7 +38,7 @@ interface CartContextValue {
   count: number;
   subtotal: number;
   loading: boolean;
-  addItem: (args: { product_id: string; variant_name?: string | null; quantity?: number }) => Promise<void>;
+  addItem: (args: { product_id: string; variant_name?: string | null; quantity?: number }) => Promise<boolean>;
   updateQuantity: (id: string, quantity: number) => Promise<void>;
   removeItem: (id: string) => Promise<void>;
   clearCart: () => Promise<void>;
@@ -112,18 +112,9 @@ export const CartProvider: React.FC<{ children: React.ReactNode }> = ({ children
           .order('created_at', { ascending: true });
         setLines(await hydrate((data as any) || []));
       } else {
-        const guest = readGuest();
-        setLines(
-          await hydrate(
-            guest.map(g => ({
-              id: `${g.product_id}::${g.variant_name ?? ''}`,
-              product_id: g.product_id,
-              variant_name: g.variant_name,
-              quantity: g.quantity,
-            }))
-          )
-        );
+        setLines([]);
       }
+
     } finally {
       setLoading(false);
     }
@@ -167,22 +158,21 @@ export const CartProvider: React.FC<{ children: React.ReactNode }> = ({ children
   }, [user, authLoading, refresh]);
 
   const addItem: CartContextValue['addItem'] = async ({ product_id, variant_name = null, quantity = 1 }) => {
-    if (user) {
-      const existing = lines.find(l => l.product_id === product_id && l.variant_name === variant_name);
-      if (existing) {
-        await supabase.from('cart_items').update({ quantity: existing.quantity + quantity }).eq('id', existing.id);
-      } else {
-        await supabase.from('cart_items').insert({ user_id: user.id, product_id, variant_name, quantity });
-      }
+    if (!user) {
+      // Sign-in required: remember the item and add it right after login
+      writeGuest([{ product_id, variant_name, quantity }]);
+      return false;
+    }
+    const existing = lines.find(l => l.product_id === product_id && l.variant_name === variant_name);
+    if (existing) {
+      await supabase.from('cart_items').update({ quantity: existing.quantity + quantity }).eq('id', existing.id);
     } else {
-      const guest = readGuest();
-      const idx = guest.findIndex(g => g.product_id === product_id && g.variant_name === variant_name);
-      if (idx >= 0) guest[idx].quantity += quantity;
-      else guest.push({ product_id, variant_name, quantity });
-      writeGuest(guest);
+      await supabase.from('cart_items').insert({ user_id: user.id, product_id, variant_name, quantity });
     }
     await refresh();
+    return true;
   };
+
 
   const updateQuantity = async (id: string, quantity: number) => {
     if (quantity < 1) return removeItem(id);

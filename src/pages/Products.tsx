@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { useToast } from '@/hooks/use-toast';
 import Navbar from '../components/Navbar';
 import Footer from '../components/Footer';
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import { supabase } from '@/integrations/supabase/client';
 import { Button } from '@/components/ui/button';
 import { MessageSquare, ShoppingCart } from 'lucide-react';
@@ -58,6 +58,8 @@ const normalizeVariants = (raw: any): Variant[] => {
 const Products: React.FC = () => {
   const { toast } = useToast();
   const { addItem } = useCart();
+  const navigate = useNavigate();
+
 
   const [products, setProducts] = useState<Product[]>([]);
   const [loading, setLoading] = useState(true);
@@ -240,7 +242,7 @@ const Products: React.FC = () => {
                             </div>
                           </div>
                         )}
-                        <div className="flex justify-between items-center mb-3">
+                        <div className="flex flex-col sm:flex-row sm:justify-between sm:items-center gap-3 mb-3">
                           <Link
                             to={detailPath(product)}
                             className="text-amber-500 font-medium hover:text-amber-600 transition-colors"
@@ -250,16 +252,25 @@ const Products: React.FC = () => {
                           <Button
                             variant="outline"
                             onClick={async () => {
-                              await addItem({ product_id: product.id, variant_name: variants[0]?.size ?? null, quantity: 1 });
+                              const added = await addItem({ product_id: product.id, variant_name: variants[0]?.size ?? null, quantity: 1 });
+                              if (!added) {
+                                toast({
+                                  title: 'Please sign in first',
+                                  description: 'Sign up or log in and we will add this sculpture to your cart.',
+                                });
+                                navigate(`/auth?next=${encodeURIComponent('/cart')}`);
+                                return;
+                              }
                               toast({ title: 'Added to cart', description: product.title });
                             }}
                             disabled={product.availability === 'out_of_stock'}
-                            className="flex items-center gap-2"
+                            className="w-full sm:w-auto flex items-center justify-center gap-2"
                           >
                             <ShoppingCart className="h-4 w-4" />
                             Add to Cart
                           </Button>
                         </div>
+
                         <div className="mb-3">
                           <Button
                             onClick={() => handleOrderClick(product, variants[0] || null)}

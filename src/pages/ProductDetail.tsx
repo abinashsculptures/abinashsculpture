@@ -119,9 +119,18 @@ const ProductDetail: React.FC = () => {
   };
 
   const addToCart = async () => {
-    await addItem({ product_id: product.id, variant_name: selectedVariant?.size ?? null, quantity: 1 });
+    const added = await addItem({ product_id: product.id, variant_name: selectedVariant?.size ?? null, quantity: 1 });
+    if (!added) {
+      toast({
+        title: 'Please sign in first',
+        description: 'Sign up or log in and we will add this sculpture to your cart.',
+      });
+      navigate(`/auth?next=${encodeURIComponent('/cart')}`);
+      return;
+    }
     toast({ title: 'Added to cart', description: 'Your sculpture is waiting in the cart.' });
   };
+
 
   const specs: { label: string; value: string }[] = [
     ...(product?.material ? [{ label: 'Material', value: product.material }] : []),
