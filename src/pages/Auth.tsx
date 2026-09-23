@@ -15,7 +15,9 @@ const Auth: React.FC = () => {
   const { toast } = useToast();
   const [searchParams] = useSearchParams();
   const next = searchParams.get('next') || '/account';
+  const [mode, setMode] = useState<'email' | 'phone'>('email');
   const [email, setEmail] = useState('');
+  const [phone, setPhone] = useState('');
   const [otp, setOtp] = useState('');
   const [otpSent, setOtpSent] = useState(false);
   const [loading, setLoading] = useState(false);
@@ -24,26 +26,59 @@ const Auth: React.FC = () => {
     if (user) navigate(next, { replace: true });
   }, [user, navigate, next]);
 
+  // Accepts 10-digit Indian numbers or full international format, returns E.164
+  const normalizePhone = (value: string) => {
+    const digits = value.replace(/[^\d]/g, '');
+    if (value.trim().startsWith('+')) return `+${digits}`;
+    if (digits.length === 10) return `+91${digits}`;
+    if (digits.length === 12 && digits.startsWith('91')) return `+${digits}`;
+    return '';
+  };
+
   const sendOtp = async (e: React.FormEvent) => {
     e.preventDefault();
     setLoading(true);
-    const { error } = await supabase.auth.signInWithOtp({
-      email,
-      options: { emailRedirectTo: `${window.location.origin}${next}` },
-    });
+
+    let error;
+    if (mode === 'email') {
+      ({ error } = await supabase.auth.signInWithOtp({
+        email,
+        options: { emailRedirectTo: `${window.location.origin}${next}` },
+      }));
+    } else {
+      const e164 = normalizePhone(phone);
+      if (!e164) {
+        setLoading(false);
+        toast({
+          title: 'Check your number',
+          description: 'Enter a 10-digit mobile number, or include the country code.',
+          variant: 'destructive',
+        });
+        return;
+      }
+      setPhone(e164);
+      ({ error } = await supabase.auth.signInWithOtp({ phone: e164 }));
+    }
+
     setLoading(false);
     if (error) {
       toast({ title: 'Could not send code', description: error.message, variant: 'destructive' });
       return;
     }
     setOtpSent(true);
-    toast({ title: 'Check your email', description: 'We sent you a 6-digit code and a sign-in link.' });
+    toast({
+      title: mode === 'email' ? 'Check your email' : 'Check your messages',
+      description: 'We sent you a 6-digit code.',
+    });
   };
 
   const verifyOtp = async (e: React.FormEvent) => {
     e.preventDefault();
     setLoading(true);
-    const { error } = await supabase.auth.verifyOtp({ email, token: otp.trim(), type: 'email' });
+    const { error } =
+      mode === 'email'
+        ? await supabase.auth.verifyOtp({ email, token: otp.trim(), type: 'email' })
+        : await supabase.auth.verifyOtp({ phone: normalizePhone(phone), token: otp.trim(), type: 'sms' });
     setLoading(false);
     if (error) {
       toast({ title: 'Invalid code', description: error.message, variant: 'destructive' });
