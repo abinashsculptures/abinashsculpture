@@ -213,7 +213,7 @@ const Account: React.FC = () => {
                   {orders.map(o => (
                     <Link
                       key={o.id}
-                      to={`/order-confirmation/${o.id}`}
+                      to={`/orders/${o.id}`}
                       className="flex flex-wrap items-center justify-between gap-3 border rounded-lg p-4 hover:border-amber-400 transition"
                     >
                       <div>

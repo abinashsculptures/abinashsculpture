@@ -59,7 +59,7 @@ const OrderConfirmation: React.FC = () => {
               </div>
 
               <div className="flex gap-4 justify-center mt-8">
-                <Link to="/account" className="btn-primary">View My Orders</Link>
+                <Link to={`/orders/${order.id}`} className="btn-primary">Track My Order</Link>
                 <Link to="/products" className="underline text-muted-foreground self-center">Continue shopping</Link>
               </div>
             </div>

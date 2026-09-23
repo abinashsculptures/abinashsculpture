@@ -23,6 +23,7 @@ import Account from "./pages/Account";
 import Cart from "./pages/Cart";
 import Checkout from "./pages/Checkout";
 import OrderConfirmation from "./pages/OrderConfirmation";
+import OrderTracking from "./pages/OrderTracking";
 
 // Create a new QueryClient instance
 const queryClient = new QueryClient();
@@ -51,6 +52,7 @@ const App = () => {
                   <Route path="/cart" element={<Cart />} />
                   <Route path="/checkout" element={<Checkout />} />
                   <Route path="/order-confirmation/:id" element={<OrderConfirmation />} />
+                  <Route path="/orders/:id" element={<OrderTracking />} />
                   <Route path="/terms-conditions" element={<TermsConditions />} />
                   <Route path="/privacy-policy" element={<PrivacyPolicy />} />
                   <Route path="/admin/*" element={<AdminDashboard />} />
