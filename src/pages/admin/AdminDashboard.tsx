@@ -20,31 +20,26 @@ const AdminDashboard: React.FC = () => {
   const { toast } = useToast();
   const navigate = useNavigate();
 
-  // Check if user is already authenticated
+  // Signed in AND holds the admin/staff role
   useEffect(() => {
-    const checkAuth = async () => {
-      const { data } = await supabase.auth.getSession();
-      if (data.session) {
-        setIsAuthenticated(true);
-      }
+    const check = async (userId?: string) => {
+      if (!userId) { setIsAuthenticated(false); return; }
+      const { data } = await supabase.rpc('is_staff', { _user_id: userId });
+      setIsAuthenticated(!!data);
     };
-    checkAuth();
+    supabase.auth.getSession().then(({ data }) => check(data.session?.user.id));
+    const { data: sub } = supabase.auth.onAuthStateChange((_e, s) => {
+      setTimeout(() => check(s?.user.id), 0);
+    });
+    return () => sub.subscription.unsubscribe();
   }, []);
-
-  // Set predefined admin credentials on component mount if email field is empty
-  useEffect(() => {
-    if (!email) {
-      setEmail('karunanidhiabinash@gmail.com');
-      setPassword('Abinash@2004');
-    }
-  }, [email]);
 
   const handleLogin = async (e: React.FormEvent) => {
     e.preventDefault();
     setLoading(true);
     
     try {
-      const { error } = await supabase.auth.signInWithPassword({
+      const { data, error } = await supabase.auth.signInWithPassword({
         email,
         password
       });
@@ -52,7 +47,8 @@ const AdminDashboard: React.FC = () => {
       if (error) {
         throw error;
       }
-      
+      const { data: ok } = await supabase.rpc('is_staff', { _user_id: data.user.id });
+      if (!ok) throw new Error('This account does not have admin access.');
       setIsAuthenticated(true);
       toast({
         title: "Login successful",
@@ -123,6 +119,9 @@ const AdminDashboard: React.FC = () => {
               {loading ? 'Signing in...' : 'Sign in'}
             </Button>
           </form>
+          <Link to="/auth?next=%2Fadmin" className="block text-center text-sm underline text-muted-foreground">
+            Or sign in with Google / email code
+          </Link>
         </div>
       </div>
     );
