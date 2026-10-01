@@ -125,11 +125,60 @@ const Checkout: React.FC = () => {
         note: 'Order placed by customer.',
       });
 
-      await clearCart();
-      navigate(`/order-confirmation/${order.id}`);
+      // Load Razorpay script
+      const loaded = await new Promise<boolean>(resolve => {
+        if ((window as any).Razorpay) return resolve(true);
+        const s = document.createElement('script');
+        s.src = 'https://checkout.razorpay.com/v1/checkout.js';
+        s.onload = () => resolve(true);
+        s.onerror = () => resolve(false);
+        document.body.appendChild(s);
+      });
+      if (!loaded) throw new Error('Could not load the payment window. Check your internet connection and try again.');
+
+      const amountPaise = Math.round(subtotal * 100);
+      const { data: rzp, error: rzpErr } = await supabase.functions.invoke('razorpay-create-order', {
+        body: { amount: amountPaise, currency: 'INR', receipt: orderNumber },
+      });
+      if (rzpErr || !rzp?.order_id) throw new Error(rzp?.error || 'Could not start payment. Please try again.');
+
+      const options = {
+        key: rzp.key_id,
+        amount: rzp.amount,
+        currency: rzp.currency,
+        name: 'Abinash Sculptures',
+        description: `Order ${orderNumber}`,
+        order_id: rzp.order_id,
+        prefill: { name: form.full_name, email: form.email, contact: form.phone },
+        theme: { color: '#b45309' },
+        handler: async (resp: any) => {
+          const { data: v, error: vErr } = await supabase.functions.invoke('razorpay-verify-payment', {
+            body: { ...resp, order_id: order.id, amount: rzp.amount },
+          });
+          if (vErr || !v?.verified) {
+            toast({ title: 'Payment could not be verified', description: 'If money was deducted, contact us with order ' + orderNumber, variant: 'destructive' });
+            setSubmitting(false);
+            return;
+          }
+          await clearCart();
+          toast({ title: 'Payment successful', description: `Order ${orderNumber} confirmed.` });
+          navigate(`/order-confirmation/${order.id}`);
+        },
+        modal: {
+          ondismiss: () => {
+            toast({ title: 'Payment cancelled', description: 'Your order is saved as unpaid. You can try paying again.' });
+            setSubmitting(false);
+          },
+        },
+      };
+      const rz = new (window as any).Razorpay(options);
+      rz.on('payment.failed', (r: any) => {
+        toast({ title: 'Payment failed', description: r?.error?.description || 'Please try again or use another method.', variant: 'destructive' });
+        setSubmitting(false);
+      });
+      rz.open();
     } catch (err: any) {
       toast({ title: 'Could not place order', description: err.message, variant: 'destructive' });
-    } finally {
       setSubmitting(false);
     }
   };
@@ -186,8 +235,7 @@ const Checkout: React.FC = () => {
                 <section className="border rounded-lg p-6">
                   <h2 className="text-xl font-semibold mb-2">4. Payment</h2>
                   <p className="text-sm text-muted-foreground">
-                    Online payment is being set up. Place your order now and our team will confirm the
-                    final amount including delivery, then share a secure payment link.
+                    Pay securely with UPI, cards, net banking or wallets via Razorpay. Delivery charges are quoted separately.
                   </p>
                 </section>
               </div>
@@ -199,8 +247,8 @@ const Checkout: React.FC = () => {
                 <div className="flex justify-between text-sm"><span>Delivery</span><span className="text-muted-foreground">Quoted separately</span></div>
                 <div className="flex justify-between text-sm"><span>Tax</span><span>₹0</span></div>
                 <div className="border-t pt-3 flex justify-between font-bold text-lg"><span>Total</span><span>₹{subtotal}</span></div>
-                <Button type="submit" className="w-full mt-4" disabled={submitting}>
-                  {submitting ? 'Placing order…' : 'Place Order'}
+                <Button type="submit" className="w-full mt-4" disabled={submitting || subtotal < 1}>
+                  {submitting ? 'Processing…' : `Pay ₹${subtotal}`}
                 </Button>
               </aside>
             </form>
