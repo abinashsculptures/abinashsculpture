@@ -8,6 +8,7 @@ import { Input } from '@/components/ui/input';
 import { useToast } from '@/hooks/use-toast';
 import { supabase } from '@/integrations/supabase/client';
 import { useAuth } from '@/contexts/AuthContext';
+import { getAuthRedirectUrl } from '@/lib/authRedirect';
 
 const Auth: React.FC = () => {
   const { user } = useAuth();
@@ -43,7 +44,7 @@ const Auth: React.FC = () => {
     if (mode === 'email') {
       ({ error } = await supabase.auth.signInWithOtp({
         email,
-        options: { emailRedirectTo: `${window.location.origin}${next}` },
+        options: { emailRedirectTo: getAuthRedirectUrl(next) },
       }));
     } else {
       const e164 = normalizePhone(phone);
@@ -90,7 +91,7 @@ const Auth: React.FC = () => {
   const google = async () => {
     const { error } = await supabase.auth.signInWithOAuth({
       provider: 'google',
-      options: { redirectTo: `${window.location.origin}${next}` },
+      options: { redirectTo: getAuthRedirectUrl(next) },
     });
     if (error) toast({ title: 'Google sign-in failed', description: error.message, variant: 'destructive' });
   };
