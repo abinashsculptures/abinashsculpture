@@ -65,6 +65,24 @@ export type Database = {
         }
         Relationships: []
       }
+      admin: {
+        Row: {
+          created_at: string
+          id: number
+          password: number | null
+        }
+        Insert: {
+          created_at?: string
+          id?: number
+          password?: number | null
+        }
+        Update: {
+          created_at?: string
+          id?: number
+          password?: number | null
+        }
+        Relationships: []
+      }
       admin_audit_log: {
         Row: {
           action: string
