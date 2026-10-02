@@ -237,10 +237,6 @@ const Checkout: React.FC = () => {
                   <p className="text-sm text-muted-foreground">
                     Pay securely with UPI, cards, net banking or wallets via Razorpay. Delivery charges are quoted separately.
                   </p>
-                  <div className="mt-3 rounded-md border border-dashed p-3 text-xs text-muted-foreground">
-                    <p className="font-semibold text-foreground">Test mode — use this test card:</p>
-                    <p>Card: 4100 2800 0000 1007 · Expiry: 12/26 · CVV: 123</p>
-                  </div>
                 </section>
               </div>
 
